@@ -46,8 +46,8 @@ logger = logging.getLogger(__name__)
 
 # ── Context limits ─────────────────────────────────────────────────────────────
 _MAX_RAG_CONTEXT_CHARS = 8_000   # ~2000 tokens — leaves room for prompt + schema
-_MAX_TOKENS_RESPONSE   = 8192    # Groq TOOLS mode supports up to 8192 output tokens
-_PROVIDER_TIMEOUT_S    = 90      # Max seconds to wait for a single provider (allows 120B models to complete output)
+_MAX_TOKENS_RESPONSE   = 4096    # Optimal response token limit for fast LLM generation
+_PROVIDER_TIMEOUT_S    = 90      # Max seconds to wait for a single provider
 
 
 # ══════════════════════════════════════════════════════════════════════════════
