@@ -1,14 +1,8 @@
 name = "sententia-frontend"
 
-# Required by Cloudflare Pages — tells it where the built output lives
+# Required: tells Cloudflare Pages where the built output lives
 pages_build_output_dir = ".vercel/output/static"
 
-# nodejs_compat is REQUIRED for Next.js on Pages (node:buffer, node:async_hooks)
+# Required: enables node:buffer, node:async_hooks (used by Next.js + Supabase)
 compatibility_flags = ["nodejs_compat"]
 compatibility_date = "2024-09-23"
-
-[build]
-command = "npm ci && npx @cloudflare/next-on-pages@1"
-
-[build.environment]
-NODE_VERSION = "22"
