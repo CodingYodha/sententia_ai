@@ -483,25 +483,24 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
             </div>
 
             {/* Modal Body - High Resolution Canvas with Zoom */}
-            <div className="flex-1 p-6 overflow-auto flex items-center justify-center bg-slate-950/50 relative">
+            <div className="flex-1 p-6 overflow-auto flex items-center justify-center bg-slate-950/50 relative min-h-[400px]">
               <div
                 style={{
                   transform: `scale(${zoom})`,
                   transformOrigin: "center center",
                   transition: "transform 0.15s ease-out",
-                  maxWidth: "100%",
-                  maxHeight: "100%",
+                  width: "100%",
+                  height: "100%",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                 }}
-                className="w-full h-full"
               >
                 <MermaidDiagram
                   syntax={diagram.mermaid_syntax}
                   theme="dark"
                   onSvgReady={handleSvgReady}
-                  className="max-w-full max-h-full"
+                  className="w-full h-full min-h-[350px]"
                 />
               </div>
             </div>

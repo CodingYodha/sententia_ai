@@ -77,14 +77,21 @@ export function MermaidDiagram({
         // Expose the rendered SVG element to parent (for export) and ensure responsive scaling
         const svgEl = container.querySelector("svg") as SVGSVGElement | null;
         if (svgEl) {
-          svgEl.removeAttribute("width");
-          svgEl.removeAttribute("height");
+          // Ensure viewBox is set for crisp scaling
+          if (!svgEl.getAttribute("viewBox")) {
+            const w = parseFloat(svgEl.getAttribute("width") || "800");
+            const h = parseFloat(svgEl.getAttribute("height") || "600");
+            svgEl.setAttribute("viewBox", `0 0 ${w} ${h}`);
+          }
+          svgEl.setAttribute("width", "100%");
+          svgEl.setAttribute("height", "100%");
+          svgEl.style.width = "100%";
+          svgEl.style.height = "100%";
           svgEl.style.maxWidth = "100%";
           svgEl.style.maxHeight = "100%";
-          svgEl.style.height = "auto";
-          svgEl.style.width = "auto";
-          svgEl.style.margin = "0 auto";
+          svgEl.style.objectFit = "contain";
           svgEl.style.display = "block";
+          svgEl.style.margin = "0 auto";
 
           if (onSvgReady) {
             onSvgReady(svgEl);
