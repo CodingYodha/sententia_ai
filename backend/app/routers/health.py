@@ -142,12 +142,12 @@ async def debug_llm_test() -> dict:
                     max_tokens=30,
                     messages=[{"role": "user", "content": "Reply with the word OK."}],
                 ),
-                timeout=15.0,
+                timeout=60.0,
             )
             entry["status"] = "OK"
             entry["reply"] = resp.reply
         except _asyncio.TimeoutError:
-            entry["status"] = "TIMEOUT (>15s)"
+            entry["status"] = "TIMEOUT (>60s)"
         except Exception as e:
             entry["status"] = f"ERROR: {type(e).__name__}: {str(e)[:400]}"
 
