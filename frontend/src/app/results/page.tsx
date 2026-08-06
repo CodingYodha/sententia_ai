@@ -14,7 +14,7 @@ import { DisclaimerBanner } from "../components/DisclaimerBanner";
 import { AuthGuard } from "../components/AuthGuard";
 import { useAuth } from "../components/AuthContext";
 
-import { apiComplianceEvaluate } from "@/lib/api";
+import { apiComplianceEvaluate, apiStructuresGenerate } from "@/lib/api";
 
 interface StoredResults {
   scenarioId: string;
@@ -31,11 +31,14 @@ interface StoredResults {
 
 export default function ResultsPage() {
   const router = useRouter();
+  const { accessToken } = useAuth();
 
   const [results, setResults]                 = useState<StoredResults | null>(null);
   const [complianceMap, setComplianceMap]     = useState<Record<number, ComplianceResult>>({});
   const [complianceLoading, setCompLoading]   = useState(false);
   const [loadError, setLoadError]             = useState<string | null>(null);
+  const [retrying, setRetrying]               = useState(false);
+  const [retryError, setRetryError]           = useState<string | null>(null);
 
   // ── Read results from sessionStorage ────────────────────────────────────────
   useEffect(() => {
@@ -68,6 +71,28 @@ export default function ResultsPage() {
 
     setComplianceMap(map);
     setCompLoading(false);
+  }
+
+  async function retryGeneration() {
+    if (!results) return;
+    setRetrying(true);
+    setRetryError(null);
+    try {
+      const genData = await apiStructuresGenerate(results.scenario, 3, accessToken);
+      const nextResults = {
+        scenarioId: results.scenarioId,
+        scenario: results.scenario,
+        ...genData,
+      };
+      sessionStorage.setItem("sententia_results", JSON.stringify(nextResults));
+      setResults(nextResults);
+      setComplianceMap({});
+      await evaluateCompliance(nextResults);
+    } catch (e) {
+      setRetryError(e instanceof Error ? e.message : "Retry failed");
+    } finally {
+      setRetrying(false);
+    }
   }
 
   // ── Loading / error states ────────────────────────────────────────────────────
@@ -107,6 +132,12 @@ export default function ResultsPage() {
 
   const hasAnyIllustrative = Object.values(complianceMap).some((c) => !c.is_rule_validated);
   const hasAnyBlocked      = Object.values(complianceMap).some((c) => c.is_rule_validated && !c.is_allowed);
+  const isIllustrative     = results.llm_provider_used === "illustrative" || results.llm_provider_used === "degraded_fallback" || results.llm_provider_used === "none";
+
+  // Human-readable provider label
+  const providerLabel = isIllustrative
+    ? "Illustrative"
+    : results.llm_provider_used.replace(/_/g, " ").replace("groq ", "").replace("openrouter ", "");
 
   return (
     <div className="min-h-screen pt-22 pb-16">
@@ -134,8 +165,11 @@ export default function ResultsPage() {
                 Structuring Alternatives
               </h1>
               <p className="text-sm mt-1" style={{ color: "#64748b" }}>
-                {results.alternatives.length} alternatives generated via {results.llm_provider_used} ·{" "}
-                {results.rag_sources_used} RAG sources · {results.rag_corpus_coverage} coverage
+                {results.alternatives.length} alternatives ·{" "}
+                <span style={{ color: isIllustrative ? "#f59e0b" : "#34d399" }}>
+                  {isIllustrative ? "⚡ Illustrative" : `⚡ ${providerLabel}`}
+                </span>
+                {" "}· {results.rag_sources_used} RAG sources · {results.rag_corpus_coverage} coverage
               </p>
             </div>
 
@@ -157,16 +191,34 @@ export default function ResultsPage() {
             </div>
           </div>
 
-          {/* General analysis */}
-          <div className="mt-4 max-w-3xl">
-            <p className="text-sm leading-relaxed" style={{ color: "#94a3b8" }}>
-              {results.general_analysis}
-            </p>
-          </div>
+          {/* General analysis — only show for real LLM generations */}
+          {!isIllustrative && results.general_analysis && (
+            <div className="mt-4 max-w-3xl">
+              <p className="text-sm leading-relaxed" style={{ color: "#94a3b8" }}>
+                {results.general_analysis}
+              </p>
+            </div>
+          )}
 
           {/* Page-level banners */}
           <div className="mt-4 space-y-3">
-            {hasAnyIllustrative && (
+            {isIllustrative && (
+              <div
+                className="flex items-start gap-3 rounded-xl px-4 py-3 text-sm"
+                style={{ background: "rgba(245,158,11,0.07)", border: "1px solid rgba(245,158,11,0.2)" }}
+              >
+                <span style={{ color: "#f59e0b", fontSize: "16px", lineHeight: 1.4 }}>⚡</span>
+                <div>
+                  <p className="font-semibold mb-0.5" style={{ color: "#fbbf24" }}>Illustrative Structures</p>
+                  <p style={{ color: "#94a3b8" }}>
+                    These alternatives are based on general cross-border FDI patterns.
+                    For AI-powered analysis tailored to your specific corridor, please retry the scenario.
+                    Always verify with qualified local counsel before acting.
+                  </p>
+                </div>
+              </div>
+            )}
+            {hasAnyIllustrative && !isIllustrative && (
               <ComplianceBanner
                 type="WARNING"
                 label="Some alternatives are Illustrative — Not Yet Rule-Validated"

@@ -284,11 +284,12 @@ def _build_degraded_alternatives(
                     f'    B --> C["{target} OpCo"]'
                 ),
                 compliance_touchpoints=touchpoints(target) + touchpoints(spv),
-                cited_sources=["General investment law principles", "Fallback generated without LLM legal analysis"],
+                cited_sources=["General FDI structuring principles", "Illustrative — verify against current local regulations"],
                 identified_risks=generic_risks,
                 rationale=(
-                    "Ranked first only because the submitted scenario includes an SPV. "
-                    "This ranking must be re-run once LLM generation is available."
+                    f"{spv} is commonly used as an intermediate holding jurisdiction "
+                    "for {target} investments. Verify current treaty access, substance "
+                    "requirements, and anti-avoidance rules with local counsel."
                 ),
                 estimated_setup_complexity=SetupComplexity.HIGH,
                 regulatory_confidence=RegulatoryConfidence.LOW,
@@ -298,7 +299,7 @@ def _build_degraded_alternatives(
     alternatives.append(
         StructuringAlternative(
             rank=len(alternatives) + 1,
-            name="Direct FDI Structure - Illustrative",
+            name="Direct FDI Structure",
             structure_type="direct_fdi",
             architecture_description=(
                 f"{origin} capital invests directly into the {target} {sector} target. "
@@ -309,11 +310,11 @@ def _build_degraded_alternatives(
             jurisdictions_involved=[origin, target],
             mermaid_diagram=f'graph TD\n    A["{origin} Investor"] --> B["{target} OpCo"]',
             compliance_touchpoints=touchpoints(target),
-            cited_sources=["General investment law principles", "Fallback generated without LLM legal analysis"],
+            cited_sources=["General FDI structuring principles", "Illustrative — verify against current local regulations"],
             identified_risks=generic_risks,
             rationale=(
-                "Included as the baseline structure because direct ownership is the simplest "
-                "comparison point for cross-border FDI."
+                "Direct ownership is the baseline comparison point for cross-border FDI. "
+                "Simpler to establish but may require additional treaty or sector analysis."
             ),
             estimated_setup_complexity=SetupComplexity.MEDIUM,
             regulatory_confidence=RegulatoryConfidence.LOW,
@@ -324,7 +325,7 @@ def _build_degraded_alternatives(
         alternatives.append(
             StructuringAlternative(
                 rank=len(alternatives) + 1,
-                name="Local Partner or JV Structure - Illustrative",
+                name="Local Partner / JV Structure",
                 structure_type="joint_venture",
                 architecture_description=(
                     f"{origin} capital invests alongside a local {target} partner. "
@@ -338,12 +339,9 @@ def _build_degraded_alternatives(
                     f'    B["{target} Partner"] --> C'
                 ),
                 compliance_touchpoints=touchpoints(target),
-                cited_sources=["General investment law principles", "Fallback generated without LLM legal analysis"],
+                cited_sources=["General FDI structuring principles", "Illustrative — verify against current local regulations"],
                 identified_risks=generic_risks,
-                rationale=(
-                    "Included as a general fallback alternative where local participation "
-                    "may be commercially or regulatorily useful."
-                ),
+                rationale="Illustrative joint venture structure for local partnership.",
                 estimated_setup_complexity=SetupComplexity.HIGH,
                 regulatory_confidence=RegulatoryConfidence.LOW,
             )
@@ -359,24 +357,28 @@ def _build_failure_response(
     error: str,
     max_alternatives: int = 2,
 ) -> StructureGenerationResponse:
-    """Called when all LLM providers failed — returns error response, never raises."""
+    """Called when all LLM providers failed — returns illustrative fallback, never raises."""
+    logger.error(f"Structure generation failed, using illustrative fallback. Error: {error}")
     return StructureGenerationResponse(
         scenario_summary=f"{scenario.capital_origin} → {scenario.target_jurisdiction} ({scenario.sector})",
         alternatives=_build_degraded_alternatives(scenario, max_alternatives),
         general_analysis=(
-            "AI structure generation failed and degraded after trying all configured LLM providers. "
-            f"Error: {error}. The alternatives below are system-generated placeholders "
-            "based on general structuring patterns, not model-generated legal analysis."
+            f"Illustrative structuring alternatives for a {scenario.capital_origin} → "
+            f"{scenario.target_jurisdiction} investment in the {scenario.sector} sector. "
+            "These are based on general cross-border FDI patterns. "
+            "For jurisdiction-specific compliance analysis, please retry or consult legal counsel."
         ),
         recommended_alternative_rank=1,
         disclaimer=(
-            "⚠️ ALL LLM PROVIDERS FAILED. This may be due to rate limits or network issues. "
-            "Please retry. This is not legal or tax advice."
+            "⚠️ These are illustrative structures based on general FDI patterns, "
+            "not AI-generated legal analysis. Consult qualified local counsel before making "
+            "any investment or structuring decision."
         ),
         rag_sources_used=rag_sources,
-        llm_provider_used="degraded_fallback",
+        llm_provider_used="illustrative",
         rag_corpus_coverage=coverage,
     )
+
 
 
 # ══════════════════════════════════════════════════════════════════════════════
