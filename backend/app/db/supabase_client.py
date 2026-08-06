@@ -35,40 +35,33 @@ def get_supabase_client() -> SupabaseClient:
     )
 
 
-async def ping_supabase() -> bool:
-    """
-    Lightweight connectivity check — tries 3 strategies in order.
-    Logs the actual exception so it appears in Render logs.
-    """
+import asyncio
+
+
+def _sync_ping_supabase() -> bool:
+    """Synchronous network check — executed in background thread."""
     settings = get_settings()
 
     if not settings.supabase_url or not settings.supabase_service_role_key:
-        logger.error(
-            "Supabase ping skipped — SUPABASE_URL or SUPABASE_SERVICE_KEY not set. "
-            f"url={'SET' if settings.supabase_url else 'MISSING'} "
-            f"key={'SET' if settings.supabase_service_role_key else 'MISSING'}"
-        )
         return False
 
     # Strategy 1: firm_workspaces table query
     try:
         client = get_supabase_client()
         client.table("firm_workspaces").select("id").limit(1).execute()
-        logger.info("Supabase ping OK via firm_workspaces query")
         return True
-    except Exception as e1:
-        logger.warning(f"Supabase firm_workspaces ping failed: {type(e1).__name__}: {e1}")
+    except Exception:
+        pass
 
     # Strategy 2: users table query
     try:
         client = get_supabase_client()
         client.table("users").select("id").limit(1).execute()
-        logger.info("Supabase ping OK via users query")
         return True
-    except Exception as e2:
-        logger.warning(f"Supabase users ping failed: {type(e2).__name__}: {e2}")
+    except Exception:
+        pass
 
-    # Strategy 3: HTTP REST API reachability (no table needed)
+    # Strategy 3: HTTP REST API reachability
     try:
         import httpx
         url = settings.supabase_url.rstrip("/") + "/rest/v1/"
@@ -76,13 +69,15 @@ async def ping_supabase() -> bool:
             "apikey": settings.supabase_service_role_key,
             "Authorization": f"Bearer {settings.supabase_service_role_key}",
         }
-        async with httpx.AsyncClient(timeout=10) as http:
-            r = await http.get(url, headers=headers)
-        if r.status_code < 500:
-            logger.info(f"Supabase REST reachable (HTTP {r.status_code}) — tables may not exist yet")
-            return True
-        logger.error(f"Supabase REST returned HTTP {r.status_code}: {r.text[:200]}")
+        r = httpx.get(url, headers=headers, timeout=2.0)
+        return r.status_code < 500
+    except Exception:
         return False
-    except Exception as e3:
-        logger.error(f"Supabase HTTP ping failed: {type(e3).__name__}: {e3}")
+
+
+async def ping_supabase() -> bool:
+    """Non-blocking Supabase ping — times out after 2.5s max to avoid blocking Uvicorn."""
+    try:
+        return await asyncio.wait_for(asyncio.to_thread(_sync_ping_supabase), timeout=2.5)
+    except Exception:
         return False

@@ -30,14 +30,22 @@ def get_qdrant_client() -> QdrantClient:
     )
 
 
-async def ping_qdrant() -> bool:
-    """
-    Lightweight connectivity check — lists collections.
-    Returns True if reachable, False otherwise.
-    """
+import asyncio
+
+
+def _sync_ping_qdrant() -> bool:
+    """Synchronous network check — executed in background thread."""
     try:
         client = get_qdrant_client()
         client.get_collections()
         return True
-    except (UnexpectedResponse, Exception):
+    except Exception:
+        return False
+
+
+async def ping_qdrant() -> bool:
+    """Non-blocking Qdrant ping — times out after 2.5s max to avoid blocking Uvicorn."""
+    try:
+        return await asyncio.wait_for(asyncio.to_thread(_sync_ping_qdrant), timeout=2.5)
+    except Exception:
         return False
