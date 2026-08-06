@@ -50,12 +50,13 @@ _OPENROUTER_HEADERS = {
 }
 
 _PROVIDERS = [
-    # ── Groq — confirmed working, free tier, TOOLS mode ───────────────────────
-    {"name": "groq_llama33_70b",       "model": "llama-3.3-70b-versatile",        "client_type": "groq"},
-    {"name": "groq_gpt_oss_120b",      "model": "openai/gpt-oss-120b",            "client_type": "groq"},
-    {"name": "groq_gpt_oss_20b",       "model": "openai/gpt-oss-20b",             "client_type": "groq"},
-    {"name": "groq_llama31_8b",        "model": "llama-3.1-8b-instant",           "client_type": "groq"},
-    {"name": "groq_deepseek_r1",       "model": "deepseek-r1-distill-llama-70b",  "client_type": "groq"},
+    # ── Groq TOOLS-mode models (support function calling) ────────────────────
+    {"name": "groq_llama33_70b",   "model": "llama-3.3-70b-versatile",  "client_type": "groq", "mode": "TOOLS"},
+    {"name": "groq_llama31_70b",   "model": "llama-3.1-70b-versatile",  "client_type": "groq", "mode": "TOOLS"},
+    {"name": "groq_llama31_8b",    "model": "llama-3.1-8b-instant",     "client_type": "groq", "mode": "TOOLS"},
+    # ── Groq MD_JSON-mode models (no function calling, text JSON output) ─────
+    {"name": "groq_gpt_oss_120b",  "model": "openai/gpt-oss-120b",      "client_type": "groq", "mode": "MD_JSON"},
+    {"name": "groq_gpt_oss_20b",   "model": "openai/gpt-oss-20b",       "client_type": "groq", "mode": "MD_JSON"},
 ]
 
 
@@ -72,13 +73,15 @@ class LLMClient:
 # SYNC CLIENTS — instructor_service (document intake)
 # ══════════════════════════════════════════════════════════════════════════════
 
-def _make_sync_groq(api_key: str) -> object:
+def _make_sync_groq(api_key: str, mode: str = "TOOLS") -> object:
     """
-    Sync Groq instructor client using TOOLS mode.
-    TOOLS mode uses function-calling — far more reliable than MD_JSON.
+    Sync Groq instructor client.
+    TOOLS mode  — uses function-calling (reliable, default).
+    MD_JSON mode — text JSON output (for models that don't support tool use).
     """
     raw = groq_sdk.Groq(api_key=api_key)
-    return instructor.from_groq(raw, mode=instructor.Mode.TOOLS)
+    instructor_mode = instructor.Mode.MD_JSON if mode == "MD_JSON" else instructor.Mode.TOOLS
+    return instructor.from_groq(raw, mode=instructor_mode)
 
 
 def _make_sync_openrouter(api_key: str) -> object:
@@ -113,8 +116,8 @@ def get_llm_client() -> LLMClient | None:
     for p in _PROVIDERS:
         try:
             if p["client_type"] == "groq" and _GROQ_AVAILABLE and settings.groq_api_key:
-                client = _make_sync_groq(settings.groq_api_key)
-                logger.info(f"Sync LLM: using {p['name']} / {p['model']}")
+                client = _make_sync_groq(settings.groq_api_key, mode=p.get("mode", "TOOLS"))
+                logger.info(f"Sync LLM: using {p['name']} / {p['model']} ({p.get('mode', 'TOOLS')} mode)")
                 return LLMClient(client=client, model=p["model"], provider=p["name"])
             elif p["client_type"] == "openai" and settings.openrouter_api_key:
                 client = _make_sync_openrouter(settings.openrouter_api_key)
@@ -135,17 +138,20 @@ def get_llm_client() -> LLMClient | None:
 # ASYNC CLIENTS — structure_service (generation engine)
 # ══════════════════════════════════════════════════════════════════════════════
 
-def _make_async_groq(api_key: str) -> object:
+def _make_async_groq(api_key: str, mode: str = "TOOLS") -> object:
     """
-    Async Groq instructor client using TOOLS mode.
+    Async Groq instructor client.
 
-    CRITICAL: instructor.from_groq with AsyncGroq requires TOOLS mode.
-    MD_JSON mode (markdown-fenced JSON) is unreliable with async and
-    causes silent parse failures — instructor's retry loop can't recover.
-    TOOLS mode uses Groq's native function-calling which is stable.
+    TOOLS mode  (default) — uses Groq's native function-calling API.
+                            Reliable structured output. Use for models that
+                            support tool use (llama-3.x, etc.).
+    MD_JSON mode           — instructs model to output markdown-fenced JSON.
+                            Use for models that don't support tool use
+                            (e.g. openai/gpt-oss-120b on Groq).
     """
     raw = groq_sdk.AsyncGroq(api_key=api_key)
-    return instructor.from_groq(raw, mode=instructor.Mode.TOOLS)
+    instructor_mode = instructor.Mode.MD_JSON if mode == "MD_JSON" else instructor.Mode.TOOLS
+    return instructor.from_groq(raw, mode=instructor_mode)
 
 
 def _make_async_openrouter(api_key: str) -> object:
@@ -192,10 +198,10 @@ def get_async_llm_cascade() -> list[LLMClient]:
         try:
             if p["client_type"] == "groq" and groq_sdk_ok and settings.groq_api_key:
                 cascade.append(LLMClient(
-                    client=_make_async_groq(settings.groq_api_key),
+                    client=_make_async_groq(settings.groq_api_key, mode=p.get("mode", "TOOLS")),
                     model=p["model"], provider=p["name"], is_async=True,
                 ))
-                logger.debug(f"Cascade: added {p['name']} / {p['model']}")
+                logger.debug(f"Cascade: added {p['name']} / {p['model']} ({p.get('mode', 'TOOLS')} mode)")
             elif p["client_type"] == "openai" and settings.openrouter_api_key:
                 cascade.append(LLMClient(
                     client=_make_async_openrouter(settings.openrouter_api_key),
