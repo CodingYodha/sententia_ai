@@ -52,11 +52,11 @@ logger = logging.getLogger(__name__)
 # These map to mermaid.js classDef — the frontend renders them with its theme
 # ──────────────────────────────────────────────────────────────────────────────
 _CLASS_DEFS = """\
-    classDef originNode     fill:#1e293b,stroke:#6366f1,color:#f8fafc,stroke-width:2px,rx:8px,ry:8px
-    classDef spvNode        fill:#2e1065,stroke:#a855f7,color:#f8fafc,stroke-width:2px,rx:8px,ry:8px
-    classDef entityNode     fill:#0f172a,stroke:#38bdf8,color:#f8fafc,stroke-width:1.5px,rx:8px,ry:8px
-    classDef targetNode     fill:#064e3b,stroke:#10b981,color:#ecfdf5,stroke-width:2px,rx:8px,ry:8px
-    classDef regulatoryNode fill:#451a03,stroke:#f59e0b,color:#fef3c7,stroke-width:2px,stroke-dasharray:4 2,rx:8px,ry:8px"""
+    classDef originNode     fill:#f5f5f4,stroke:#292524,color:#0c0a09,stroke-width:2px,rx:8px,ry:8px
+    classDef spvNode        fill:#f0fdf4,stroke:#16a34a,color:#14532d,stroke-width:2px,rx:8px,ry:8px
+    classDef entityNode     fill:#ffffff,stroke:#78716c,color:#0c0a09,stroke-width:1.5px,rx:8px,ry:8px
+    classDef targetNode     fill:#eff6ff,stroke:#2563eb,color:#1e3a8a,stroke-width:2px,rx:8px,ry:8px
+    classDef regulatoryNode fill:#fffbeb,stroke:#d97706,color:#78350f,stroke-width:2px,stroke-dasharray:4 2,rx:8px,ry:8px"""
 
 # Mermaid reserved words that cannot be used as node IDs
 _RESERVED = frozenset(["end", "graph", "subgraph", "style", "class", "click",

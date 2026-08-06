@@ -19,9 +19,9 @@ const DEMO_STRUCTURE = {
     C["India Tech OpCo<br/><span style='font-size:11px;opacity:0.8;font-weight:normal'>[India - Private Limited]</span>"]
     A -->|"100% Equity / Capital"| B
     B -->|"100% FDI / CCPS"| C
-    classDef originNode fill:#1e293b,stroke:#6366f1,color:#f8fafc,stroke-width:2px,rx:8px,ry:8px
-    classDef spvNode fill:#2e1065,stroke:#a855f7,color:#f8fafc,stroke-width:2px,rx:8px,ry:8px
-    classDef targetNode fill:#064e3b,stroke:#10b981,color:#ecfdf5,stroke-width:2px,rx:8px,ry:8px
+    classDef originNode fill:#f5f5f4,stroke:#292524,color:#0c0a09,stroke-width:2px,rx:8px,ry:8px
+    classDef spvNode fill:#f0fdf4,stroke:#16a34a,color:#14532d,stroke-width:2px,rx:8px,ry:8px
+    classDef targetNode fill:#eff6ff,stroke:#2563eb,color:#1e3a8a,stroke-width:2px,rx:8px,ry:8px
     class A originNode
     class B spvNode
     class C targetNode`,

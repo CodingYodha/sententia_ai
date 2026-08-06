@@ -545,18 +545,18 @@ export default function IntakePage() {
 
         {/* ── STEP 2: EXTRACTION PREVIEW ── */}
         {step === 2 && extraction && (
-          <div className="space-y-5">
+          <div className="space-y-6">
             <Card>
-              <h2 className="text-base font-semibold mb-4" style={{ color: "#818cf8" }}>
+              <h2 className="text-lg font-editorial-display font-medium text-stone-900 mb-4">
                 Extracted Document Data — Confirm Before Generation
               </h2>
 
               {extraction.ubo_info && (
-                <div className="mb-4">
-                  <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#64748b" }}>
+                <div className="mb-5">
+                  <p className="text-xs font-semibold uppercase tracking-widest mb-1.5 text-stone-500">
                     Ownership Chain Summary
                   </p>
-                  <p className="text-sm leading-relaxed" style={{ color: "#cbd5e1" }}>
+                  <p className="text-sm font-editorial-body text-stone-700 leading-relaxed">
                     {extraction.ubo_info.ownership_chain_summary || "—"}
                   </p>
                 </div>
@@ -564,21 +564,20 @@ export default function IntakePage() {
 
               {(extraction.ubo_info?.ultimate_beneficial_owners?.length ?? 0) > 0 && (
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "#64748b" }}>
+                  <p className="text-xs font-semibold uppercase tracking-widest mb-3 text-stone-500">
                     UBO Entities
                   </p>
                   <div className="space-y-2">
                     {(extraction.ubo_info?.ultimate_beneficial_owners ?? []).map((ubo, i) => (
                       <div
                         key={i}
-                        className="flex items-center justify-between px-4 py-3 rounded-xl"
-                        style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+                        className="flex items-center justify-between px-4 py-3 rounded-xl bg-stone-50 border border-stone-200"
                       >
                         <div>
-                          <p className="text-sm font-medium" style={{ color: "#f1f1f8" }}>{ubo.name}</p>
-                          <p className="text-xs" style={{ color: "#64748b" }}>{ubo.jurisdiction} · {ubo.entity_type}</p>
+                          <p className="text-sm font-semibold text-stone-900">{ubo.name}</p>
+                          <p className="text-xs font-editorial-body text-stone-500">{ubo.jurisdiction} · {ubo.entity_type}</p>
                         </div>
-                        <span className="text-sm font-bold" style={{ color: "#818cf8" }}>{ubo.ownership_pct}%</span>
+                        <span className="text-sm font-bold text-stone-900">{ubo.ownership_pct}%</span>
                       </div>
                     ))}
                   </div>
@@ -586,32 +585,25 @@ export default function IntakePage() {
               )}
 
               {!extraction.ubo_info && extraction.raw_preview && (
-                <pre className="text-xs overflow-auto max-h-48" style={{ color: "#94a3b8", lineHeight: 1.6 }}>
+                <pre className="text-xs font-mono overflow-auto max-h-48 text-stone-600 p-3 bg-stone-50 rounded-xl border border-stone-200" style={{ lineHeight: 1.6 }}>
                   {extraction.raw_preview}
                 </pre>
               )}
             </Card>
 
-            <div className="flex gap-3">
+            <div className="flex gap-4">
               <button
                 onClick={() => setStep(1)}
-                className="flex-1 py-3 rounded-xl text-sm font-medium"
-                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "#94a3b8", cursor: "pointer" }}
+                className="btn-outline flex-1 py-3.5 text-sm"
               >
                 ← Back
               </button>
               <button
                 id="btn-confirm-extraction"
                 onClick={generateStructures}
-                className="flex-1 py-3 rounded-xl text-sm font-semibold"
-                style={{
-                  background: "rgba(99,102,241,0.2)",
-                  border: "1.5px solid rgba(99,102,241,0.4)",
-                  color: "#a5b4fc",
-                  cursor: "pointer",
-                }}
+                className="btn-primary flex-1 py-3.5 text-sm"
               >
-                Confirm & Generate →
+                Confirm &amp; Generate →
               </button>
             </div>
           </div>
@@ -620,43 +612,38 @@ export default function IntakePage() {
         {/* ── STEP 3: GENERATING ── */}
         {step === 3 && (
           <Card>
-            <div className="flex flex-col items-center gap-6 py-8">
+            <div className="flex flex-col items-center gap-6 py-10">
               {genError ? (
                 <div className="text-center">
-                  <p className="text-base font-semibold mb-2" style={{ color: "#f87171" }}>Generation Failed</p>
-                  <p className="text-sm mb-5" style={{ color: "#94a3b8" }}>{genError}</p>
+                  <p className="text-base font-semibold mb-2 text-red-600">Generation Failed</p>
+                  <p className="text-sm mb-6 text-stone-600 font-editorial-body">{genError}</p>
                   <button
                     onClick={() => { setStep(1); setGenError(null); }}
-                    className="px-5 py-2.5 rounded-xl text-sm font-medium"
-                    style={{ background: "rgba(99,102,241,0.15)", border: "1px solid rgba(99,102,241,0.3)", color: "#818cf8", cursor: "pointer" }}
+                    className="btn-outline px-6 py-2.5 text-sm"
                   >
                     ← Try Again
                   </button>
                 </div>
               ) : (
                 <>
-                  <div
-                    className="w-16 h-16 rounded-2xl flex items-center justify-center"
-                    style={{ background: "rgba(99,102,241,0.1)", border: "1px solid rgba(99,102,241,0.25)" }}
-                  >
-                    <svg className="animate-spin" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="2">
+                  <div className="w-16 h-16 rounded-2xl flex items-center justify-center bg-stone-100 border border-stone-200 shadow-sm">
+                    <svg className="animate-spin text-stone-900" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                       <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
                     </svg>
                   </div>
                   <div className="text-center">
-                    <p className="text-base font-semibold mb-1" style={{ color: "#f1f1f8" }}>Generating Structures…</p>
-                    <p className="text-sm" style={{ color: "#64748b" }}>
+                    <p className="text-xl font-editorial-display font-medium text-stone-900 mb-1">Generating Structures…</p>
+                    <p className="text-sm font-editorial-body text-stone-600">
                       Querying RAG corpus · Running LLM cascade · Evaluating compliance
                     </p>
                   </div>
                   <div className="w-full max-w-xs">
-                    <div className="h-1 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
+                    <div className="h-1.5 rounded-full overflow-hidden bg-stone-200">
                       <div
-                        className="h-full rounded-full"
+                        className="h-full rounded-full bg-stone-900"
                         style={{
-                          background: "linear-gradient(90deg, #6366f1, #818cf8)",
                           animation: "progress-indeterminate 1.5s ease-in-out infinite",
-                          width: "60%",
+                          width: "50%",
                         }}
                       />
                     </div>
