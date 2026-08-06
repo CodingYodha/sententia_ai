@@ -10,8 +10,9 @@ httpx==0.27.0
 
 # ── Document intake ──────────────────────────────────────────────────────────
 python-multipart==0.0.9       # FastAPI file uploads
-docling==2.31.0               # PDF/DOCX extraction (primary)
-pypdf==4.3.1                  # lightweight PDF fallback + test fixture generation
+# docling removed — pulls torch+transformers+easyocr+CUDA (~2GB), too heavy for free tier
+# docling_service.py automatically falls back to pypdf when docling is not installed
+pypdf==4.3.1                  # lightweight PDF extraction (primary on free tier)
 
 # ── LLM structured output ────────────────────────────────────────────────────
 instructor==1.3.4             # Instructor (structured LLM output via Pydantic)
