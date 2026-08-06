@@ -63,3 +63,36 @@ async def health_check() -> HealthResponse:
             ),
         },
     )
+
+
+@router.get("/debug/env", summary="Check which env vars are set (values masked)")
+async def debug_env() -> dict:
+    """
+    Shows SET / MISSING for every critical env var — values are never exposed.
+    Use this to diagnose missing secrets on Render / HF Spaces.
+    """
+    import os
+
+    def _status(val: str) -> str:
+        if not val:
+            return "MISSING ❌"
+        masked = val[:8] + "..." + val[-4:] if len(val) > 12 else "***"
+        return f"SET ✅ ({masked})"
+
+    settings = get_settings()
+
+    return {
+        "supabase_url":              _status(settings.supabase_url),
+        "supabase_service_role_key": _status(settings.supabase_service_role_key),
+        "supabase_anon_key":         _status(settings.supabase_anon_key),
+        "supabase_jwt_secret":       _status(settings.supabase_jwt_secret),
+        "qdrant_url":                _status(settings.qdrant_url),
+        "qdrant_api_key":            _status(settings.qdrant_api_key),
+        "groq_api_key":              _status(settings.groq_api_key),
+        "openrouter_api_key":        _status(settings.openrouter_api_key),
+        "jina_api_key":              _status(settings.jina_api_key),
+        # Raw env var names (what Render might have set)
+        "_raw_SUPABASE_SERVICE_KEY":      _status(os.environ.get("SUPABASE_SERVICE_KEY", "")),
+        "_raw_SUPABASE_SERVICE_ROLE_KEY": _status(os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")),
+        "_raw_SUPABASE_URL":              _status(os.environ.get("SUPABASE_URL", "")),
+    }

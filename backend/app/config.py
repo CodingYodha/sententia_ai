@@ -4,7 +4,9 @@ Loads all environment variables with type validation via pydantic-settings.
 """
 
 from functools import lru_cache
+from pydantic import model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
+import os
 
 
 class Settings(BaseSettings):
@@ -32,13 +34,31 @@ class Settings(BaseSettings):
     qdrant_url: str = ""
     qdrant_api_key: str = ""
 
-    # ── Supabase ─────────────────────────────────────────────────────
+    # ── Supabase ─────────────────────────────────────────────────────────
     supabase_url: str = ""
     supabase_anon_key: str = ""
     supabase_service_role_key: str = ""
-    # JWT secret from Supabase → Project Settings → API → JWT Settings
-    # Used by the backend to verify access tokens issued by Supabase Auth.
     supabase_jwt_secret: str = ""
+
+    @model_validator(mode="after")
+    def _resolve_aliases(self) -> "Settings":
+        """
+        Accept common alternate env var names so Render / HF Spaces / local .env
+        all work without renaming variables.
+
+        Render convention:  SUPABASE_SERVICE_KEY  (shorter)
+        Our internal name:  SUPABASE_SERVICE_ROLE_KEY
+        """
+        # SUPABASE_SERVICE_KEY  →  supabase_service_role_key
+        if not self.supabase_service_role_key:
+            self.supabase_service_role_key = os.environ.get("SUPABASE_SERVICE_KEY", "")
+
+        # SUPABASE_ANON_KEY  →  supabase_anon_key
+        if not self.supabase_anon_key:
+            self.supabase_anon_key = os.environ.get("SUPABASE_ANON_KEY", "")
+
+        # SUPABASE_JWT_SECRET already matched by name
+        return self
 
     # ── CORS ─────────────────────────────────────────────────────────
     # Comma-separated list of allowed origins
