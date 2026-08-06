@@ -1,0 +1,154 @@
+MONETARY AUTHORITY OF SINGAPORE (MAS) — REGULATORY FRAMEWORK
+Capital Markets, Fund Management, Variable Capital Companies (VCC), and AML/CFT
+Source: Monetary Authority of Singapore — www.mas.gov.sg
+Consolidated summary as of 2025
+
+═══════════════════════════════════════════════════════════════════════════════
+1. OVERVIEW — MAS AS INTEGRATED FINANCIAL REGULATOR
+═══════════════════════════════════════════════════════════════════════════════
+
+The Monetary Authority of Singapore is Singapore's central bank and integrated financial
+regulator. MAS supervises all financial services entities in Singapore including:
+- Banks and finance companies
+- Insurance companies
+- Capital markets intermediaries (brokers, dealers, advisers)
+- Fund managers and collective investment schemes
+- Payment service providers
+- Exchange operators
+
+MAS operates under a principles-based regulatory philosophy, emphasizing outcomes over
+prescriptive rules, and provides comprehensive regulatory guidance through:
+- Notices (legally binding)
+- Guidelines (best practice, not legally binding but influential)
+- Circulars (policy announcements)
+- Consultation Papers (proposed regulatory changes)
+
+═══════════════════════════════════════════════════════════════════════════════
+2. CAPITAL MARKETS — LICENSING FRAMEWORK
+═══════════════════════════════════════════════════════════════════════════════
+
+SECURITIES AND FUTURES ACT 2001 (SFA):
+Governs securities and derivatives markets in Singapore. Key licenses:
+
+CAPITAL MARKETS SERVICES (CMS) LICENSE:
+Required for conducting regulated activities including:
+- Dealing in capital markets products (securities, units in collective investment schemes)
+- Fund management
+- Providing custodial services for securities
+- Securities financing
+- Providing credit rating services
+
+LICENSE EXEMPTIONS:
+Certain persons are exempt from CMS licensing requirements:
+- Banks licensed under Banking Act
+- Certain foreign companies regulated in their home jurisdiction (Section 99(1)(h) SFA)
+- "Sophisticated" investors dealing between themselves (institutional investor exemptions)
+
+FUND MANAGEMENT LICENSING:
+Registered Fund Management Company (RFMC): For smaller fund managers managing ≤ S$250M
+AUM with ≤ 30 qualified investors. Registration (not full licensing) required.
+Licensed Fund Management Company (LFMC): Full CMS license required for larger managers.
+  - Retail LFMC: May manage retail funds, stricter requirements
+  - Accredited/Institutional LFMC: May only manage sophisticated investor funds
+
+═══════════════════════════════════════════════════════════════════════════════
+3. VARIABLE CAPITAL COMPANY (VCC) — FUND STRUCTURE
+═══════════════════════════════════════════════════════════════════════════════
+
+OVERVIEW:
+The Variable Capital Company Act (VCC Act) was enacted in 2018 (effective January 2020)
+to create a new corporate structure specifically designed for investment funds in Singapore.
+VCCs have rapidly gained adoption — over 1,000 VCCs registered since inception.
+
+WHAT IS A VCC?
+A VCC is a corporate entity specifically designed to serve as a fund vehicle with:
+- Variable share capital (can issue/redeem shares without shareholder approval)
+- Umbrella structure: One VCC can house multiple sub-funds (each with ring-fenced assets)
+- Flexible dividend distribution from capital (unlike standard Singapore companies)
+- Simplified regulatory requirements compared to collective investment scheme structure
+
+ELIGIBLE FUND MANAGERS:
+Must be managed by an MAS-licensed or registered fund manager (LFMC or RFMC).
+
+VCC ADVANTAGES FOR CROSS-BORDER INVESTMENT STRUCTURES:
+1. Singapore Income Tax Act provides tax exemptions for qualifying VCC funds (Section 13O, 13U)
+2. GST remission schemes for VCC fund management expenses
+3. Recognized as a fund structure in key jurisdictions (Australia, Luxembourg)
+4. Sub-fund ring-fencing: Liability of one sub-fund does not cross-contaminate others
+5. Can take on partnership-style economics while maintaining corporate limited liability
+
+TAX TREATMENT OF VCC (Section 13O and 13U Schemes):
+VCC sub-funds managed by approved fund managers may qualify for:
+- Section 13O (formerly 13R): Singapore Resident Fund Scheme — tax exemption on
+  specified income (dividends, interest, gains from disposal of investments)
+  REQUIREMENTS: AUM ≥ S$50M, 2+ fund management employees in Singapore, local spend ≥ S$200K/year
+- Section 13U (formerly 13X): Enhanced Tier Fund Scheme — broader asset class coverage
+  REQUIREMENTS: AUM ≥ S$50M; minimum local expenditure (higher than 13O); 3+ investment
+  professionals based in Singapore
+
+RELEVANCE FOR CROSS-BORDER STRUCTURES:
+A Gulf SWF investing into India through a Singapore VCC sub-fund can:
+(a) Benefit from Singapore-India DTAA (if VCC qualifies as Singapore tax resident)
+(b) Obtain MAS-regulated status for the investment vehicle
+(c) Maintain ring-fenced liability at sub-fund level
+(d) Benefit from Singapore's neutral tax treatment on fund income
+
+═══════════════════════════════════════════════════════════════════════════════
+4. AML/CFT — ANTI-MONEY LAUNDERING FRAMEWORK
+═══════════════════════════════════════════════════════════════════════════════
+
+MAS NOTICE 626 (Banks) and equivalent notices for other financial institution types:
+Comprehensive AML/CFT framework incorporating FATF (Financial Action Task Force) standards.
+
+KEY REQUIREMENTS FOR INVESTMENT STRUCTURES:
+CUSTOMER DUE DILIGENCE (CDD):
+- Standard CDD: Verify identity of customer, beneficial owner (>25% ownership/control)
+- Enhanced CDD: For higher-risk customers (PEPs, high-risk jurisdictions, complex structures)
+- Ongoing monitoring: Transaction monitoring for unusual patterns
+
+BENEFICIAL OWNER IDENTIFICATION:
+For corporate customers: Identify natural persons owning ≥ 25% of shares/voting rights
+(Singapore threshold consistent with FATF Recommendation 10). Singapore financial institutions
+must look through multiple layers of corporate structure to identify natural person UBOs.
+
+POLITICALLY EXPOSED PERSONS (PEPs):
+Enhanced due diligence for PEPs, their family members, and close associates. Singapore
+has a broad PEP definition aligned with FATF guidance. Government officials, state-owned
+enterprise directors, and senior politicians from any jurisdiction.
+
+HIGH-RISK JURISDICTIONS:
+FATF blacklist and greylist jurisdictions require enhanced AML measures. Transactions
+involving entities from high-risk jurisdictions face additional scrutiny from Singapore
+financial institutions regardless of nominal investor domicile.
+
+═══════════════════════════════════════════════════════════════════════════════
+5. SINGAPORE AS INVESTMENT HOLDING HUB — ADVANTAGES
+═══════════════════════════════════════════════════════════════════════════════
+
+POLITICAL AND LEGAL STABILITY:
+Rule of law, independent judiciary, English legal system, common law heritage.
+Consistent regulatory environment. Top-ranked for ease of doing business.
+
+TREATY NETWORK:
+Singapore has DTAAs with 100+ countries including India, China, UAE, US, Germany, Netherlands.
+Singapore's treaty network is one of the most extensive in Asia.
+
+PARTICIPATION EXEMPTION / DIVIDEND EXEMPTION:
+Dividends received by Singapore holding company from foreign subsidiaries are generally
+exempt from Singapore tax under Section 13(8) Income Tax Act (Singapore) if:
+(a) Headline tax rate of foreign jurisdiction ≥ 15%; AND
+(b) Dividends were subject to tax in foreign jurisdiction
+
+CAPITAL GAINS:
+Singapore has no capital gains tax. Gains from sale of investments are generally not
+taxable in Singapore (unless classified as trading income — test based on frequency,
+nature, purpose of investment).
+
+NO WITHHOLDING TAX ON DIVIDENDS:
+Singapore does not impose withholding tax on dividends paid to non-residents.
+This makes Singapore a highly efficient dividend repatriation hub.
+
+TRANSFER PRICING:
+Singapore has transfer pricing rules aligned with OECD guidelines (Section 34D ITA Singapore).
+Related party transactions must be at arm's length. Advance Pricing Arrangements (APAs)
+available from IRAS.

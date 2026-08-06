@@ -1,0 +1,138 @@
+INCOME TAX ACT 1961 — SECTION 9(1)(i): INDIRECT TRANSFER OF INDIAN ASSETS
+Source: Ministry of Finance, Government of India
+Amended by: Finance Act 2012 (retrospective amendment), Finance Act 2015, Finance Act 2017
+
+═══════════════════════════════════════════════════════════════════════════════
+1. STATUTORY TEXT — SECTION 9(1)(i)
+═══════════════════════════════════════════════════════════════════════════════
+
+Section 9(1) of the Income Tax Act 1961 provides for the following income to be deemed
+to accrue or arise in India:
+
+9(1)(i): All income accruing or arising, whether directly or indirectly, through or from
+any business connection in India, or through or from any property in India, or through
+or from any asset or source of income in India, or through the transfer of a capital asset
+situate in India.
+
+EXPLANATION 5 (inserted by Finance Act 2012):
+For the purposes of this clause, an asset or a capital asset being any share or interest
+in a company or entity registered or incorporated outside India shall be deemed to be
+situated in India, if the share or interest derives, directly or indirectly, its value
+substantially from the assets located in India.
+
+EXPLANATION 6 (amended by Finance Act 2015):
+"Substantially" for purposes of Explanation 5 means more than 50% of the fair market
+value of the total assets of the company or entity is attributable to assets located in India.
+
+═══════════════════════════════════════════════════════════════════════════════
+2. THE 50% VALUE DERIVATION TEST
+═══════════════════════════════════════════════════════════════════════════════
+
+A share/interest in a foreign company (e.g., Singapore SPV, Cayman holdco) is deemed
+to be a capital asset "situated in India" if:
+
+TEST: Value derived from Indian assets > 50% of total assets of the foreign entity
+
+CALCULATION METHOD (Finance Act 2015):
+- Numerator: Fair market value of Indian assets held (directly or indirectly) by
+  the foreign entity
+- Denominator: Fair market value of ALL assets held (directly or indirectly) by
+  the foreign entity
+- Ratio > 50% → share/interest deemed situated in India → capital gains from transfer
+  taxable in India in the hands of non-resident transferor
+
+EXAMPLE:
+  Singapore HoldCo assets:
+  - 74% stake in Indian OpCo: FMV USD 100M (constitutes 80% of total assets)
+  - Cash in Singapore: USD 25M (20% of total assets)
+  
+  India-derived value: 80% > 50% threshold → Section 9(1)(i) applies
+  Transfer of shares in Singapore HoldCo by non-resident → Capital gains taxable in India
+
+═══════════════════════════════════════════════════════════════════════════════
+3. SMALL SHAREHOLDER EXEMPTION
+═══════════════════════════════════════════════════════════════════════════════
+
+Finance Act 2015 introduced an exemption for small shareholders:
+
+EXEMPTION APPLIES IF BOTH CONDITIONS MET:
+(a) The transferor does not hold (directly or indirectly) more than 5% of the share
+    capital or voting power of the foreign company/entity at any time during the
+    12 months preceding the date of transfer; AND
+(b) The gains from transfer do not arise to a company, firm, or other association of
+    persons in which Indian residents hold more than 50% interest
+
+This exemption protects genuine minority portfolio investors from inadvertent India
+tax exposure on transfers of foreign company shares.
+
+═══════════════════════════════════════════════════════════════════════════════
+4. TREATY OVERRIDE — DTAA PROTECTION
+═══════════════════════════════════════════════════════════════════════════════
+
+Section 90(2) of the Income Tax Act provides that DTAA provisions shall prevail to the
+extent they are more beneficial to the taxpayer. However:
+
+SINGAPORE-INDIA DTAA — CAPITAL GAINS (Article 13):
+- Pre-April 1, 2017 investments: Capital gains exempt from Indian tax (grandfathered)
+- Post-April 1, 2017 investments: Capital gains taxable in India on source basis
+  The 2016 Protocol (effective 2017) substantially eliminated the capital gains
+  exemption for Singapore-routed investments in India
+
+MAURITIUS-INDIA DTAA — CAPITAL GAINS (Article 13):
+- Similar grandfathering: Pre-April 1, 2017 investments: exempt
+- Post-April 1, 2017: India has right to tax capital gains
+- "Limitation of benefits" clause applies — shell companies without substance
+  in Mauritius may not qualify
+
+NETHERLANDS-INDIA DTAA:
+- Contains robust capital gains article; remains relevant for PE/VC structures
+
+PRINCIPAL PURPOSE TEST (PPT — Post-BEPS):
+Following India's adoption of BEPS Multilateral Instrument, most Indian DTAAs now
+include the PPT clause. DTAA benefits can be denied if it is reasonable to conclude
+that obtaining treaty benefit was one of the principal purposes of an arrangement.
+
+═══════════════════════════════════════════════════════════════════════════════
+5. WITHHOLDING OBLIGATION — SECTION 195
+═══════════════════════════════════════════════════════════════════════════════
+
+Any person responsible for paying to a non-resident any sum chargeable under the
+Income Tax Act must deduct tax at source (TDS/withholding) under Section 195.
+
+For indirect transfer transactions:
+- The Indian entity (if it has knowledge of the transfer) may have a withholding obligation
+- The acquirer in an indirect transfer may need to withhold if the Indian assets are
+  acquired through the foreign structure
+- Application for lower/nil deduction certificate (Section 197) available from
+  jurisdictional assessing officer
+
+REPORTING — RULE 114DB:
+Non-residents transferring shares/interest in a foreign entity where Section 9(1)(i)
+Explanation 5 applies must file Form 3CT in India within 90 days of transfer.
+Failure to report is a separate compliance default.
+
+═══════════════════════════════════════════════════════════════════════════════
+6. PRACTICAL IMPLICATIONS FOR SPV STRUCTURING
+═══════════════════════════════════════════════════════════════════════════════
+
+SCENARIO 1 — SPV predominantly holding Indian assets:
+Chinese HoldCo holds Singapore SPV. Singapore SPV holds 74% of Indian OpCo (FMV USD 100M)
+and no other significant assets. If Chinese HoldCo transfers Singapore SPV shares to a
+third party, Section 9(1)(i) Explanation 5 applies: Indian assets constitute >50% of
+SPV value. Capital gains are deemed to arise in India and are taxable in India.
+
+MITIGATION STRATEGIES:
+1. Diversify SPV assets (hold non-Indian assets to bring India % below 50%) — complex
+2. Hold for long-term and rely on re-negotiated DTAA protection — uncertain post-2017
+3. Restructure before exit to direct India holding — may trigger other tax events
+4. Apply for advance ruling from Authority for Advance Rulings (AAR) — time-consuming
+
+SCENARIO 2 — SPV with diversified global assets:
+If the Singapore SPV holds multiple country investments and Indian assets constitute
+only 30% of total SPV value → Section 9(1)(i) Explanation 5 does NOT apply. Transfer
+of SPV shares is not deemed as Indian asset transfer. No India tax on transfer.
+
+KEY PLANNING POINT:
+The 50% test is calculated at the time of transfer. Asset values fluctuate. Pre-exit
+asset valuation analysis is critical to determine whether Section 9(1)(i) applies
+and to assess treaty protection availability.

@@ -1,0 +1,98 @@
+[
+  {
+    "corridor_id": "china_sg_india__basic",
+    "matched": true,
+    "is_validated": true,
+    "is_allowed": false,
+    "latency_ms": 12.6,
+    "notes": ""
+  },
+  {
+    "corridor_id": "china_sg_india__pn3_defence",
+    "matched": true,
+    "is_validated": true,
+    "is_allowed": false,
+    "latency_ms": 13.7,
+    "notes": "violations=1"
+  },
+  {
+    "corridor_id": "china_direct_india",
+    "matched": true,
+    "is_validated": true,
+    "is_allowed": false,
+    "latency_ms": 12.9,
+    "notes": ""
+  },
+  {
+    "corridor_id": "us_cayman_india__standard",
+    "matched": true,
+    "is_validated": true,
+    "is_allowed": true,
+    "latency_ms": 12.1,
+    "notes": "violations=[]"
+  },
+  {
+    "corridor_id": "us_cayman_india__pfic_passive",
+    "matched": true,
+    "is_validated": true,
+    "is_allowed": true,
+    "latency_ms": 11.3,
+    "notes": "violations=[]"
+  },
+  {
+    "corridor_id": "gulf_lux_france__golden_powers",
+    "matched": true,
+    "is_validated": true,
+    "is_allowed": true,
+    "latency_ms": 12.6,
+    "notes": "violations=[]"
+  },
+  {
+    "corridor_id": "saudi_lux_france__retail_clean",
+    "matched": true,
+    "is_validated": true,
+    "is_allowed": true,
+    "latency_ms": 14.2,
+    "notes": ""
+  },
+  {
+    "corridor_id": "qatar_lux_france__pillar_two",
+    "matched": true,
+    "is_validated": true,
+    "is_allowed": true,
+    "latency_ms": 29.7,
+    "notes": "pillar_two_violations=[]"
+  },
+  {
+    "corridor_id": "japan_vietnam__unvalidated",
+    "matched": false,
+    "is_validated": false,
+    "is_allowed": null,
+    "latency_ms": 2.8,
+    "notes": "fallback fired: banner=WARNING"
+  },
+  {
+    "corridor_id": "australia_uae_egypt__obscure",
+    "matched": false,
+    "is_validated": false,
+    "is_allowed": null,
+    "latency_ms": 2.2,
+    "notes": ""
+  },
+  {
+    "corridor_id": "sk_switzerland_brazil__unvalidated",
+    "matched": false,
+    "is_validated": false,
+    "is_allowed": null,
+    "latency_ms": 2.2,
+    "notes": ""
+  },
+  {
+    "corridor_id": "nigeria_mauritius_india__plausible_unvalidated",
+    "matched": false,
+    "is_validated": false,
+    "is_allowed": null,
+    "latency_ms": 2.2,
+    "notes": ""
+  }
+]

@@ -1,0 +1,86 @@
+DEAL SUMMARY MEMORANDUM
+STRICTLY PRIVATE & CONFIDENTIAL
+
+Project: MONSOON
+Prepared for: Investment Committee
+Date: 3 February 2025
+Advisor: M/s Trilegal (India) and Allen & Gledhill LLP (Singapore)
+
+═══════════════════════════════════════════════════════════════════════════════
+1. TRANSACTION OVERVIEW
+═══════════════════════════════════════════════════════════════════════════════
+
+Gulf Sovereign Capital LLC ("GSC"), a sovereign wealth fund registered in
+Abu Dhabi, UAE, proposes to invest USD 85,000,000 (United States Dollars
+Eighty-Five Million) in TechAgri Solutions Private Limited ("Company"), an
+agri-tech company headquartered in Pune, Maharashtra, India.
+
+The investment will be structured as a primary equity infusion in exchange for
+a 34% stake in the Company on a fully diluted basis, via a Singapore-incorporated
+special purpose vehicle ("Singapore SPV") to access the India-Singapore
+Bilateral Investment Treaty (DTAA) and treaty protection provisions.
+
+SECTOR: Agricultural Technology / Precision Farming
+STAGE: Series B (Company previously raised Series A of USD 12M in 2023)
+
+═══════════════════════════════════════════════════════════════════════════════
+2. INVESTMENT STRUCTURE
+═══════════════════════════════════════════════════════════════════════════════
+
+Proposed Structure (Primary):
+
+  Gulf Sovereign Capital LLC (Abu Dhabi, UAE)
+    │
+    ├─ Equity contribution: USD 85,000,000
+    ↓
+  GSC India SPV Pte. Ltd. (Singapore) ← [NEW ENTITY to be incorporated]
+    │
+    ├─ FDI into India under Automatic Route
+    │  (Sector: Agri-tech, 100% FDI permissible under current policy)
+    ↓
+  TechAgri Solutions Pvt. Ltd. (Pune, India)
+    └─ Post-investment stake: 34% (fully diluted)
+
+Rationale for Singapore Routing:
+- India-Singapore DTAA provides capital gains exemption on future exit
+- Singapore's robust IP holding regime for agri-tech patents
+- Bilateral Investment Treaty protection for sovereign investor
+- No land-border restriction applicable (UAE is not a land-border country)
+
+═══════════════════════════════════════════════════════════════════════════════
+3. REGULATORY CONSIDERATIONS
+═══════════════════════════════════════════════════════════════════════════════
+
+3.1  FDI Policy: Agri-tech / precision farming falls under automatic route;
+     Government approval not required for this transaction.
+
+3.2  Press Note 3 (2020): Not applicable — UAE is not a land-border country
+     of India. Automatic route applicable.
+
+3.3  FEMA Compliance: Inbound FDI reporting to RBI within 30 days of receipt
+     of funds (Form FC-GPR).
+
+3.4  Companies Act §90 (SBO): GSC will hold 34% — triggers SBO disclosure.
+     GSC to file Form BEN-2 within 30 days of acquisition.
+
+3.5  Transfer Pricing: Arm's length pricing to be certified for any
+     inter-company transactions between Singapore SPV and India OpCo.
+
+═══════════════════════════════════════════════════════════════════════════════
+4. PROPOSED GOVERNANCE
+═══════════════════════════════════════════════════════════════════════════════
+
+- GSC (via Singapore SPV) to appoint 2 directors on 7-member board
+- Promoters (Sharma Family Trust) to retain 3 board seats
+- 2 independent directors to be mutually agreed
+- GSC veto rights over: new share issuance, debt >USD 10M, M&A, change of business
+- Lock-up: 24 months from closing
+- Exit: GSC targeting 5–7 year hold; expects IPO or strategic sale
+
+═══════════════════════════════════════════════════════════════════════════════
+5. VALUATION
+═══════════════════════════════════════════════════════════════════════════════
+
+Pre-Money Valuation: USD 165,000,000
+Post-Money Valuation: USD 250,000,000 (USD 165M + USD 85M investment)
+Entry Price per Share: INR 850 (approx. USD 10.20 at 83.3 INR/USD)

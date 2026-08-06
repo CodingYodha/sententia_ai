@@ -1,0 +1,19 @@
+name = "sententia-frontend"
+
+# ── Cloudflare Pages — Next.js on Pages config ────────────────────────────────
+# Build command in Cloudflare dashboard: npx @cloudflare/next-on-pages@1
+# Output directory:                      .vercel/output/static
+# Root directory:                        frontend
+#
+# Environment variables to set in Cloudflare Pages dashboard:
+#   NEXT_PUBLIC_API_URL             = https://<your-hf-space>.hf.space
+#   NEXT_PUBLIC_SUPABASE_URL        = https://<project-ref>.supabase.co
+#   NEXT_PUBLIC_SUPABASE_ANON_KEY   = eyJ...
+#   NODE_VERSION                    = 20
+
+[build]
+command = "npm ci && npx @cloudflare/next-on-pages@1"
+destination = ".vercel/output/static"
+
+[build.environment]
+NODE_VERSION = "20"

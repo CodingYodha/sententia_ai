@@ -1,0 +1,155 @@
+SINGAPORE-INDIA DOUBLE TAXATION AVOIDANCE AGREEMENT (DTAA)
+Official Title: Agreement Between the Government of the Republic of Singapore and the
+Government of the Republic of India for the Avoidance of Double Taxation and the
+Prevention of Fiscal Evasion with Respect to Taxes on Income
+First Signed: 1981 | Substantially Amended: 2005 | Protocol of 2016 (effective 2017)
+Source: Inland Revenue Authority of Singapore (IRAS); CBDT India
+
+═══════════════════════════════════════════════════════════════════════════════
+1. OVERVIEW AND STRATEGIC IMPORTANCE
+═══════════════════════════════════════════════════════════════════════════════
+
+The Singapore-India DTAA is one of India's most commercially significant bilateral tax
+treaties, governing the tax treatment of investment flows between two of Asia's largest
+financial and investment hubs. Singapore is the largest source of FDI into India from
+a treaty jurisdiction.
+
+The 2016 Protocol fundamentally changed the capital gains treatment under this DTAA,
+eliminating the capital gains exemption for investments made after April 1, 2017 and
+introducing a Principal Purpose Test (PPT) as an anti-avoidance measure.
+
+═══════════════════════════════════════════════════════════════════════════════
+2. CAPITAL GAINS — ARTICLE 13 (POST-2016 PROTOCOL)
+═══════════════════════════════════════════════════════════════════════════════
+
+PRE-APRIL 1, 2017 INVESTMENTS (GRANDFATHERED):
+Capital gains on shares acquired before April 1, 2017 remain covered by the original
+Article 13, which provided that gains from alienation of shares in an Indian company
+by a Singapore resident were taxable only in Singapore (where India's capital gains
+tax was effectively exempt). This grandfathering is permanently preserved for such shares.
+
+POST-MARCH 31, 2017 INVESTMENTS (NEW REGIME):
+Capital gains from alienation of shares in an Indian company are taxable in India.
+Specifically:
+- Source Rule: India has the right to tax capital gains on Indian company shares
+- Rate: As per Indian domestic tax law (for long-term capital gains: 10% for listed,
+  10%/20% for unlisted depending on holding period and indexation)
+- Transition Period (FY 2017-18 and FY 2018-19): 50% tax exemption (phased in)
+- From FY 2019-20 onwards: Full India taxation applies
+
+INDIRECT TRANSFER INTERACTION:
+Even where Singapore-India DTAA Article 13 provides capital gains rights to India,
+the indirect transfer provisions of Section 9(1)(i) of India's Income Tax Act may
+apply to transfers of Singapore company shares (not direct Indian shares). Post-2017,
+DTAA protection for indirect transfers is significantly reduced.
+
+═══════════════════════════════════════════════════════════════════════════════
+3. DIVIDENDS — ARTICLE 10
+═══════════════════════════════════════════════════════════════════════════════
+
+Withholding tax on dividends paid by Indian company to Singapore shareholder:
+- If Singapore shareholder holds ≥ 25% of Indian company shares: 10% withholding
+- Other cases: 15% withholding
+- Under Indian domestic law: Dividend Distribution Tax (DDT) was abolished from
+  FY 2020-21; dividends now taxable in shareholder's hands at treaty rates
+  
+BENEFIT: Lower treaty rate (10%/15%) vs Indian domestic withholding rate.
+SUBSTANCE REQUIREMENT: Singapore recipient must be the beneficial owner of dividends.
+A Singapore SPV that immediately pass-throughs dividends to a third-country investor
+without real business activity may not qualify as beneficial owner (see Article 10(2)).
+
+═══════════════════════════════════════════════════════════════════════════════
+4. INTEREST — ARTICLE 11
+═══════════════════════════════════════════════════════════════════════════════
+
+Withholding tax on interest paid from India to Singapore lender:
+- General rate: 15%
+- For banking institutions and financial enterprises: 10%
+
+BENEFIT vs DOMESTIC LAW: Indian domestic withholding on interest is 40% for corporate
+non-residents (or 20% under Section 115A). Treaty rate is significantly more favorable.
+
+═══════════════════════════════════════════════════════════════════════════════
+5. ROYALTIES AND FEES FOR TECHNICAL SERVICES — ARTICLE 12
+═══════════════════════════════════════════════════════════════════════════════
+
+Withholding tax on royalties and FTS paid from India to Singapore:
+- Royalties: 10% (reduced from 15% by 2005 protocol)
+- Fees for Technical Services: 10%
+- Domestic rate without treaty: 10%-20%
+
+For IP-holding structures (Singapore holding IP, licensing to Indian entity):
+- Royalty withholding at 10% is favorable
+- Principal Purpose Test (PPT — introduced by 2016 Protocol) may deny benefit if
+  principal purpose of IP transfer to Singapore was to obtain reduced withholding
+
+═══════════════════════════════════════════════════════════════════════════════
+6. ANTI-AVOIDANCE — PRINCIPAL PURPOSE TEST (PPT)
+═══════════════════════════════════════════════════════════════════════════════
+
+2016 Protocol introduced Article 24A — Limitation of Benefits:
+
+A benefit under this Convention shall not be granted in respect of an item of income
+if it is reasonable to conclude, having regard to all relevant facts and circumstances,
+that obtaining that benefit was one of the principal purposes of any arrangement or
+transaction that resulted directly or indirectly in that benefit, unless it is established
+that granting that benefit in these circumstances would be in accordance with the object
+and purpose of the relevant provisions of this Convention.
+
+PRACTICAL IMPLICATIONS:
+- Shell companies in Singapore without economic substance → at risk of PPT denial
+- Singapore SPVs set up solely to access DTAA benefits without real business → at risk
+- SAFE HARBOR: Companies with genuine economic substance in Singapore (offices, employees,
+  management and control in Singapore, meaningful business operations) → lower PPT risk
+- Singapore Economic Development Board (EDB) certification of substantive business → helpful
+
+═══════════════════════════════════════════════════════════════════════════════
+7. RESIDENCE — ARTICLE 4
+═══════════════════════════════════════════════════════════════════════════════
+
+Tax residence for treaty purposes is determined by domestic law of each country.
+For companies:
+- Singapore: Incorporated or managed and controlled in Singapore
+- India: Incorporated in India (domicile test)
+
+DUAL RESIDENCE TIE-BREAKER:
+For companies resident in both countries, place of effective management (POEM) is the
+tie-breaker. India's POEM rules (effective FY 2017-18) treat a foreign company as Indian
+tax resident if its POEM is in India (i.e., key management and commercial decisions are
+made in India).
+
+IMPACT ON SPV STRUCTURING:
+A Singapore SPV whose directors routinely take instructions from Indian parent or make
+decisions while physically in India risks being treated as India-tax-resident (POEM in
+India), negating all DTAA benefits and exposing the Singapore entity to full Indian taxation.
+SUBSTANCE IN SINGAPORE IS CRITICAL: Board meetings must genuinely occur in Singapore,
+directors must exercise independent judgment in Singapore, management must not be delegated
+to India-based officers.
+
+═══════════════════════════════════════════════════════════════════════════════
+8. COMPREHENSIVE ECONOMIC COOPERATION AGREEMENT (CECA) — INVESTMENT PROVISIONS
+═══════════════════════════════════════════════════════════════════════════════
+
+The Singapore-India CECA (2005) supplements the DTAA with investment protection provisions:
+
+NATIONAL TREATMENT: Each Party shall accord to investors of the other Party and their
+investments, treatment no less favorable than it accords to its own investors in like
+circumstances with respect to management, use, and enjoyment of investments.
+
+MFN TREATMENT: Investors of each Party shall receive treatment no less favorable than
+that accorded to investors of any third state.
+
+INVESTOR-STATE DISPUTE SETTLEMENT (ISDS):
+Disputes between an investor of one Party and the other Party relating to an investment
+may be submitted to international arbitration (ICSID or UNCITRAL Rules).
+
+EXPROPRIATION PROTECTION:
+Neither Party shall nationalize or expropriate investments of investors of the other
+Party directly or indirectly except: (a) for public purpose; (b) on a non-discriminatory
+basis; (c) in accordance with due process; and (d) accompanied by prompt and adequate
+compensation at fair market value.
+
+PRACTICAL USE:
+CECA investment chapter provides Singapore investors in India a layer of protection
+beyond the DTAA — applicable to all investments, regardless of when made.
+The ISDS mechanism provides an alternative to Indian courts for dispute resolution.

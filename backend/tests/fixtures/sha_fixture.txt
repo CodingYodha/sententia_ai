@@ -1,0 +1,98 @@
+SHAREHOLDERS' AGREEMENT
+GREENFIELD INDIA PRIVATE LIMITED
+
+Dated: 20 January 2025
+
+BETWEEN:
+(1) APEX HOLDINGS PTE. LTD., a company incorporated in Singapore with UEN 202500001A,
+    having its registered office at 1 Raffles Place, #20-01, Singapore 048616
+    ("Apex" / "Investor")
+
+(2) RAJIV MEHTA & ASSOCIATES (HUF), represented by its Karta Mr. Rajiv Mehta,
+    resident at 14B, Vasant Vihar, New Delhi 110057
+    ("Promoter")
+
+(3) GREENFIELD INDIA PRIVATE LIMITED, CIN: U72900DL2024PTC123456,
+    having its registered office at Plot No. 7, Sector 44, Gurugram, Haryana 122003
+    ("Company")
+
+═══════════════════════════════════════════════════════════════════════════════
+CLAUSE 4 — BOARD COMPOSITION AND MANAGEMENT
+═══════════════════════════════════════════════════════════════════════════════
+
+4.1  Board Size. The Board of Directors shall consist of five (5) directors.
+
+4.2  Appointment Rights.
+     (a) Apex Appointment Right: So long as Apex holds not less than 26% of the
+         equity share capital of the Company on a fully-diluted basis, Apex shall be
+         entitled to appoint two (2) directors to the Board, including one (1)
+         Independent Director acceptable to the Promoter.
+     (b) Promoter Appointment Right: The Promoter shall be entitled to appoint
+         three (3) directors to the Board, including the Managing Director.
+     (c) Apex Observer: In addition to its director appointment rights, Apex shall
+         be entitled to appoint one (1) non-voting Board observer.
+
+4.3  Chairperson. The Chairperson of the Board shall be appointed by the Promoter.
+     The Chairperson shall not have a casting vote.
+
+═══════════════════════════════════════════════════════════════════════════════
+CLAUSE 5 — RESERVED MATTERS (VETO RIGHTS)
+═══════════════════════════════════════════════════════════════════════════════
+
+5.1  Investor Veto Rights. The following actions shall require the prior written
+     consent of Apex (which consent shall not be unreasonably withheld or delayed):
+
+     (a) Any issuance of new shares, warrants, options, or other equity securities
+         of the Company or any Subsidiary;
+     (b) Any change to the authorized or issued share capital of the Company;
+     (c) Any amendment to the Memorandum or Articles of Association of the Company
+         that adversely affects the rights of Apex;
+     (d) Any merger, demerger, consolidation, scheme of arrangement, or amalgamation
+         involving the Company;
+     (e) Incurring any indebtedness exceeding INR 50,000,000 (Indian Rupees Five
+         Crore) in a single transaction or in aggregate in any financial year;
+     (f) Any acquisition of assets or businesses with a transaction value exceeding
+         INR 100,000,000;
+     (g) Any change to the nature of the principal business of the Company;
+     (h) Approval of the annual business plan and budget of the Company;
+     (i) Appointment or removal of the Chief Executive Officer, Chief Financial
+         Officer, or any other Key Managerial Personnel as defined under the
+         Companies Act 2013.
+
+═══════════════════════════════════════════════════════════════════════════════
+CLAUSE 6 — TRANSFER RESTRICTIONS AND LIQUIDITY
+═══════════════════════════════════════════════════════════════════════════════
+
+6.1  Lock-In Period. Neither Party shall Transfer any Shares during the period of
+     thirty-six (36) months from the Closing Date (the "Lock-In Period") without
+     the prior written consent of the other Party.
+
+6.2  Right of First Refusal (ROFR). After the Lock-In Period, any Shareholder
+     wishing to Transfer Shares shall first offer such Shares to the other
+     Shareholders pro-rata to their existing shareholding at the same price and
+     on the same terms as offered by any bona fide third party purchaser.
+
+6.3  Tag-Along Right. If the Promoter proposes to Transfer Shares constituting more
+     than 15% of the total equity share capital in any 12-month period to a third
+     party, Apex shall have the right (but not obligation) to participate in such
+     Transfer pro-rata to its shareholding on the same terms and conditions.
+
+6.4  Drag-Along Right. If Shareholders holding not less than 75% of the equity share
+     capital of the Company wish to Transfer all of their Shares to a bona fide
+     third-party purchaser in a single transaction, such Shareholders shall have
+     the right to require all remaining Shareholders to Transfer their Shares to
+     such purchaser on the same economic terms.
+
+═══════════════════════════════════════════════════════════════════════════════
+CLAUSE 7 — ANTI-DILUTION
+═══════════════════════════════════════════════════════════════════════════════
+
+7.1  Anti-Dilution Protection. In the event of any issuance of equity securities
+     by the Company at a price per share lower than the price paid by Apex (a
+     "Down Round"), Apex shall be entitled to receive additional Shares from the
+     Company calculated on a broad-based weighted average anti-dilution basis,
+     such that Apex's effective per-share price is adjusted downward accordingly.
+
+     The weighted average anti-dilution formula shall take into account all
+     outstanding shares, options, warrants, and convertible instruments on a
+     fully-diluted basis at the time of the Down Round.

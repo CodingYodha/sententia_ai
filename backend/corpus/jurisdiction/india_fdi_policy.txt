@@ -1,0 +1,119 @@
+INDIA FDI POLICY — CONSOLIDATED SUMMARY
+DPIIT Consolidated FDI Policy 2020 (as amended through 2026)
+Source: Department for Promotion of Industry and Internal Trade (DPIIT), Government of India
+
+═══════════════════════════════════════════════════════════════════════════════
+1. OVERVIEW AND LEGAL FRAMEWORK
+═══════════════════════════════════════════════════════════════════════════════
+
+India's Foreign Direct Investment (FDI) policy is governed by the Foreign Exchange
+Management Act 1999 (FEMA), the FEMA (Non-Debt Instruments) Rules 2019, and the
+DPIIT Consolidated FDI Policy updated periodically. The Reserve Bank of India (RBI)
+and DPIIT jointly administer FDI regulations in India.
+
+FDI is permitted through two routes:
+
+AUTOMATIC ROUTE: FDI does not require prior government approval. The foreign investor
+and the Indian company receiving FDI only need to notify RBI within 30 days of receiving
+funds (Form FC-GPR) and within 60 days of transfer of shares (Form FC-TRS). This route
+covers the majority of sectors.
+
+GOVERNMENT ROUTE (Prior Approval Route): FDI requires prior approval of the Government
+through the Foreign Investment Facilitation Portal (FIFP) administered by DPIIT. The
+competent authority varies by sector (e.g., Ministry of Defence for defence sector,
+Ministry of Civil Aviation for airports). Government route cases are processed within
+60 working days.
+
+═══════════════════════════════════════════════════════════════════════════════
+2. PROHIBITED SECTORS (FDI NOT PERMITTED)
+═══════════════════════════════════════════════════════════════════════════════
+
+FDI is prohibited in the following sectors:
+- Lottery business (including government/private/online lottery)
+- Gambling and betting (including casinos)
+- Chit funds
+- Nidhi company
+- Trading in Transferable Development Rights (TDRs)
+- Real estate business or construction of farm houses
+- Manufacturing of cigars, cheroots, cigarillos, and cigarettes (tobacco products)
+- Activities/sectors not open to private sector investment (atomic energy, railway operations)
+- Agricultural or plantation activities (with exceptions for tea plantation, horticulture, etc.)
+
+═══════════════════════════════════════════════════════════════════════════════
+3. KEY SECTORS AND FDI CAPS
+═══════════════════════════════════════════════════════════════════════════════
+
+AUTOMATIC ROUTE — 100% FDI:
+- Information Technology (IT/ITES/BPO)
+- Pharmaceuticals (greenfield)
+- Chemicals
+- Food processing
+- Textiles and garments
+- Construction development (townships, housing, built-up infrastructure) — subject to conditions
+- E-commerce (marketplace model only; inventory-based FDI not permitted)
+- Agri-tech and precision farming
+- Renewable energy
+- Infrastructure (roads, highways, ports)
+
+AUTOMATIC ROUTE — SECTOR CAPS:
+- Private sector banking: up to 74% automatic; beyond 74% requires government approval
+- Insurance: 74% (automatic route)
+- Telecom: 100% (automatic up to 49%; government route above 49%)
+- Civil aviation (greenfield airports): 100% automatic; brownfield airports: 74% automatic, beyond requires government
+- Pharmaceuticals (brownfield): 74% automatic; beyond 74% requires government approval
+
+GOVERNMENT ROUTE:
+- Defence: up to 74% automatic; beyond 74% requires government (with access to modern technology)
+- Multi-brand retail trading: 51%, government route, subject to conditions (30% local sourcing)
+- Banking (public sector): 20% cap, government route
+- Print media: 26% cap, government route
+- Broadcasting (terrestrial/DTH): various caps, government route
+
+═══════════════════════════════════════════════════════════════════════════════
+4. COMPLIANCE AND REPORTING OBLIGATIONS
+═══════════════════════════════════════════════════════════════════════════════
+
+FC-GPR (Foreign Currency-Gross Provisional Return): 
+Filed by Indian company with RBI within 30 days of receiving FDI. Reports issue of
+shares/convertible instruments. Filed online via FIRMS portal.
+
+FC-TRS (Foreign Currency-Transfer of Shares):
+Filed when shares are transferred between resident and non-resident parties. Filed
+within 60 days of transfer.
+
+FCTRS: Annual return filed by Indian company for every financial year for outstanding
+foreign investments.
+
+VALUATION REQUIREMENTS:
+- Shares must be issued to foreign investor at price not less than fair market value
+  determined by internationally accepted pricing methodology (DCF for unlisted companies;
+  SEBI guidelines for listed)
+- For secondary transfers, price must be within the pricing range determined by registered
+  merchant banker
+
+DOWNSTREAM INVESTMENT:
+When an Indian company with foreign investment makes investment in another Indian entity,
+it is treated as indirect foreign investment if foreign investor holds more than 50% in
+the Indian investing company. Downstream investment follows the same sectoral caps and
+conditions as direct FDI.
+
+═══════════════════════════════════════════════════════════════════════════════
+5. FDI FROM LAND-BORDER COUNTRIES — PRESS NOTE 3 (2020) AND PRESS NOTE 2 (2026)
+═══════════════════════════════════════════════════════════════════════════════
+
+[See separate document: Press Note 3 (2020 Series) for full details]
+
+Amendment introduced by Press Note 3 (2020) requires government approval for all FDI
+from entities in countries sharing a land border with India. Affected countries include:
+China, Bangladesh, Pakistan, Nepal, Myanmar (Burma), Bhutan, and Afghanistan.
+
+Key implications:
+- Applies to ALL sectors, even those otherwise on automatic route
+- Applies to beneficial ownership — even if immediate investor is from a non-land-border
+  country, if the ultimate beneficial owner is from a land-border country, government
+  approval is required
+- Applies to transfer of existing investments as well as new FDI
+- No threshold — any amount of investment from land-border country entities requires approval
+
+Press Note 2 (2026) further clarified the UBO tracing methodology and extended the scope
+to cover indirect holdings through multi-layered structures.

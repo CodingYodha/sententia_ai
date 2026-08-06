@@ -1,0 +1,86 @@
+{
+  "india_fdi_policy.txt": {
+    "jurisdiction": "INDIA",
+    "document_type": "policy_note",
+    "effective_date": 1577836800,
+    "source_url": "https://dpiit.gov.in/sites/default/files/FDI-Policy-2020.pdf",
+    "title": "DPIIT Consolidated FDI Policy 2020 (as amended)"
+  },
+  "press_note_3_2020.txt": {
+    "jurisdiction": "INDIA",
+    "document_type": "policy_note",
+    "effective_date": 1588291200,
+    "source_url": "https://dpiit.gov.in/sites/default/files/pn3_2020.pdf",
+    "title": "Press Note 3 (2020 Series) — FDI from Land Border Countries"
+  },
+  "press_note_2_2026.txt": {
+    "jurisdiction": "INDIA",
+    "document_type": "policy_note",
+    "effective_date": 1748736000,
+    "source_url": "https://dpiit.gov.in/",
+    "title": "Press Note 2 (2026 Series) — Amendments to Press Note 3"
+  },
+  "section_9_indirect_transfer.txt": {
+    "jurisdiction": "INDIA",
+    "document_type": "statute",
+    "effective_date": 1356998400,
+    "source_url": "https://incometaxindia.gov.in/pages/acts/income-tax-act.aspx",
+    "title": "Income Tax Act 1961 — Section 9(1)(i): Indirect Transfer of Indian Assets"
+  },
+  "sbo_companies_act_s90.txt": {
+    "jurisdiction": "INDIA",
+    "document_type": "statute",
+    "effective_date": 1538352000,
+    "source_url": "https://www.mca.gov.in/content/mca/global/en/acts-rules/ebooks/acts.html",
+    "title": "Companies Act 2013 — Section 90: Significant Beneficial Ownership (SBO)"
+  },
+  "singapore_india_dtaa.txt": {
+    "jurisdiction": "SINGAPORE",
+    "document_type": "treaty",
+    "effective_date": 832636800,
+    "source_url": "https://www.iras.gov.sg/taxes/international-tax/list-of-dtas-limited-treaties/singapore-india",
+    "title": "Singapore-India Double Taxation Avoidance Agreement (DTAA) — Consolidated"
+  },
+  "singapore_india_ceca.txt": {
+    "jurisdiction": "SINGAPORE",
+    "document_type": "treaty",
+    "effective_date": 1097280000,
+    "source_url": "https://www.mti.gov.sg/Trade/Free-Trade-Agreements/CECA",
+    "title": "Singapore-India Comprehensive Economic Cooperation Agreement (CECA) 2005"
+  },
+  "oecd_model_tax_convention.txt": {
+    "jurisdiction": "GLOBAL",
+    "document_type": "commentary",
+    "effective_date": 1564617600,
+    "source_url": "https://www.oecd.org/tax/treaties/model-tax-convention-on-income-and-on-capital-2019.htm",
+    "title": "OECD Model Tax Convention on Income and Capital — 2019 Condensed Version"
+  },
+  "cfius_overview.txt": {
+    "jurisdiction": "UNITED_STATES",
+    "document_type": "regulation",
+    "effective_date": 1567296000,
+    "source_url": "https://home.treasury.gov/policy-issues/international/the-committee-on-foreign-investment-in-the-united-states-cfius",
+    "title": "CFIUS — Committee on Foreign Investment in the United States: FIRRMA Overview"
+  },
+  "eu_fdi_screening.txt": {
+    "jurisdiction": "EUROPEAN_UNION",
+    "document_type": "regulation",
+    "effective_date": 1553817600,
+    "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32019R0452",
+    "title": "EU FDI Screening Regulation (EU) 2019/452 — Framework Overview"
+  },
+  "mas_approach_singapore.txt": {
+    "jurisdiction": "SINGAPORE",
+    "document_type": "regulation",
+    "effective_date": 1577836800,
+    "source_url": "https://www.mas.gov.sg/regulation",
+    "title": "Monetary Authority of Singapore — Regulatory Framework and VCC Overview"
+  },
+  "treaty_shopping_gaar.txt": {
+    "jurisdiction": "GLOBAL",
+    "document_type": "commentary",
+    "effective_date": 1448928000,
+    "source_url": "https://www.oecd.org/tax/beps/beps-actions/action6/",
+    "title": "Treaty Shopping, GAAR, and BEPS Action 6 — Principal Purpose Test"
+  }
+}

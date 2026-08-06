@@ -1,0 +1,203 @@
+TREATY SHOPPING, GENERAL ANTI-AVOIDANCE RULES (GAAR), AND BEPS ACTION 6
+Comprehensive Overview for Cross-Border Investment Structuring
+Source: OECD BEPS Action Plan; Indian Income Tax Act (Chapter X-A); MLI
+
+═══════════════════════════════════════════════════════════════════════════════
+1. TREATY SHOPPING — DEFINITION AND MECHANICS
+═══════════════════════════════════════════════════════════════════════════════
+
+DEFINITION:
+Treaty shopping refers to the practice of a person (not resident in either contracting
+state of a tax treaty) attempting to obtain benefits of that treaty by interposing an
+entity that IS resident in one of the contracting states.
+
+CLASSIC STRUCTURE (Direct Conduit):
+  Actual Investor (Country C, no treaty with Country B)
+    ↓
+  Conduit Entity (Country A, has favorable DTAA with Country B)
+    ↓
+  Target Investment (Country B — source of income)
+  
+The conduit entity in Country A exists primarily to access DTAA benefits between
+Countries A and B, which the actual investor in Country C could not directly access.
+
+TREATY SHOPPING MOTIVATIONS:
+- Capital gains exemptions (e.g., pre-2017 Singapore-India or Mauritius-India treaties)
+- Reduced withholding tax on dividends, interest, royalties
+- Enhanced investment protection under bilateral investment treaties (BITs)
+- Dispute resolution access through ISDS clauses
+
+═══════════════════════════════════════════════════════════════════════════════
+2. BEPS ACTION 6 — PREVENTING TREATY ABUSE
+═══════════════════════════════════════════════════════════════════════════════
+
+The OECD BEPS (Base Erosion and Profit Shifting) project identified treaty abuse
+(including treaty shopping) as one of the most critical sources of BEPS. BEPS Action 6
+introduced minimum standards and recommendations to prevent treaty shopping.
+
+BEPS ACTION 6 MINIMUM STANDARD:
+Countries must include in their tax treaties one of:
+(a) Combined approach: Limitation on Benefits (LoB) article + Principal Purpose Test (PPT)
+(b) PPT alone
+(c) LoB article alone (if supplemented by domestic anti-avoidance)
+
+MULTILATERAL INSTRUMENT (MLI):
+The BEPS Multilateral Convention to Implement Tax Treaty Related Measures to Prevent BEPS
+allows countries to modify bilateral tax treaties simultaneously. Over 100 jurisdictions
+have signed. India has ratified the MLI, modifying its covered agreements.
+
+═══════════════════════════════════════════════════════════════════════════════
+3. PRINCIPAL PURPOSE TEST (PPT) — DETAILED ANALYSIS
+═══════════════════════════════════════════════════════════════════════════════
+
+PPT PROVISION (MLI Article 7 / OECD MTC Article 29(9)):
+"Notwithstanding the other provisions of this Convention, a benefit under this Convention
+shall not be granted in respect of an item of income or capital if it is reasonable to
+conclude, having regard to all relevant facts and circumstances, that obtaining that
+benefit was one of the principal purposes of any arrangement or transaction that
+resulted directly or indirectly in that benefit, unless it is established that granting
+that benefit in these circumstances would be in accordance with the object and purpose
+of the relevant provisions of this Convention."
+
+KEY ELEMENTS:
+1. "REASONABLE TO CONCLUDE": An objective standard. Tax authority must show it is
+   reasonable — not that treaty shopping was the ONLY purpose, just ONE of the PRINCIPAL purposes.
+   
+2. "ONE OF THE PRINCIPAL PURPOSES": Even if a structure has legitimate business purposes,
+   if treaty benefit was also a principal purpose, PPT may apply. Not de minimis.
+   
+3. BURDEN SHIFTS: Once tax authority shows a principal purpose of obtaining benefit,
+   taxpayer must show that granting the benefit accords with the "object and purpose" of
+   the treaty provision.
+
+4. RELEVANT FACTORS (OECD Commentary on Article 29):
+   - When the arrangement was set up relative to when income arose
+   - Whether the arrangement produces significant treaty benefits for one party
+   - Whether the arrangement results in the income not being taxed in the intermediary's country
+   - Whether the conduit entity carries on genuine business activities
+   - Substance and economic reality of the arrangement
+
+PPT APPLICATION EXAMPLES (from OECD Commentary):
+
+EXAMPLE A — PPT APPLIES:
+Company R in Country R holds shares in Company S in Country S. Treaty between R and S
+exempts source-state taxation of capital gains. Company R was established immediately
+before a planned sale of Company S shares by its parent in Country T (which has no treaty
+with Country S). The principal purpose of interposing Company R was to access the treaty
+exemption. PPT denies the exemption.
+
+EXAMPLE B — PPT DOES NOT APPLY:
+Company R in Country R has operated genuine business for 10 years. It holds shares in
+Country S subsidiary as part of diversified global operations. Shares were acquired in
+the ordinary course of business. Capital gains treaty exemption applies upon sale.
+PPT does not apply — obtaining treaty benefit was not a principal purpose; it was
+incidental to genuine business operations.
+
+═══════════════════════════════════════════════════════════════════════════════
+4. LIMITATION ON BENEFITS (LoB) — US MODEL
+═══════════════════════════════════════════════════════════════════════════════
+
+LOB ARTICLE (typically found in US bilateral treaties):
+A more mechanical test than PPT. Treaty benefits are limited to persons who satisfy
+one of the "qualifying person" tests:
+
+QUALIFYING PERSON TESTS:
+- Individual resident: Automatically qualifies
+- Publicly listed company: Shares regularly traded on recognized exchange in one or both
+  Contracting States
+- Subsidiary: If shares owned ≥ 50% by qualifying persons, and meets "erosion test"
+  (< 50% of income used to make deductible payments to non-treaty-country persons)
+- Active business test: Person engaged in active conduct of trade or business in residence
+  state, and income is connected/incidental to that business
+- Derivative benefits test: Benefits would have been available if income had gone directly
+  to persons in third states who are residents of treaty states and themselves qualifying
+
+LoB APPROACH vs PPT APPROACH:
+- LoB: More mechanical/predictable; provides certainty for genuine business entities
+- PPT: More flexible/subjective; broader anti-abuse coverage; lower threshold to apply
+- Combination: Many post-2017 treaties use PPT + simplified LoB
+
+═══════════════════════════════════════════════════════════════════════════════
+5. INDIA GAAR — CHAPTER X-A INCOME TAX ACT 1961
+═══════════════════════════════════════════════════════════════════════════════
+
+EFFECTIVE DATE: April 1, 2017 (for arrangements entered into from FY 2017-18 onwards)
+STATUTORY BASIS: Sections 95-102 of Income Tax Act 1961 (Chapter X-A)
+
+SECTION 96 — IMPERMISSIBLE AVOIDANCE ARRANGEMENT (IAA):
+An arrangement is an IAA if its MAIN PURPOSE is to obtain a tax benefit AND:
+(a) It creates rights/obligations not normally found in arm's length arrangements
+(b) It results in misuse or abuse of provisions of the Act
+(c) It lacks commercial substance
+(d) It is entered into by means not ordinarily employed for bona fide purposes
+
+WHAT CONSTITUTES LACK OF COMMERCIAL SUBSTANCE (Section 97):
+- Round-trip financing (funds going out and returning without genuine economic substance)
+- Accommodating party: Any party acting as a mere conduit with no real economic role
+- Elements offsetting each other
+- Presence of equity/debt instruments that are structured primarily to achieve tax benefit
+- Location of asset or transaction without substantial commercial purpose
+
+SECTION 96(2) — PRESUMPTION:
+If a business purpose of an arrangement is not evident to the Income Tax Authority,
+the main purpose shall be PRESUMED to be tax benefit unless the taxpayer shows otherwise.
+
+CONSEQUENCE OF IAA DESIGNATION:
+Income tax authority may:
+- Disregard the arrangement in whole or in part
+- Reallocate income/expense between parties to the arrangement
+- Re-characterize the nature of income or expense
+- Disregard the corporate form of an entity
+- Treat two or more entities as one for tax purposes
+
+GAAR + TREATY INTERACTION:
+GAAR overrides bilateral DTAA benefits where an arrangement is determined to be an IAA.
+The Supreme Court of India confirmed GAAR's overriding effect on treaty benefits in
+subsequent interpretations. However, GAAR is not applied lightly — tax authority must
+follow prescribed procedural safeguards (Approving Panel, etc.).
+
+GAAR SAFE HARBOR — RULE 10U:
+GAAR does NOT apply if:
+- Arrangement is between non-residents and concerns income not taxable in India
+- Arrangement qualifies for exemption under Section 10 of ITA (with limitations)
+- Tax benefit in a year is less than INR 3 crore (approximately USD 360,000) — de minimis
+
+═══════════════════════════════════════════════════════════════════════════════
+6. SUBSTANCE REQUIREMENTS — PRACTICAL GUIDANCE
+═══════════════════════════════════════════════════════════════════════════════
+
+To withstand PPT / GAAR / anti-avoidance challenges, Singapore/Mauritius/Netherlands/UAE
+intermediate entities should have genuine economic substance:
+
+MINIMUM SUBSTANCE CHECKLIST:
+☐ Registered office with genuine operations (not just a registered agent address)
+☐ Local directors with relevant expertise who make genuine decisions
+☐ Employees with substantive role (not just administrative staff)
+☐ Board meetings conducted in jurisdiction of incorporation
+☐ Local bank accounts with genuine cash flows
+☐ Local expenses consistent with business scale
+☐ Independent decision-making authority (not subject to routine instructions from parent)
+☐ Tax registration and actual tax payments in jurisdiction
+☐ No contractual obligation to pass through 100% of income
+
+SINGAPORE SPECIFIC:
+Singapore's territorial tax system means that Singapore holding companies typically do
+not pay Singapore tax on foreign-sourced income (Section 13(8) dividend exemption).
+This reduces the "tax in hands of conduit" argument. Substance in Singapore remains
+important for PPT purposes.
+
+HIGH RISK SCENARIOS (PPT/GAAR likely to apply):
+✗ SPV incorporated immediately before a planned transaction
+✗ SPV with no employees, no real office, no decision-making authority
+✗ SPV whose sole asset is the investment into target country
+✗ SPV that passes through 100% of income/gains with no retention or business purpose
+✗ Structures where treaty benefit was explicitly referenced in pre-transaction documents
+✗ Structures driven primarily by a tax advisor's optimization memo
+
+LOW RISK SCENARIOS:
+✓ Entity established well before transaction with genuine business history
+✓ Multiple investment activities (not just one-country concentration)
+✓ Local employees with genuine investment decision-making authority
+✓ Retained earnings, operating costs, genuine business activities in intermediate country
+✓ Investment held for long-term (not structured for quick flip)
+✓ Commercial rationale documented clearly and independently supported

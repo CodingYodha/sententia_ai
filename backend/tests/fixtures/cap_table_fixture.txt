@@ -1,0 +1,48 @@
+CAP TABLE — GREENFIELD INDIA PRIVATE LIMITED
+As of: 15 January 2025
+Prepared by: Corporate Secretarial, M/s Linklaters LLP (Singapore)
+
+═══════════════════════════════════════════════════════════════════════════════
+CAPITALISATION TABLE
+═══════════════════════════════════════════════════════════════════════════════
+
+Share Class: Ordinary Shares (INR 10 par value per share)
+
+| Shareholder                        | Jurisdiction | No. of Shares | % Ownership | Share Class |
+|------------------------------------|--------------|---------------|-------------|-------------|
+| Apex Holdings Pte. Ltd.            | Singapore    | 7,400,000     | 74.00%      | Ordinary    |
+| Rajiv Mehta & Associates (HUF)     | India        | 1,800,000     | 18.00%      | Ordinary    |
+| Cornerstone Venture Partners I LP  | Cayman Islands | 800,000     |  8.00%      | Ordinary    |
+| TOTAL                              |              | 10,000,000    | 100.00%     |             |
+
+═══════════════════════════════════════════════════════════════════════════════
+ULTIMATE BENEFICIAL OWNERSHIP (UBO) DISCLOSURE
+Pursuant to Companies Act 2013, Section 90 — Significant Beneficial Ownership
+═══════════════════════════════════════════════════════════════════════════════
+
+Apex Holdings Pte. Ltd. (Singapore) — 74% of Greenfield India Pvt. Ltd.
+  └── Owned 100% by: Huang Wei International Holdings Ltd. (Hong Kong)
+       └── Owned 100% by: Mr. Huang Wei (PRC National, Chinese citizen)
+            — UBO: Mr. Huang Wei, Chinese national, holds effective 74% in Greenfield India
+
+Rajiv Mehta & Associates (HUF) — 18% of Greenfield India Pvt. Ltd.
+  └── HUF Karta: Mr. Rajiv Mehta (Indian National, PAN: ABCDE1234F)
+       — UBO: Mr. Rajiv Mehta, Indian national, holds effective 18% in Greenfield India
+
+Cornerstone Venture Partners I LP — 8% of Greenfield India Pvt. Ltd.
+  └── General Partner: Cornerstone GP LLC (Delaware, USA)
+       └── Managed by: Ms. Sarah Chen (US National) and Mr. David Park (US National)
+            — UBOs: Ms. Sarah Chen and Mr. David Park, US nationals, hold effective 8%
+
+NOTE: Total foreign ownership = 82% (74% PRC-origin via Singapore SPV + 8% Cayman/US)
+SBO disclosure threshold triggered: Yes (>10% indirect ownership per Companies Act §90)
+
+═══════════════════════════════════════════════════════════════════════════════
+VOTING RIGHTS
+═══════════════════════════════════════════════════════════════════════════════
+
+All shares carry equal voting rights (1 vote per share).
+No differential voting rights issued.
+
+Authorized Share Capital: INR 150,000,000 (15,000,000 shares @ INR 10 each)
+Issued and Paid-up Capital: INR 100,000,000 (10,000,000 shares @ INR 10 each)

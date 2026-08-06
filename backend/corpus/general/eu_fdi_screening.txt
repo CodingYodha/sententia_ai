@@ -1,0 +1,116 @@
+EU FDI SCREENING REGULATION — REGULATION (EU) 2019/452
+Framework for Screening of Foreign Direct Investments into the European Union
+Source: European Commission; Official Journal of the EU L 79I, 21.3.2019
+Effective: October 11, 2020 | Proposal for strengthened Regulation: 2024
+
+═══════════════════════════════════════════════════════════════════════════════
+1. OVERVIEW AND PURPOSE
+═══════════════════════════════════════════════════════════════════════════════
+
+Regulation (EU) 2019/452 established a Union framework for screening FDI on the grounds
+of security or public order. The Regulation does NOT create a Union-level FDI approval
+mechanism — it creates a COOPERATION FRAMEWORK between Member States and the Commission,
+while leaving screening authority with individual Member States.
+
+RATIONALE: To ensure that FDI that potentially threatens EU security or public order
+undergoes proper screening, and to allow exchange of information and coordination between
+Member States on transactions that may affect multiple Member States or EU-level interests.
+
+═══════════════════════════════════════════════════════════════════════════════
+2. SCOPE — WHAT IS COVERED
+═══════════════════════════════════════════════════════════════════════════════
+
+COVERED INVESTMENT:
+FDI into the EU: An investment of any kind by a foreign investor aiming to establish or
+maintain lasting and direct links between the foreign investor and the undertaking to
+which capital is made available (typically direct investments resulting in ≥ 10% shareholding).
+
+NOT COVERED:
+- Portfolio investments (below control threshold, no "lasting links")
+- Intra-EU investments (investment from one EU Member State to another)
+- Greenfield investments in new sectors (though Member States may screen independently)
+
+SECTORS OF CONCERN (Article 4 — non-exhaustive list for Member States):
+Member States and the Commission shall take the following into account when screening:
+1. Critical infrastructure (energy, transport, water, health, communications, media,
+   data processing, aerospace, defense, financial, electoral/voting infrastructure)
+2. Critical technologies and dual-use items (AI, robotics, semiconductors, cybersecurity,
+   aerospace, defense, energy storage, quantum, nuclear technologies)
+3. Supply of critical inputs (energy, raw materials, food security)
+4. Access to sensitive information (personal data, health data, IP)
+5. Freedom and pluralism of the media
+
+═══════════════════════════════════════════════════════════════════════════════
+3. MEMBER STATE SCREENING MECHANISMS
+═══════════════════════════════════════════════════════════════════════════════
+
+The Regulation requires Member States to notify the Commission and other Member States
+of FDI transactions undergoing screening in their jurisdiction.
+
+As of 2024, the following major EU economies have national FDI screening mechanisms:
+- GERMANY: Foreign Trade and Payments Act (AWG) + Foreign Trade and Payments Ordinance
+  (AWV). Sectors: critical infrastructure, media, defense, health. Thresholds: 10%-25%
+  depending on sector. Mandatory for certain defense/critical infrastructure sectors.
+- FRANCE: Decree 2019-1590. Broad scope — national defense, public security, public
+  policy. Mandatory filing for controlling investments in sensitive sectors.
+- NETHERLANDS: National Security Screening Act (Vifo Act, 2023). Critical infrastructure,
+  technology. Mandatory filing for acquisitions in covered sectors.
+- ITALY: "Golden Powers" Decree. Broad sectors: defense, telecom, energy, transport,
+  finance. Mandatory notification. Government may impose conditions or veto.
+
+═══════════════════════════════════════════════════════════════════════════════
+4. EUROPEAN COMMISSION ROLE
+═══════════════════════════════════════════════════════════════════════════════
+
+The Commission may issue opinions on FDI transactions that:
+(a) Are likely to affect security or public order in more than one Member State; or
+(b) Could affect EU projects or programs of Union interest (TEN-E, TEN-T, Horizon Europe,
+    Galileo, EGNOS, Copernicus, Connecting Europe Facility, etc.)
+
+Commission opinions are non-binding but carry significant weight. Member State where
+screening occurs must take the Commission's opinion into utmost account.
+
+EXTRATERRITORIAL EFFECT:
+If FDI is not subject to screening in any Member State, the Commission itself may issue
+opinions if the investment affects Union security/public order. This creates a "backstop"
+Commission screening role even where no Member State has jurisdiction.
+
+═══════════════════════════════════════════════════════════════════════════════
+5. STRENGTHENED REGULATION — 2024 PROPOSAL
+═══════════════════════════════════════════════════════════════════════════════
+
+In January 2024, the European Commission proposed a strengthened FDI Regulation to:
+1. Require ALL Member States to have national screening mechanisms (currently optional)
+2. Expand sectoral scope to align with EU critical raw materials, chips, and AI strategies
+3. Introduce mandatory notification for certain cross-border transactions affecting EU
+4. Reduce review timelines
+5. Strengthen anti-circumvention rules (shell companies, structured investments)
+
+This strengthened regulation is expected to significantly increase the number of
+transactions subject to EU FDI review.
+
+═══════════════════════════════════════════════════════════════════════════════
+6. CROSS-BORDER INVESTMENT IMPLICATIONS
+═══════════════════════════════════════════════════════════════════════════════
+
+FOR NON-EU INVESTORS ENTERING EU:
+- Technology sector investments: Must assess Germany, France, Netherlands, Italy
+  screening requirements at minimum
+- Energy/infrastructure: Likely triggers multiple Member State reviews
+- Media: France and Germany have specific media ownership restrictions
+
+CHINESE INVESTMENT IN EU:
+Chinese investments in EU critical sectors face increasing scrutiny. Several German
+acquisitions of semiconductor and critical technology companies by Chinese buyers
+have been blocked or unwound (e.g., Aixtron attempted acquisition — blocked by German
+government following US pressure, 2016; Siltronic — blocked 2022).
+
+STRUCTURING THROUGH EU MEMBER STATES:
+Routing Chinese investment through an EU-based holding company does NOT avoid
+FDI screening if the ultimate controlling party is non-EU. The look-through to
+beneficial ownership is standard in EU Member State screening processes.
+
+TIMING:
+FDI screenings in EU Member States can take 90-150 days (or longer for complex deals).
+Pre-signing engagement with competent authorities (where pre-notification is possible)
+is strongly recommended for investments in covered sectors.

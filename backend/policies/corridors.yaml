@@ -1,0 +1,113 @@
+version: "1.0"
+description: >
+  Pre-validated investment corridor registry for Sententia.ai compliance engine.
+  Add new corridors here — no changes to business logic code required.
+  Each corridor entry specifies: origin jurisdictions, optional SPV jurisdictions,
+  target jurisdictions, the OPA policy package, and the Rego source file.
+
+  Matching rules:
+    - A corridor matches if origin, target, and (if specified) SPV all match.
+    - origin_jurisdictions / spv_jurisdictions / target_jurisdictions are lists —
+      any value in the list is a valid match.
+    - Use standardized UPPER_SNAKE_CASE for jurisdiction names.
+    - If spv_jurisdictions is null, the corridor matches regardless of SPV.
+
+corridors:
+
+  # ─── 1. PRC Capital → Singapore SPV → India ───────────────────────────────────
+  - id: china_singapore_india
+    name: "PRC Capital → Singapore SPV → India"
+    origin_jurisdictions:
+      - CHINA
+    spv_jurisdictions:
+      - SINGAPORE
+    target_jurisdictions:
+      - INDIA
+    policy_package: "sententia.corridors.india"
+    rego_file: "india_corridor.rego"
+    status: active
+    description: >
+      PRC-origin FDI into India via Singapore SPV.
+      Covers: Press Note 3 (2020) / Press Note 2 (2026) prior Government Approval
+      requirement; Section 9(1)(i) Explanation 5/6 indirect transfer tax test;
+      Companies Act §90 Significant Beneficial Ownership disclosure trigger;
+      FEMA FC-GPR reporting obligation.
+    references:
+      - "Press Note 3 (2020 Series) — DPIIT"
+      - "Press Note 2 (2026 Series) — DPIIT (if in force)"
+      - "Section 9(1)(i) — Income Tax Act 1961"
+      - "Companies Act 2013, Section 90 + SBO Rules 2018/2019"
+      - "FEMA 1999 — FC-GPR reporting"
+
+  # Also match direct China → India (no SPV) under the same India policy
+  - id: china_direct_india
+    name: "PRC Capital → India (Direct)"
+    origin_jurisdictions:
+      - CHINA
+    spv_jurisdictions: null         # matches regardless of SPV
+    target_jurisdictions:
+      - INDIA
+    policy_package: "sententia.corridors.india"
+    rego_file: "india_corridor.rego"
+    status: active
+    description: >
+      Direct PRC FDI into India without intermediate SPV.
+      Same Press Note 3 and SBO rules apply; indirect transfer test less critical
+      (no intermediate holding company), but FC-GPR and SBO still required.
+
+  # ─── 2. US Capital → Cayman SPV → India ──────────────────────────────────────
+  - id: us_cayman_india
+    name: "US Capital → Cayman Islands SPV → India"
+    origin_jurisdictions:
+      - UNITED_STATES
+    spv_jurisdictions:
+      - CAYMAN_ISLANDS
+    target_jurisdictions:
+      - INDIA
+    policy_package: "sententia.corridors.us_cayman_india"
+    rego_file: "us_cayman_india.rego"
+    status: active
+    description: >
+      US PE/VC fund investing into India via Cayman Islands SPV — the dominant
+      structure for Silicon Valley VC into Indian startups.
+      Covers: FATCA reporting obligations for US persons; FEMA FC-GPR India filing;
+      Cayman economic substance requirements; PFIC passive asset test;
+      Section 9(1)(i) indirect transfer on exit (if SPV predominantly India assets).
+    references:
+      - "FATCA (IRC §1471-1474) — US Treasury"
+      - "Cayman Islands Economic Substance Act 2019"
+      - "FEMA 1999 — FC-GPR reporting"
+      - "IRC §1297 — PFIC definition"
+      - "Section 9(1)(i) — Income Tax Act 1961"
+
+  # ─── 3. Gulf Capital → Luxembourg SPV → France ────────────────────────────────
+  - id: gulf_luxembourg_france
+    name: "Gulf Capital → Luxembourg Holdco → France"
+    origin_jurisdictions:
+      - SAUDI_ARABIA
+      - UAE
+      - QATAR
+      - KUWAIT
+      - BAHRAIN
+      - OMAN
+    spv_jurisdictions:
+      - LUXEMBOURG
+    target_jurisdictions:
+      - FRANCE
+    policy_package: "sententia.corridors.gulf_eu"
+    rego_file: "gulf_eu.rego"
+    status: active
+    description: >
+      Gulf sovereign wealth fund or HNWI capital into France via Luxembourg holding
+      company — common structure for Gulf investment into EU assets (real estate,
+      hospitality, technology, luxury).
+      Covers: French 'Golden Powers' (Decree 2019-1590) notification for sensitive
+      sectors; EU FDI Screening Regulation (EU) 2019/452 cooperation mechanism;
+      Luxembourg ATAD (EU Anti-Tax Avoidance Directive) substance requirements;
+      OECD Pillar Two global minimum tax (15%) check; EU DAC6 mandatory disclosure.
+    references:
+      - "Decree n°2019-1590 — French Ministry of Economy (Golden Powers)"
+      - "EU FDI Screening Regulation (EU) 2019/452"
+      - "EU ATAD Directive 2016/1164 (transposed into Luxembourg law)"
+      - "OECD Pillar Two — Global Minimum Tax Framework"
+      - "EU DAC6 Mandatory Disclosure Rules"

@@ -1,0 +1,161 @@
+OECD MODEL TAX CONVENTION ON INCOME AND CAPITAL — 2019 CONDENSED VERSION
+Key Articles and Commentary Relevant to Cross-Border Investment Structuring
+Source: OECD Publishing, Paris. OECD (2019), Model Tax Convention on Income and Capital
+Condensed Version — July 2010 (as updated through 2019 and 2024)
+
+═══════════════════════════════════════════════════════════════════════════════
+OVERVIEW AND SIGNIFICANCE
+═══════════════════════════════════════════════════════════════════════════════
+
+The OECD Model Tax Convention (MTC) is the foundational template upon which the vast
+majority of bilateral tax treaties (DTAAs) worldwide are based. Over 3,000 bilateral
+treaties follow the OECD MTC structure. Understanding the Model Convention and its
+official Commentary is essential for interpreting bilateral treaty provisions.
+
+India negotiates its treaties broadly following the OECD MTC but with UN Model Convention
+influences (stronger source-country taxation rights). The OECD MTC Commentary (though not
+legally binding) is routinely cited by Indian courts, tax tribunals, and the Authority for
+Advance Rulings (AAR) in interpreting treaty provisions.
+
+═══════════════════════════════════════════════════════════════════════════════
+ARTICLE 1 — PERSONS COVERED / BENEFICIAL OWNERSHIP
+═══════════════════════════════════════════════════════════════════════════════
+
+The Convention applies to persons who are residents of one or both of the Contracting States.
+
+BENEFICIAL OWNERSHIP (Article 10, 11, 12):
+Treaty-reduced withholding rates are available only to the "beneficial owner" of income.
+A conduit company — one that receives income but is obligated by contract or law to
+pass it on to another person — is NOT the beneficial owner.
+
+OECD Commentary Para 12.1 on Article 10:
+"A conduit company cannot be regarded as the beneficial owner if, though the formal owner
+of the income, it has, as a practical matter, very narrow powers which render it, in relation
+to the income concerned, a mere fiduciary or administrator acting on account of the interested parties."
+
+PRACTICAL TEST (derived from Commentary):
+- Does the receiving entity have the right to use and enjoy the income?
+- Is the receiving entity subject to a contractual or legal obligation to pass income on?
+- Does the receiving entity bear any economic risk on the income?
+
+A Singapore SPV that holds Indian company shares and receives dividends, then distributes
+100% immediately to its parent with no discretion → risk of "conduit" characterization.
+A Singapore entity with own employees, real operations, genuine equity risk, discretion
+over distributions → more likely to be treated as beneficial owner.
+
+═══════════════════════════════════════════════════════════════════════════════
+ARTICLE 4 — RESIDENT / PLACE OF EFFECTIVE MANAGEMENT
+═══════════════════════════════════════════════════════════════════════════════
+
+Residence is determined by domestic law. For companies that are dual residents, the
+tie-breaker is the Place of Effective Management (POEM):
+
+"The place of effective management is the place where the key management and commercial
+decisions that are necessary for the conduct of the entity's business as a whole are
+in substance made."
+
+2017 Update Commentary: POEM determination requires examination of:
+1. Where meetings of board of directors are held
+2. Where the chief executive officer and senior management habitually reside
+3. Where the senior day-to-day management is carried on
+4. Where the entity's headquarters are located
+5. Where the management's decisions are made
+
+This is consistent with India's domestic POEM rules (Section 6(3)(ii) Income Tax Act
+as amended by Finance Act 2016).
+
+═══════════════════════════════════════════════════════════════════════════════
+ARTICLE 5 — PERMANENT ESTABLISHMENT (PE)
+═══════════════════════════════════════════════════════════════════════════════
+
+A "permanent establishment" means a fixed place of business through which the business
+of an enterprise is wholly or partly carried on. If a foreign enterprise has a PE in
+the source country, the source country may tax business profits attributable to the PE.
+
+TYPES OF PE:
+Fixed place PE: Office, branch, factory, workshop, mine, oil/gas well
+Agency PE: A person acting on behalf of an enterprise habitually exercising authority
+  to conclude contracts in the source country (not merely as independent agent)
+Construction PE: Building site or construction project that lasts more than 12 months
+Service PE: (UN Model / some bilateral treaties) Personnel providing services in source
+  country for more than 183 days in any 12-month period
+
+BEPS ACTION 7 — ANTI-FRAGMENTATION (2016 Update):
+Artificial avoidance of PE status through fragmented activities or artificial structures
+(e.g., splitting contracts, using multiple entities) is addressed. Commissionnaire
+structures and dependent agent PE rules were expanded.
+
+RELEVANCE FOR SPV STRUCTURES:
+If a Singapore SPV (holding Indian company shares) has employees or agents in India
+making investment decisions, managing operations, or exercising authority → risk of
+creating an Indian PE for the Singapore entity. PE in India → business profits (including
+capital gains management income) may be taxable in India.
+
+═══════════════════════════════════════════════════════════════════════════════
+ARTICLE 7 — BUSINESS PROFITS
+═══════════════════════════════════════════════════════════════════════════════
+
+Business profits of a resident of a Contracting State are taxable only in that State
+unless the enterprise carries on business through a PE in the other State.
+
+If PE exists: Profits attributable to the PE are taxable in the PE's jurisdiction.
+Attribution follows OECD Transfer Pricing Guidelines and the "authorized OECD approach"
+(functionally separate entity principle).
+
+═══════════════════════════════════════════════════════════════════════════════
+ARTICLE 13 — CAPITAL GAINS
+═══════════════════════════════════════════════════════════════════════════════
+
+OECD MTC DEFAULT POSITION:
+Gains from alienation of shares deriving more than 50% of their value from immovable
+property (real estate) situated in the source state → source state has taxing rights.
+Other gains from shares → residence state has exclusive taxing rights.
+
+COUNTRY MODIFICATIONS:
+Many bilateral treaties modify the default MTC position. India has negotiated source-based
+capital gains taxation in many of its treaties (particularly post-BEPS MLI ratification).
+
+2017 ADDITION — SHARES RICH IN IMMOVABLE PROPERTY:
+New paragraph added: Gains from alienation of shares deriving more than 50% of their
+value from immovable property may be taxed in the state where the immovable property
+is situated. This provision prevents avoidance of real estate capital gains taxes through
+offshore holding companies.
+
+═══════════════════════════════════════════════════════════════════════════════
+ARTICLE 26 — EXCHANGE OF INFORMATION
+═══════════════════════════════════════════════════════════════════════════════
+
+Tax authorities shall exchange information that is foreseeably relevant for carrying out
+the provisions of the Convention or domestic tax laws of the Contracting States.
+Information may be used for tax purposes only and shall be kept confidential.
+
+SIGNIFICANCE:
+Post-CRS (Common Reporting Standard) and FATCA, the exchange of information between
+tax authorities has become routine and automatic. Structures relying on opacity between
+jurisdictions are no longer viable planning tools. UBO information disclosed in one
+jurisdiction (e.g., Qdrant registry in Singapore) may be automatically reported to
+Indian tax authorities under the multilateral instrument implementing CRS.
+
+═══════════════════════════════════════════════════════════════════════════════
+MULTILATERAL INSTRUMENT (MLI) — BEPS CONVENTION
+═══════════════════════════════════════════════════════════════════════════════
+
+The OECD/G20 Base Erosion and Profit Shifting (BEPS) Multilateral Instrument (MLI),
+effective for India from April 1, 2020, modifies covered tax agreements (India's
+bilateral treaties with 25+ countries including Singapore, Mauritius, Netherlands, UAE)
+to include:
+
+1. MINIMUM STANDARD ANTI-ABUSE (Article 6 MLI — PPT):
+   Principal Purpose Test applies to all covered agreements. Treaty benefits denied
+   if obtaining the benefit was one of the principal purposes of the arrangement.
+
+2. PERMANENT ESTABLISHMENT — ANTI-FRAGMENTATION (Article 13-15 MLI):
+   Prevents artificial PE avoidance through activity fragmentation.
+
+3. DISPUTE RESOLUTION — MAP (Article 16 MLI):
+   Mutual Agreement Procedure improvements for treaty interpretation disputes.
+
+KEY PRACTICAL IMPLICATION:
+The MLI means that the Principal Purpose Test NOW applies to Singapore-India,
+Mauritius-India, Netherlands-India, UAE-India (and other covered treaties) DTAAs.
+Treaty shopping is subject to active PPT challenge by tax authorities.

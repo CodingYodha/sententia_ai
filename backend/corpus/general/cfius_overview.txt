@@ -1,0 +1,144 @@
+COMMITTEE ON FOREIGN INVESTMENT IN THE UNITED STATES (CFIUS)
+FIRRMA Overview and Investment Screening Framework
+Source: U.S. Department of Treasury, CFIUS
+Foreign Investment Risk Review Modernization Act of 2018 (FIRRMA) | 31 C.F.R. Part 800 and Part 802
+
+═══════════════════════════════════════════════════════════════════════════════
+1. OVERVIEW AND STATUTORY BASIS
+═══════════════════════════════════════════════════════════════════════════════
+
+CFIUS is an interagency committee of the U.S. Government authorized to review certain
+transactions involving foreign investment in the United States to determine the effect
+of such transactions on the national security of the United States.
+
+STATUTORY BASIS:
+- Section 721 of the Defense Production Act of 1950 (as amended by FIRRMA 2018)
+- Implemented by regulations at 31 C.F.R. Part 800 (covered transactions) and
+  31 C.F.R. Part 802 (real estate transactions)
+- Additional guidance in CFIUS annual reports to Congress
+
+COMMITTEE MEMBERS:
+Treasury (Chair), State, Defense, DOJ, Commerce, DHS, USTR, OMB, OSTP, NSA, DNI, DOE
++ agency heads invited as appropriate (e.g., DOT for transportation transactions)
+
+═══════════════════════════════════════════════════════════════════════════════
+2. COVERED TRANSACTIONS — WHAT CFIUS REVIEWS
+═══════════════════════════════════════════════════════════════════════════════
+
+COVERED CONTROL TRANSACTIONS (Part 800):
+Any transaction (including mergers, acquisitions, certain investments) that could result
+in foreign control of any U.S. business, regardless of sector.
+
+"Control" means the power, direct or indirect, whether or not exercised, to determine,
+direct, or decide important matters affecting an entity.
+
+COVERED NON-CONTROLLING INVESTMENTS (Part 800 — TID U.S. Businesses):
+Even non-controlling foreign investments in certain "TID U.S. businesses" are covered:
+- Technology: U.S. businesses involved in critical technology (defined by export control laws —
+  EAR, ITAR, nuclear-related, select agents)
+- Infrastructure: U.S. businesses that own or operate critical infrastructure
+  (financial market infrastructure, power grid, water systems, telecom, ports, etc.)
+- Data: U.S. businesses that collect or maintain sensitive personal data of U.S. persons
+  (financial data, health data, geolocation data, biometric data, etc.)
+
+For TID investments, "covered" even if foreign investor only gets:
+- Access to material non-public technical information
+- Membership on board of directors or board observer rights
+- Involvement in substantive decision-making regarding TID aspects
+
+COVERED REAL ESTATE TRANSACTIONS (Part 802):
+Foreign purchase, lease, or concession of certain real estate proximate to military
+installations, U.S. government facilities, or certain airports/ports.
+
+═══════════════════════════════════════════════════════════════════════════════
+3. MANDATORY VS. VOLUNTARY FILINGS
+═══════════════════════════════════════════════════════════════════════════════
+
+MANDATORY DECLARATIONS (cannot be waived — short form, 30-day review):
+Required for transactions where:
+(a) Foreign government holds ≥ 25% economic interest in the foreign investor AND
+    the transaction involves a TID U.S. business; OR
+(b) Transaction involves a U.S. critical technology business AND foreign investor is from
+    certain countries (updated annually by USTR) — "excepted foreign states" currently
+    includes Australia, Canada, UK, New Zealand (Five Eyes partners)
+
+VOLUNTARY NOTICE (full notice, 45-day review + 45-day investigation if warranted):
+For covered transactions not subject to mandatory declaration, parties may voluntarily
+file a notice with CFIUS. Voluntary filing provides "safe harbor" — if CFIUS clears
+the transaction, it cannot be reopened unless information was materially false/omitted.
+
+Parties who do NOT file voluntarily risk:
+- Post-closing CFIUS review at any time (no statute of limitations for national security)
+- Forced divestiture order by President of the United States
+- Civil monetary penalties up to $250,000 per violation (per day) or transaction value
+
+═══════════════════════════════════════════════════════════════════════════════
+4. CHINESE INVESTMENT — HEIGHTENED SCRUTINY
+═══════════════════════════════════════════════════════════════════════════════
+
+PRC-NEXUS TRANSACTIONS:
+Chinese investment in U.S. businesses receives heightened CFIUS scrutiny across all
+sectors, including those not traditionally considered sensitive. CFIUS has increased
+enforcement actions, mandatory filing requirements, and mitigation agreement requirements
+for PRC-nexus transactions.
+
+KEY CONCERNS IDENTIFIED BY CFIUS FOR PRC INVESTORS:
+- Technology transfer risk (export of U.S. technology to China)
+- IP theft risk through board/observer positions
+- Data access risk for PRC government
+- Influence over U.S. critical infrastructure
+- Supply chain compromise
+
+STRUCTURING THROUGH THIRD COUNTRIES:
+CFIUS looks through nominal investors to identify foreign government control and
+beneficial ownership. Routing PRC investment through Singapore, Cayman Islands, or
+other third countries does NOT avoid CFIUS review if:
+- The ultimate beneficial owner or controlling party is Chinese
+- A Chinese government-affiliated entity has rights or influence in the investment
+- Chinese investor provides financing or has call/put rights on the investment
+
+FIRRMA made explicit that CFIUS has jurisdiction over any transaction where the
+foreign person is "controlled by" a foreign government — PRC state-owned enterprises
+(SOEs) and entities with significant PRC government involvement are automatically
+subject to heightened review.
+
+═══════════════════════════════════════════════════════════════════════════════
+5. REVIEW PROCESS AND TIMELINES
+═══════════════════════════════════════════════════════════════════════════════
+
+DECLARATION REVIEW: Up to 30 days
+  CFIUS may: (a) clear, (b) request full notice, (c) initiate own review
+
+NOTICE REVIEW: 45 days (initial review)
+  If CFIUS determines national security risk may exist → 45-day investigation period
+
+INVESTIGATION: Additional 45 days
+  Parties may be asked to provide mitigation measures, additional information
+
+PRESIDENTIAL ACTION: President has 15 days after CFIUS recommendation to act
+  Presidential action (rare but ultimate): block or unwind transaction
+
+MITIGATION AGREEMENTS:
+CFIUS frequently clears transactions subject to mitigation conditions:
+- National Security Agreement (NSA): Ongoing commitments re: personnel, access, data
+- Special Security Agreement (SSA): Enhanced controls for classified information access
+- Proxy Agreements: Transfer of control to U.S. persons for national security matters
+
+═══════════════════════════════════════════════════════════════════════════════
+6. IMPACT ON CROSS-BORDER STRUCTURING
+═══════════════════════════════════════════════════════════════════════════════
+
+For fund investments into U.S. companies:
+- PE/VC funds with Chinese LPs investing ≥ 25% of fund capital → CFIUS mandatory
+  filing required for TID U.S. businesses
+- Fund GPs must assess LP nationality in structuring CFIUS compliance
+
+For direct investment into U.S. by non-U.S. acquiror:
+- Even majority acquisitions by non-sensitive country investors may trigger CFIUS
+  if U.S. target has TID characteristics
+- Pre-signing CFIUS risk assessment is standard practice for M&A
+
+EXCEPTED INVESTOR STATUS:
+Investors from Australia, Canada, UK, New Zealand may qualify as "excepted investors"
+for certain non-controlling TID investments, with reduced CFIUS obligations.
+This status is earned/certified, not automatic — requires meeting criteria.

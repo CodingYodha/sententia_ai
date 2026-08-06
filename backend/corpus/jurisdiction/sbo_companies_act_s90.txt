@@ -1,0 +1,143 @@
+COMPANIES ACT 2013 — SECTION 90: SIGNIFICANT BENEFICIAL OWNERSHIP (SBO)
+AND RULES MADE THEREUNDER
+Source: Ministry of Corporate Affairs (MCA), Government of India
+Companies (Significant Beneficial Owners) Rules 2018, amended 2019 and 2021
+
+═══════════════════════════════════════════════════════════════════════════════
+1. STATUTORY PROVISION — SECTION 90
+═══════════════════════════════════════════════════════════════════════════════
+
+Section 90(1): Every individual who, acting alone or together, or through one or more
+persons or trust, including a trust and persons resident outside India, holds beneficial
+interests of not less than 10% of shares in a company, or who has right to exercise, or
+actually exercises, significant influence or control as defined in clause (27) of section
+2, over the company (herein referred to as "significant beneficial owner") shall make a
+declaration in the prescribed form and manner to the company specifying the nature of
+his interest and other particulars, as may be prescribed.
+
+═══════════════════════════════════════════════════════════════════════════════
+2. DEFINITION OF SIGNIFICANT BENEFICIAL OWNER (SBO)
+═══════════════════════════════════════════════════════════════════════════════
+
+Under the Companies (SBO) Rules 2018 (as amended), an individual is a SBO if they hold
+individually or jointly, through any indirect means:
+
+THRESHOLD: 10% or more of:
+(a) shares in the reporting company, OR
+(b) voting rights in the reporting company, OR  
+(c) right to receive dividend or any other distribution from the reporting company
+
+OR
+
+CONTROL THRESHOLD: Right to exercise or actually exercises significant influence or control
+(as per Section 2(27) of Companies Act 2013 — control means right to appoint majority of
+directors or to control management or policy decisions)
+
+INDIRECT HOLDING — HOW TO CALCULATE:
+Shares held through a body corporate: Individual's % in body corporate × body corporate's
+% in reporting company = Indirect interest of individual in reporting company
+
+Example: Individual holds 60% in a Singapore company, which holds 20% in Indian company.
+Individual's indirect interest = 60% × 20% = 12% → EXCEEDS 10% threshold → SBO declaration required.
+
+═══════════════════════════════════════════════════════════════════════════════
+3. OBLIGATIONS OF SBO — DECLARATION REQUIREMENTS
+═══════════════════════════════════════════════════════════════════════════════
+
+FORM BEN-1 (Declaration by SBO to Company):
+- The SBO must file Form BEN-1 with the reporting Indian company
+- Filed WITHIN 90 DAYS of commencement of SBO Rules (for existing holdings)
+- Filed WITHIN 30 DAYS of any change in SBO status or % holding
+- Contains: SBO's name, address, nationality, PAN/passport number, nature of interest,
+  date of acquiring interest, % shareholding/voting rights
+
+FORM BEN-2 (Return of SBO by Company to Registrar of Companies):
+- The Indian company must file Form BEN-2 with the ROC (Registrar of Companies)
+- Filed WITHIN 30 DAYS of receiving BEN-1 declaration from SBO
+- Alternatively, if no BEN-1 received, company must independently identify SBOs
+  and file BEN-2 with details obtained through due diligence
+
+FORM BEN-3 (Register of SBO maintained by Company):
+- Company must maintain a register of SBOs in prescribed format
+- Available for inspection at registered office
+- Entries must be updated within 14 days of any change
+
+═══════════════════════════════════════════════════════════════════════════════
+4. OBLIGATIONS OF COMPANY — NOTICE TO SHAREHOLDERS
+═══════════════════════════════════════════════════════════════════════════════
+
+Section 90(5): A company may, by notice in writing, require any member of the company
+(whether he holds shares in his own name or as a trustee) to give details of any interest
+in the shares of the company held by such member, whether for himself or for any other person.
+
+The company can issue notices in Form BEN-4 to shareholders suspected of being nominees
+or holding on behalf of others, requiring disclosure of the beneficial owner.
+
+DUTY OF NOMINEE SHAREHOLDERS:
+Any person holding shares on behalf of another must disclose the identity of the beneficial
+owner to the company. Failure to respond to BEN-4 notice within 30 days entitles the company
+to apply to NCLT to restrict rights attached to such shares.
+
+═══════════════════════════════════════════════════════════════════════════════
+5. PENALTIES FOR NON-COMPLIANCE
+═══════════════════════════════════════════════════════════════════════════════
+
+SECTION 90(10) — Individual SBO fails to make declaration:
+Penalty: INR 50,000 and in case of continuing default, further fine of INR 1,000 per day
+(maximum INR 2,00,000 total)
+
+SECTION 90(11) — Company fails to maintain register or file BEN-2:
+Penalty: INR 10,00,000 (ten lakh rupees) and every officer in default: INR 1,00,000
+In case of continuing default: additional INR 1,000 per day up to INR 5,00,000
+
+SECTION 90(12) — Person makes false declaration knowingly:
+Imprisonment up to 1 year OR fine up to INR 25,00,000 OR both
+
+═══════════════════════════════════════════════════════════════════════════════
+6. INTERACTION WITH FDI REGULATIONS AND PRESS NOTE 3
+═══════════════════════════════════════════════════════════════════════════════
+
+The SBO framework under Companies Act interacts critically with FDI Policy:
+
+PRESS NOTE 3 THRESHOLD CALIBRATION:
+Press Note 3 (2020) uses the concept of "beneficial owner" to determine whether
+land-border country entities are investing in India. The SBO Rules provide the
+definitional framework for determining beneficial ownership.
+
+KEY INTERACTION:
+If an individual from a land-border country (e.g., China) holds ≥ 10% directly or
+indirectly in an Indian company, BOTH requirements apply:
+1. Companies Act §90 SBO declaration (Form BEN-1/BEN-2) to MCA/ROC
+2. Press Note 3 Government Approval from DPIIT for the FDI structure
+
+DISCLOSURE TIMELINE FOR INBOUND FDI TRANSACTIONS:
+At CLOSING:
+  - FC-GPR filing with RBI (within 30 days of share allotment)
+  - BEN-1 by SBO to Indian company (within 30 days if new SBO threshold triggered)
+  
+Within 30 days of BEN-1 receipt:
+  - BEN-2 filing by Indian company with ROC
+
+═══════════════════════════════════════════════════════════════════════════════
+7. PRACTICAL GUIDANCE FOR CROSS-BORDER INVESTMENT STRUCTURES
+═══════════════════════════════════════════════════════════════════════════════
+
+MULTI-LAYERED STRUCTURES:
+For structures where investment comes through multiple SPVs (e.g., Singapore HoldCo →
+Mauritius SubCo → India OpCo), the SBO analysis must pierce through all layers to
+identify the natural person with ≥ 10% economic interest in the Indian company.
+
+Each layer of the structure must be included in the BEN-1 declaration, showing the
+chain from the natural person UBO down to the Indian company.
+
+FUNDS AND POOLED VEHICLES:
+For investment through a private equity fund or venture capital fund:
+- If any single investor in the fund holds ≥ 10% of the fund AND the fund holds ≥ 10%
+  in the Indian company → that investor may be an SBO of the Indian company
+- Fund manager must assess investor base for potential Indian SBO obligations
+- Disclosure risk assessment is standard part of India-bound fund investment process
+
+SOVEREIGN WEALTH FUNDS AND GOVERNMENT-OWNED ENTITIES:
+Government entities, sovereign wealth funds fully owned by foreign governments may
+be exempt from SBO requirements in certain circumstances — consult specific guidance
+from MCA. However, FDI policy compliance remains applicable.

@@ -1,0 +1,161 @@
+PRESS NOTE 3 (2020 SERIES) — FDI FROM LAND BORDER COUNTRIES
+Government of India — Department for Promotion of Industry and Internal Trade (DPIIT)
+Issued: April 22, 2020 | Effective: Immediately upon notification
+
+AND
+
+PRESS NOTE 2 (2026 SERIES) — AMENDMENTS AND CLARIFICATIONS
+Effective: 2026 (exact date subject to gazette notification)
+
+═══════════════════════════════════════════════════════════════════════════════
+PRESS NOTE 3 (2020) — FULL TEXT SUMMARY
+═══════════════════════════════════════════════════════════════════════════════
+
+BACKGROUND:
+Press Note 3 of 2020 was issued by DPIIT to curb opportunistic takeovers and acquisitions
+of Indian companies during the COVID-19 pandemic, targeting primarily Chinese investments.
+The amendment revised the Foreign Exchange Management (Non-Debt Instruments) Rules 2019.
+
+CORE PROVISION — PARAGRAPH 3.1.1(a):
+A non-resident entity can invest in India, subject to the FDI Policy. However, an entity
+of a country, which shares a land border with India, or where the beneficial owner of an
+investment into India is situated in or is a citizen of any such country, can invest only
+under the Government Route.
+
+LAND BORDER COUNTRIES (as defined):
+Countries that share a land border with India for purposes of this Press Note:
+1. China (People's Republic of China)
+2. Bangladesh (People's Republic of Bangladesh)
+3. Pakistan (Islamic Republic of Pakistan)
+4. Nepal (Federal Democratic Republic of Nepal)
+5. Myanmar (Republic of the Union of Myanmar)
+6. Bhutan (Kingdom of Bhutan)
+7. Afghanistan (now governed by Taliban administration)
+
+NOTE: Sri Lanka does NOT share a land border with India and is NOT subject to this restriction.
+UAE, Singapore, Mauritius, Cayman Islands, USA, UK, EU member states are NOT land-border
+countries and are NOT subject to this mandatory government approval requirement.
+
+═══════════════════════════════════════════════════════════════════════════════
+SCOPE AND COVERAGE
+═══════════════════════════════════════════════════════════════════════════════
+
+SECTION A — NEW INVESTMENTS:
+All new FDI from entities in land-border countries, across ALL sectors (including those
+otherwise on the Automatic Route), now requires prior government approval through DPIIT.
+There is no threshold exemption — even USD 1 of investment requires approval.
+
+SECTION B — TRANSFER OF EXISTING INVESTMENTS:
+Any transfer of ownership in an existing Indian company which would result in beneficial
+ownership moving to a land-border country entity requires prior government approval.
+This includes:
+- Sale of shares to a land-border country entity by an existing shareholder
+- Corporate restructuring that changes ultimate beneficial ownership to land-border country
+- Pledge or hypothecation of shares in favor of a land-border country entity
+
+SECTION C — DOWNSTREAM INVESTMENT:
+If a company with land-border country beneficial ownership makes downstream investment in
+another Indian entity, such downstream investment also requires government approval regardless
+of the sector.
+
+SECTION D — BENEFICIAL OWNERSHIP TRACING:
+The Press Note applies based on BENEFICIAL OWNERSHIP, not immediate investor jurisdiction.
+The following chain must be analyzed:
+
+Example: Situation requiring Government Approval:
+  Mr. Zhang Wei (Chinese national) → 100% owns HoldCo (Singapore SPV) → 74% invests in
+  Indian Company (Technology sector)
+  
+ANALYSIS: Although the immediate investor is a Singapore company (not a land-border country),
+the BENEFICIAL OWNER is Mr. Zhang Wei, a Chinese national / PRC-resident entity. Therefore,
+Government Approval is REQUIRED even though Singapore is not a land-border country.
+
+Example: Situation NOT requiring Government Approval:
+  Ms. Sarah Chen (US national, not PRC national/resident) → 100% owns Cayman Fund →
+  Singapore SPV → 49% investment in Indian Technology company
+  
+ANALYSIS: The beneficial owner is a US national. Government Approval NOT required.
+Automatic Route applies (subject to sectoral cap compliance).
+
+═══════════════════════════════════════════════════════════════════════════════
+DEFINITION OF "BENEFICIAL OWNER" FOR PN3 PURPOSES
+═══════════════════════════════════════════════════════════════════════════════
+
+For corporate entities: The natural person(s) who ultimately own or control the entity,
+either through direct shareholding exceeding 25% (later reduced to 10% under SBO rules),
+or through exercising effective control.
+
+For funds: The General Partner/Investment Manager and/or ultimate fund investors
+based on ownership/control thresholds.
+
+The Ministry of Finance / FEMA rules cross-reference Companies Act Section 90 thresholds
+for SBO determination. Under revised rules, the threshold for UBO determination for
+PN3 purposes is 10% effective economic ownership.
+
+═══════════════════════════════════════════════════════════════════════════════
+GOVERNMENT APPROVAL PROCESS (PN3 INVESTMENTS)
+═══════════════════════════════════════════════════════════════════════════════
+
+AUTHORITY: Foreign Investment Facilitation Portal (FIFP) — www.fifp.gov.in
+PROCESSING: Cabinet Committee on Economic Affairs (CCEA) for investments above INR 5,000 crore;
+  competent ministry otherwise
+TIMELINE: 60 working days from date of complete application
+DOCUMENTS REQUIRED:
+- Detailed ownership structure up to natural person level
+- Business plan and purpose of investment
+- Declaration of no security threat
+- Annual report of investing entity
+- Declaration that no national security interest is compromised
+
+═══════════════════════════════════════════════════════════════════════════════
+PRESS NOTE 2 (2026) — AMENDMENTS AND CLARIFICATIONS
+═══════════════════════════════════════════════════════════════════════════════
+
+Press Note 2 of 2026 Series made the following key amendments to PN3 (2020):
+
+1. ENHANCED UBO TRACING METHODOLOGY:
+   The threshold for triggering PN3 Government Approval route through indirect ownership
+   is clarified as follows:
+   - Direct ownership ≥ 10% by land-border country entity/national → Government Approval required
+   - Indirect ownership through multi-layered structures → aggregate economic interest ≥ 10%
+     triggers Government Approval requirement
+   - Control through rights (board seats, veto rights, call options) even below 10% economic
+     threshold → fact-specific analysis required, DPIIT may require Government Approval
+
+2. LOOK-THROUGH FOR INVESTMENT FUNDS:
+   For foreign portfolio investors (FPIs) and investment funds, PN2 (2026) requires look-through
+   to underlying investors where any single land-border country investor holds ≥ 10% of
+   fund units/interests.
+
+3. ANNUAL CERTIFICATION:
+   Indian companies with foreign investment are required to file annual certification
+   (with each FC-GPR filing) confirming that no beneficial owner from a land-border country
+   holds ≥ 10% economic interest, directly or indirectly.
+
+4. EXEMPTIONS:
+   - Foreign Portfolio Investors (FPIs) registered with SEBI where no single land-border
+     country investor exceeds 10% → exempt from individual approval (fund-level compliance applies)
+   - GIFT City investments → relaxed provisions under IFSC framework
+   - ODI (Outbound Direct Investment) by Indian entities → PN3 does not apply
+
+═══════════════════════════════════════════════════════════════════════════════
+STRATEGIC STRUCTURING IMPLICATIONS
+═══════════════════════════════════════════════════════════════════════════════
+
+COMMON MISCONCEPTION: Many investors assume routing through Singapore or Mauritius avoids
+PN3 Government Approval requirement. This is INCORRECT when the ultimate beneficial owner
+is from a land-border country. The Government Approval requirement follows the beneficial
+owner, not the immediate investor.
+
+VALID STRUCTURE (if investor is genuinely non-land-border): 
+UAE investor → Singapore SPV → India: NO PN3 issue (UAE is not land-border; applies
+Singapore-India DTAA benefits)
+
+INVALID ATTEMPT TO AVOID PN3:
+Chinese investor → Singapore nominee SPV → India: PN3 APPLIES. Government Approval required.
+Using Singapore structuring does not circumvent PN3 when beneficial owner is Chinese.
+
+PERMITTED STRUCTURE FOR PN3-COVERED INVESTORS:
+Chinese investor WITH Government Approval → Singapore SPV (post-approval) → India:
+Investment permitted upon obtaining prior government approval, regardless of routing.
+The approval covers the full structure including SPV layers.
