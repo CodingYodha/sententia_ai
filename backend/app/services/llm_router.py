@@ -1,11 +1,12 @@
 """
 Sententia.ai — LLM Router
 
-Provider cascade for all LLM calls:
-  1. OpenRouter — NVIDIA Nemotron 3 Ultra (primary, 1M ctx)
-  2. Groq       — Llama 3.3 70B (secondary, low-latency)
-  3. OpenRouter — Nemotron 3 Super (tertiary insurance)
-  4. OpenRouter — Ling-3.0-flash  (tertiary insurance)
+Provider cascade for all LLM calls (Groq-first for reliability):
+  1. Groq  — llama-3.3-70b-versatile      (primary  — fastest, free tier)
+  2. Groq  — llama3-70b-8192             (secondary — fallback Groq model)
+  3. Groq  — mixtral-8x7b-32768          (tertiary  — broad context)
+  4. OpenRouter — nvidia/llama-3.1-nemotron-ultra-253b-v1:free (last resort)
+  5. OpenRouter — nvidia/llama-3.3-nemotron-super-49b-v1:free  (last resort)
 
 Two modes:
   - Sync  (get_llm_client)      — used by instructor_service (document intake)
@@ -44,10 +45,13 @@ _OPENROUTER_HEADERS = {
 }
 
 _PROVIDERS = [
-    {"name": "openrouter_nemotron_ultra",  "model": "nvidia/llama-3.1-nemotron-ultra-253b-v1:free", "client_type": "openai"},
-    {"name": "groq_llama33_70b",           "model": "llama-3.3-70b-versatile",                      "client_type": "groq"},
-    {"name": "openrouter_nemotron_super",  "model": "nvidia/llama-3.3-nemotron-super-49b-v1:free",  "client_type": "openai"},
-    {"name": "openrouter_ling",            "model": "ling-l1-20b:free",                              "client_type": "openai"},
+    # ── Groq first — reliable free tier, low latency ─────────────────────────
+    {"name": "groq_llama33_70b",       "model": "llama-3.3-70b-versatile",  "client_type": "groq"},
+    {"name": "groq_llama3_70b",        "model": "llama3-70b-8192",          "client_type": "groq"},
+    {"name": "groq_mixtral",           "model": "mixtral-8x7b-32768",       "client_type": "groq"},
+    # ── OpenRouter as last resort (free models can be slow / unavailable) ────
+    {"name": "openrouter_nemotron_ultra", "model": "nvidia/llama-3.1-nemotron-ultra-253b-v1:free", "client_type": "openai"},
+    {"name": "openrouter_nemotron_super", "model": "nvidia/llama-3.3-nemotron-super-49b-v1:free",  "client_type": "openai"},
 ]
 
 
@@ -89,23 +93,27 @@ def get_llm_client() -> LLMClient | None:
     from app.config import get_settings
     settings = get_settings()
 
+    groq_key_set = bool(settings.groq_api_key)
+    or_key_set   = bool(settings.openrouter_api_key)
+    logger.info(f"Sync LLM keys: groq={'SET' if groq_key_set else 'MISSING'} openrouter={'SET' if or_key_set else 'MISSING'}")
+
     for p in _PROVIDERS:
         try:
-            if p["client_type"] == "openai" and settings.openrouter_api_key:
-                return LLMClient(
-                    client=_make_sync_openrouter(settings.openrouter_api_key),
-                    model=p["model"], provider=p["name"],
-                )
-            elif p["client_type"] == "groq" and _GROQ_AVAILABLE and settings.groq_api_key:
+            if p["client_type"] == "groq" and _GROQ_AVAILABLE and settings.groq_api_key:
                 return LLMClient(
                     client=_make_sync_groq(settings.groq_api_key),
+                    model=p["model"], provider=p["name"],
+                )
+            elif p["client_type"] == "openai" and settings.openrouter_api_key:
+                return LLMClient(
+                    client=_make_sync_openrouter(settings.openrouter_api_key),
                     model=p["model"], provider=p["name"],
                 )
         except Exception as e:
             logger.warning(f"Sync provider {p['name']} init failed: {e}")
             continue
 
-    logger.warning("No sync LLM providers configured")
+    logger.warning("No sync LLM providers configured — check GROQ_API_KEY / OPENROUTER_API_KEY env vars")
     return None
 
 
@@ -131,7 +139,8 @@ def _make_async_groq(api_key: str) -> object:
 
 def get_async_llm_cascade() -> list[LLMClient]:
     """
-    Returns ALL available async Instructor clients in cascade priority order.
+    Returns ALL available async Instructor clients in cascade priority order
+    (Groq first, then OpenRouter as last resort).
 
     The structure_service iterates this list and logs which provider served
     each call. If a provider raises, the next is tried automatically.
@@ -145,24 +154,42 @@ def get_async_llm_cascade() -> list[LLMClient]:
     from app.config import get_settings
     settings = get_settings()
 
+    groq_key_set = bool(settings.groq_api_key)
+    or_key_set   = bool(settings.openrouter_api_key)
+    groq_sdk_ok  = _GROQ_AVAILABLE
+    logger.info(
+        f"Async LLM cascade init: "
+        f"groq_key={'SET' if groq_key_set else 'MISSING'} "
+        f"groq_sdk={'OK' if groq_sdk_ok else 'NOT INSTALLED'} "
+        f"openrouter_key={'SET' if or_key_set else 'MISSING'}"
+    )
+
     cascade: list[LLMClient] = []
 
     for p in _PROVIDERS:
         try:
-            if p["client_type"] == "openai" and settings.openrouter_api_key:
-                cascade.append(LLMClient(
-                    client=_make_async_openrouter(settings.openrouter_api_key),
-                    model=p["model"], provider=p["name"], is_async=True,
-                ))
-            elif p["client_type"] == "groq" and _GROQ_AVAILABLE and settings.groq_api_key:
+            if p["client_type"] == "groq" and groq_sdk_ok and settings.groq_api_key:
                 cascade.append(LLMClient(
                     client=_make_async_groq(settings.groq_api_key),
+                    model=p["model"], provider=p["name"], is_async=True,
+                ))
+            elif p["client_type"] == "openai" and settings.openrouter_api_key:
+                cascade.append(LLMClient(
+                    client=_make_async_openrouter(settings.openrouter_api_key),
                     model=p["model"], provider=p["name"], is_async=True,
                 ))
         except Exception as e:
             logger.warning(f"Async provider {p['name']} init failed: {e}")
 
     if not cascade:
-        logger.warning("No async LLM providers available — check OPENROUTER_API_KEY / GROQ_API_KEY")
+        logger.error(
+            "CRITICAL: No async LLM providers available! "
+            f"groq_key={'SET' if groq_key_set else 'MISSING'}, "
+            f"groq_sdk={'OK' if groq_sdk_ok else 'NOT INSTALLED'}, "
+            f"openrouter_key={'SET' if or_key_set else 'MISSING'}. "
+            "Set GROQ_API_KEY in Render environment variables."
+        )
+    else:
+        logger.info(f"Async cascade ready: {[c.provider for c in cascade]}")
 
     return cascade
