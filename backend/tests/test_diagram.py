@@ -329,6 +329,9 @@ class TestFixtureADirect:
         mermaid, _, __, checkpoints, ___ = self._render(show_reg=True)
         assert _has_regulatory_node(mermaid)
         assert checkpoints >= 1
+        # Diamond labels must be quoted: unquoted parentheses are parsed as
+        # Mermaid syntax rather than as the jurisdiction text.
+        assert 'reg_0_bafa{"BAFA (Germany)' in mermaid
 
     def test_regulatory_checkpoint_suppressed(self):
         """When show_regulatory_checkpoints=False, no regulatoryNode."""

@@ -110,21 +110,23 @@ def _slugify(text: str, prefix: str = "n") -> str:
 
 def _safe_label(text: str) -> str:
     """Remove characters that break Mermaid node labels."""
-    # Remove/replace problematic chars: quotes, backticks, curly braces, pipes
+    # Keep labels to plain, single-line text.  Mermaid's unquoted diamond labels
+    # interpret parentheses and escaped newlines as syntax tokens.
     text = text.replace('"', "'").replace("`", "'")
-    text = re.sub(r"[{}|]", "", text)
-    return text.strip()
+    text = re.sub(r"[{}|\[\]]", "", text)
+    text = text.replace("\\n", " ")
+    return re.sub(r"\s+", " ", text).strip()
 
 
 def _node_mermaid(node: _Node) -> str:
     """Emit a single Mermaid node definition line."""
     lbl = _safe_label(node.label)
     if node.shape == "diamond":
-        return f'    {node.id}{{{{{lbl}}}}}'
+        return f'    {node.id}{{"{lbl}"}}'
     elif node.shape == "stadium":
-        return f'    {node.id}([{lbl}])'
+        return f'    {node.id}(["{lbl}"])'
     elif node.shape == "cylinder":
-        return f'    {node.id}[({lbl})]'
+        return f'    {node.id}[("{lbl}")]'
     else:
         return f'    {node.id}["{lbl}"]'
 
@@ -222,8 +224,8 @@ def _enrich_llm_mermaid(
             jurisdiction = _safe_label(tp.get("jurisdiction", ""))
             requirement = _safe_label(tp.get("requirement", "Approval"))[:60]
             node_id = _slugify(f"reg_{i}_{authority}")
-            lbl = f"{authority}\\n({jurisdiction})\\n{requirement}"
-            checkpoint_lines.append(f'    {node_id}{{{{{lbl}}}}}')
+            lbl = f"{authority} ({jurisdiction}) {requirement}"
+            checkpoint_lines.append(f'    {node_id}{{"{lbl}"}}')
             class_lines.append(f"    class {node_id} regulatoryNode")
             checkpoint_count += 1
 
@@ -357,7 +359,7 @@ def _build_diagram_from_fields(
             jurisdiction = _safe_label(tp.get("jurisdiction", ""))
             requirement  = _safe_label(tp.get("requirement", "Approval"))[:60]
             node_id = _slugify(f"reg_{i}_{authority}")
-            lbl = f"{authority}\\n({jurisdiction})\\n{requirement}"
+            lbl = f"{authority} ({jurisdiction}) {requirement}"
             diagram.nodes.append(_Node(
                 id=node_id,
                 label=lbl,
