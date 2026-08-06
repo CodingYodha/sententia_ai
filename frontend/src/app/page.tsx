@@ -1,414 +1,234 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { DiagramPanel, type DiagramData } from "./components/DiagramPanel";
 import { apiDiagramGenerate } from "@/lib/api";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-interface ServiceStatus {
-  status: "ok" | "error";
-  latency_ms: number | null;
-}
-
-interface HealthData {
-  status: "ok" | "degraded";
-  version: string;
-  timestamp: string;
-  services: {
-    supabase: ServiceStatus;
-    qdrant: ServiceStatus;
-  };
-}
-
-type FetchState = "idle" | "loading" | "success" | "error";
-
-// ─── Constants ────────────────────────────────────────────────────────────────
-const API_URL = (process.env.NEXT_PUBLIC_API_URL || "https://sententia-backend.onrender.com").replace(/\/$/, "");
-
-// ─── Sub-components ───────────────────────────────────────────────────────────
-function StatusDot({ status }: { status: "ok" | "error" | "loading" }) {
-  const colors: Record<string, string> = {
-    ok:      "bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)]",
-    error:   "bg-red-400    shadow-[0_0_8px_rgba(248,113,113,0.6)]",
-    loading: "bg-amber-400  shadow-[0_0_8px_rgba(251,191,36,0.6)]  animate-pulse",
-  };
-  return (
-    <span
-      className={`inline-block w-2.5 h-2.5 rounded-full ${colors[status]}`}
-      aria-label={status}
-    />
-  );
-}
-
-function ServiceCard({
-  name,
-  service,
-  loading,
-}: {
-  name: string;
-  service?: ServiceStatus;
-  loading: boolean;
-}) {
-  const status = loading ? "loading" : (service?.status ?? "error");
-  return (
-    <div
-      className="flex items-center justify-between px-4 py-3 rounded-xl"
-      style={{
-        background: "rgba(255,255,255,0.04)",
-        border: "1px solid rgba(255,255,255,0.07)",
-      }}
-    >
-      <div className="flex items-center gap-3">
-        <StatusDot status={status as "ok" | "error" | "loading"} />
-        <span className="text-sm font-medium" style={{ color: "var(--color-text-secondary)" }}>
-          {name}
-        </span>
-      </div>
-      {!loading && service && (
-        <span className="text-xs" style={{ color: "var(--color-text-muted)" }}>
-          {service.latency_ms !== null ? `${service.latency_ms} ms` : "—"}
-        </span>
-      )}
-    </div>
-  );
-}
-
-// ── Demo fixture (2-entity direct structure) shown when API is reachable ────
+// ── Illustrative Demo Structure ──────────────────────────────────────────────
 const DEMO_STRUCTURE = {
   rank: 1,
-  name: "US PE Fund → Germany OpCo (Direct FDI)",
-  structure_type: "direct_fdi",
-  architecture_description: "Demo structure.",
-  ownership_chain: "US PE Fund (100%) → Germany OpCo",
-  jurisdictions_involved: ["United States", "Germany"],
+  name: "US PE Fund → Mauritius SPV → India OpCo (FDI Corridor)",
+  structure_type: "spv_corridor",
+  architecture_description: "Tax-efficient cross-border FDI vehicle utilizing Mauritius Category 1 Global Business License (GBL) for Indian portfolio investment under DTAA Amendment Article 13.",
+  ownership_chain: "US LP Investors (100%) → US PE Fund LP → Mauritius SPV (100%) → India Tech OpCo",
+  jurisdictions_involved: ["United States", "Mauritius", "India"],
   mermaid_diagram: `graph TD
-    A["US PE Fund\\n[United States]"]
-    B["Germany OpCo\\n[Germany]"]
-    A -->|"Capital / 100% equity"| B
+    A["US PE Fund LP\\n[United States]"]
+    B["Mauritius SPV\\n[Category 1 GBL]"]
+    C["India Tech OpCo\\n[India - Private Limited]"]
+    A -->|"100% Equity / Capital"| B
+    B -->|"100% FDI / Compulsory Convertible Preference Shares"| C
     classDef originNode fill:#1e3a5f,stroke:#4a9eff,color:#fff,stroke-width:2px
+    classDef spvNode fill:#3d2c5e,stroke:#a855f7,color:#fff,stroke-width:2px
     classDef targetNode fill:#1b4332,stroke:#40916c,color:#d8f3dc,stroke-width:2px
     class A originNode
-    class B targetNode`,
+    class B spvNode
+    class C targetNode`,
   compliance_touchpoints: [
     {
-      jurisdiction: "Germany",
-      requirement: "BAFA screening — acquisitions above 25% by non-EU acquirer",
-      timing: "pre-signing",
-      authority: "BAFA",
+      jurisdiction: "India",
+      requirement: "FEMA (Non-Debt Instruments) Rules 2019 — Form FC-GPR filing within 30 days of allotment.",
+      timing: "post-issuance",
+      authority: "Reserve Bank of India (RBI)",
+    },
+    {
+      jurisdiction: "Mauritius",
+      requirement: "FSC Substance Requirement — minimum annual expenditure & local management board.",
+      timing: "ongoing",
+      authority: "Financial Services Commission (FSC)",
+    },
+    {
+      jurisdiction: "Bilateral",
+      requirement: "India-Mauritius DTAA Principal Purpose Test (PPT) — BEPS Action 6 compliance.",
+      timing: "structuring",
+      authority: "CBDT / Income Tax Dept",
     },
   ],
-  cited_sources: ["OECD MTC"],
-  identified_risks: [],
-  rationale: "Demo",
-  estimated_setup_complexity: "low",
-  regulatory_confidence: "medium",
+  cited_sources: ["FEMA NDI Rules 2019", "India-Mauritius DTAA Protocol 2024", "OECD BEPS Action 6"],
+  identified_risks: [
+    "GAAR scrutiny if commercial substance in Mauritius is deemed insufficient.",
+  ],
+  rationale: "Optimizes capital deployment with established double taxation treaty benefits and clear FDI approval pathways.",
+  estimated_setup_complexity: "medium",
+  regulatory_confidence: "high",
 };
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
 export default function HomePage() {
-  const [health, setHealth] = useState<HealthData | null>(null);
-  const [fetchState, setFetchState] = useState<FetchState>("idle");
-  const [lastChecked, setLastChecked] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  // Diagram state
   const [diagram, setDiagram] = useState<DiagramData | null>(null);
-  const [diagramState, setDiagramState] = useState<FetchState>("idle");
-  const [diagramError, setDiagramError] = useState<string | null>(null);
+  const [loadingDiagram, setLoadingDiagram] = useState(false);
 
-  async function fetchDiagram() {
-    setDiagramState("loading");
-    setDiagramError(null);
-    try {
-      const data: DiagramData = await apiDiagramGenerate(DEMO_STRUCTURE);
-      setDiagram(data);
-      setDiagramState("success");
-    } catch (err) {
-      setDiagramError(err instanceof Error ? err.message : "Diagram fetch failed");
-      setDiagramState("error");
-    }
-  }
-
-  async function checkHealth() {
-    setFetchState("loading");
-    setError(null);
-    let attempts = 0;
-    const maxAttempts = 15;
-    while (attempts < maxAttempts) {
+  useEffect(() => {
+    async function loadDemoDiagram() {
+      setLoadingDiagram(true);
       try {
-        const res = await fetch(`${API_URL}/health`, { cache: "no-store" });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data: HealthData = await res.json();
-        setHealth(data);
-        setFetchState("success");
-        setLastChecked(new Date().toLocaleTimeString());
-        return;
-      } catch (err) {
-        attempts++;
-        if (attempts >= maxAttempts) {
-          setError(err instanceof Error ? err.message : "Failed to reach backend");
-          setFetchState("error");
-        } else {
-          // Wait 3s before retry — handles Render free tier cold-start (~25-30s wake up time)
-          await new Promise((r) => setTimeout(r, 3000));
-        }
+        const data = await apiDiagramGenerate(DEMO_STRUCTURE);
+        setDiagram(data);
+      } catch {
+        // Fallback to local rendering if API is sleeping
+        setDiagram({
+          mermaid_syntax: DEMO_STRUCTURE.mermaid_diagram,
+          entity_count: 3,
+          edge_count: 2,
+          regulatory_checkpoint_count: 3,
+          jurisdictions: DEMO_STRUCTURE.jurisdictions_involved,
+          structure_name: DEMO_STRUCTURE.name,
+          generation_warnings: [],
+        });
+      } finally {
+        setLoadingDiagram(false);
       }
     }
-  }
-
-  useEffect(() => {
-    checkHealth();
+    loadDemoDiagram();
   }, []);
 
-  // Fetch demo diagram once backend is confirmed healthy
-  useEffect(() => {
-    if (fetchState === "success" && diagramState === "idle") {
-      fetchDiagram();
-    }
-  }, [fetchState, diagramState]);
-
-  const isLoading = fetchState === "loading";
-  const overallStatus = fetchState === "success" ? health?.status : fetchState === "error" ? "error" : "loading";
-
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center px-6 py-16">
-      {/* ── Header ── */}
-      <div className="text-center mb-16 space-y-4">
-        {/* Logo mark */}
+    <main className="min-h-screen flex flex-col items-center justify-between px-6 py-12 max-w-6xl mx-auto space-y-16">
+      {/* ── Hero Header Section ── */}
+      <section className="text-center pt-8 space-y-6 max-w-3xl">
+        {/* Logo Icon */}
         <div
-          className="mx-auto mb-6 w-16 h-16 rounded-2xl flex items-center justify-center"
+          className="mx-auto w-20 h-20 rounded-3xl flex items-center justify-center transition-transform hover:scale-105 duration-300"
           style={{
-            background: "linear-gradient(135deg, rgba(99,102,241,0.2) 0%, rgba(99,102,241,0.05) 100%)",
-            border: "1px solid rgba(99,102,241,0.3)",
-            boxShadow: "var(--glow-brand)",
+            background: "linear-gradient(135deg, rgba(99,102,241,0.25) 0%, rgba(168,85,247,0.1) 100%)",
+            border: "1px solid rgba(129,140,248,0.35)",
+            boxShadow: "0 0 50px rgba(99,102,241,0.25)",
           }}
         >
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <svg width="40" height="40" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M6 24L16 8L26 24" stroke="#818cf8" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M9.5 19h13" stroke="#6366f1" strokeWidth="2" strokeLinecap="round"/>
+            <path d="M9.5 19h13" stroke="#c084fc" strokeWidth="2" strokeLinecap="round"/>
           </svg>
         </div>
 
         <h1
-          className="text-4xl font-bold tracking-tight"
+          className="text-5xl sm:text-6xl font-extrabold tracking-tight"
           style={{
-            background: "linear-gradient(135deg, #f1f1f8 30%, #818cf8 100%)",
+            background: "linear-gradient(135deg, #ffffff 20%, #c084fc 60%, #818cf8 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
           }}
         >
           Sententia.ai
         </h1>
-        <p className="text-lg max-w-md mx-auto" style={{ color: "var(--color-text-secondary)" }}>
-          AI-powered cross-border fund structuring and compliance validation.
+
+        <p className="text-xl sm:text-2xl font-medium text-slate-300 leading-relaxed">
+          AI-Powered Cross-Border Fund Structuring &amp; Regulatory Compliance Engine
         </p>
 
-        {/* Status badge */}
-        <div className="flex justify-center mt-2">
-          <span
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium"
+        <p className="text-sm sm:text-base text-slate-400 max-w-2xl mx-auto leading-normal">
+          Automate legal entity architectures, evaluate multi-jurisdictional FDI, tax, and bilateral treaty constraints, and export audit-ready ownership diagrams.
+        </p>
+
+        {/* CTA Buttons */}
+        <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+          <Link
+            href="/intake"
+            className="px-8 py-4 rounded-xl text-base font-semibold text-white transition-all duration-200 hover:shadow-lg flex items-center gap-2"
             style={{
-              background: "rgba(255,255,255,0.05)",
-              border: "1px solid rgba(255,255,255,0.09)",
-              color: "var(--color-text-muted)",
+              background: "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)",
+              boxShadow: "0 4px 20px rgba(99,102,241,0.4)",
             }}
           >
-            <StatusDot status={overallStatus as "ok" | "error" | "loading"} />
-            {isLoading
-              ? "Checking services…"
-              : fetchState === "success"
-              ? `Backend ${health?.status === "ok" ? "healthy" : "degraded"} · v${health?.version}`
-              : "Backend unreachable"}
-          </span>
-        </div>
-      </div>
+            <span>Start New Scenario</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </Link>
 
-      {/* ── Health Card ── */}
-      <div
-        className="w-full max-w-sm rounded-2xl p-6 space-y-3"
-        style={{
-          background: "rgba(255,255,255,0.03)",
-          border: "1px solid rgba(255,255,255,0.07)",
-          boxShadow: "0 4px 40px rgba(0,0,0,0.4)",
-        }}
-      >
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-sm font-semibold uppercase tracking-widest" style={{ color: "var(--color-text-muted)" }}>
-            Service Status
-          </h2>
-          {lastChecked && (
-            <span className="text-xs" style={{ color: "var(--color-text-muted)" }}>
-              {lastChecked}
-            </span>
-          )}
+          <Link
+            href="/review"
+            className="px-8 py-4 rounded-xl text-base font-semibold transition-all duration-200"
+            style={{
+              background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(255,255,255,0.12)",
+              color: "#e2e8f0",
+            }}
+          >
+            Review Queue
+          </Link>
         </div>
+      </section>
 
-        {/* API */}
+      {/* ── Feature Highlights Grid ── */}
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full pt-4">
         <div
-          className="flex items-center justify-between px-4 py-3 rounded-xl"
+          className="p-6 rounded-2xl space-y-3 transition-all hover:translate-y-[-2px]"
           style={{
-            background: "rgba(255,255,255,0.04)",
+            background: "rgba(255,255,255,0.02)",
             border: "1px solid rgba(255,255,255,0.07)",
           }}
         >
-          <div className="flex items-center gap-3">
-            <StatusDot
-              status={
-                isLoading ? "loading"
-                : fetchState === "success" ? "ok"
-                : "error"
-              }
-            />
-            <span className="text-sm font-medium" style={{ color: "var(--color-text-secondary)" }}>
-              FastAPI backend
-            </span>
+          <div className="w-10 h-10 rounded-xl bg-indigo-500/20 flex items-center justify-center text-indigo-400 font-bold">
+            01
           </div>
-          <span className="text-xs" style={{ color: "var(--color-text-muted)" }}>
-            {API_URL.replace("http://", "").replace("https://", "")}
+          <h3 className="text-lg font-semibold text-slate-100">Multi-Jurisdiction Structuring</h3>
+          <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+            Generate ranked, compliant fund structures across US, EU, GIFT City, Singapore, Mauritius, and India corridors.
+          </p>
+        </div>
+
+        <div
+          className="p-6 rounded-2xl space-y-3 transition-all hover:translate-y-[-2px]"
+          style={{
+            background: "rgba(255,255,255,0.02)",
+            border: "1px solid rgba(255,255,255,0.07)",
+          }}
+        >
+          <div className="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center text-purple-400 font-bold">
+            02
+          </div>
+          <h3 className="text-lg font-semibold text-slate-100">Deterministic Compliance Engine</h3>
+          <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+            Validate investments against FEMA NDI Rules, OECD BEPS MLI, DTAA protocols, and sectoral caps with cited legal authorities.
+          </p>
+        </div>
+
+        <div
+          className="p-6 rounded-2xl space-y-3 transition-all hover:translate-y-[-2px]"
+          style={{
+            background: "rgba(255,255,255,0.02)",
+            border: "1px solid rgba(255,255,255,0.07)",
+          }}
+        >
+          <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 font-bold">
+            03
+          </div>
+          <h3 className="text-lg font-semibold text-slate-100">Audit-Ready Diagrams &amp; Review</h3>
+          <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+            Interactive Mermaid ownership graphs with high-res PNG &amp; PDF export, plus expert-in-the-loop audit logging.
+          </p>
+        </div>
+      </section>
+
+      {/* ── Live Diagram Engine Demo ── */}
+      <section className="w-full space-y-4 pt-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-xl font-bold text-slate-100">Architecture Visualization Engine</h2>
+            <p className="text-xs text-slate-400">Sample ownership flow with client-side PNG/PDF diagram rendering</p>
+          </div>
+          <span className="px-3 py-1 rounded-full text-xs font-mono bg-purple-500/10 border border-purple-500/30 text-purple-300">
+            Interactive Preview
           </span>
         </div>
 
-        <ServiceCard
-          name="Supabase (Postgres)"
-          service={health?.services.supabase}
-          loading={isLoading}
-        />
-        <ServiceCard
-          name="Qdrant (vector DB)"
-          service={health?.services.qdrant}
-          loading={isLoading}
-        />
-
-        {/* Error message */}
-        {fetchState === "error" && error && (
-          <div
-            className="mt-3 px-4 py-3 rounded-xl text-xs"
-            style={{
-              background: "rgba(248,113,113,0.08)",
-              border: "1px solid rgba(248,113,113,0.2)",
-              color: "var(--color-error)",
-            }}
-          >
-            {error} — is the backend running on {API_URL}?
-          </div>
-        )}
-
-        {/* Refresh button */}
-        <button
-          id="btn-refresh-health"
-          onClick={checkHealth}
-          disabled={isLoading}
-          className="w-full mt-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200"
-          style={{
-            background: isLoading
-              ? "rgba(99,102,241,0.1)"
-              : "rgba(99,102,241,0.15)",
-            border: "1px solid rgba(99,102,241,0.3)",
-            color: isLoading ? "var(--color-text-muted)" : "#a5b4fc",
-            cursor: isLoading ? "not-allowed" : "pointer",
-          }}
-          onMouseEnter={(e) => {
-            if (!isLoading)
-              (e.currentTarget as HTMLButtonElement).style.background =
-                "rgba(99,102,241,0.25)";
-          }}
-          onMouseLeave={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.background =
-              "rgba(99,102,241,0.15)";
-          }}
-        >
-          {isLoading ? "Checking…" : "↻ Refresh"}
-        </button>
-      </div>
-
-      {/* ── Diagram Demo Section ── */}
-      <div className="w-full max-w-3xl mt-10">
-        <div className="flex items-center justify-between mb-4">
-          <h2
-            className="text-sm font-semibold uppercase tracking-widest"
-            style={{ color: "var(--color-text-muted)" }}
-          >
-            Structure Diagram Demo
-          </h2>
-          <button
-            id="btn-generate-diagram"
-            onClick={fetchDiagram}
-            disabled={diagramState === "loading"}
-            className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
-            style={{
-              background: "rgba(99,102,241,0.12)",
-              border: "1px solid rgba(99,102,241,0.25)",
-              color: "#a5b4fc",
-              cursor: diagramState === "loading" ? "not-allowed" : "pointer",
-              opacity: diagramState === "loading" ? 0.6 : 1,
-            }}
-          >
-            {diagramState === "loading" ? "Generating…" : "↺ Re-generate"}
-          </button>
-        </div>
-
-        {diagramState === "idle" && (
-          <div
-            className="rounded-2xl p-8 text-center"
-            style={{
-              background: "rgba(255,255,255,0.02)",
-              border: "1px solid rgba(255,255,255,0.06)",
-            }}
-          >
-            <p className="text-sm" style={{ color: "var(--color-text-muted)" }}>
-              Start the backend then click Refresh to auto-generate a diagram.
-            </p>
-          </div>
-        )}
-
-        {diagramState === "loading" && (
-          <div
-            className="rounded-2xl p-8 flex items-center justify-center gap-3"
-            style={{
-              background: "rgba(255,255,255,0.02)",
-              border: "1px solid rgba(255,255,255,0.06)",
-            }}
-          >
-            <svg
-              className="animate-spin"
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#818cf8"
-              strokeWidth="2"
-            >
+        {loadingDiagram ? (
+          <div className="rounded-2xl p-12 flex items-center justify-center gap-3 bg-white/5 border border-white/10">
+            <svg className="animate-spin" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="2">
               <path d="M21 12a9 9 0 1 1-6.219-8.56" />
             </svg>
-            <span className="text-sm" style={{ color: "#818cf8" }}>Generating diagram…</span>
+            <span className="text-sm text-indigo-300">Rendering ownership diagram…</span>
           </div>
-        )}
-
-        {diagramState === "error" && (
-          <div
-            className="rounded-2xl p-5 text-sm"
-            style={{
-              background: "rgba(248,113,113,0.06)",
-              border: "1px solid rgba(248,113,113,0.2)",
-              color: "#fca5a5",
-            }}
-          >
-            {diagramError} — ensure the backend is running and try Refresh.
-          </div>
-        )}
-
-        {diagramState === "success" && diagram && (
-          <DiagramPanel
-            diagram={diagram}
-            isIllustrative={false}
-          />
-        )}
-      </div>
+        ) : diagram ? (
+          <DiagramPanel diagram={diagram} isIllustrative={true} />
+        ) : null}
+      </section>
 
       {/* ── Footer ── */}
-      <p className="mt-12 text-xs" style={{ color: "var(--color-text-muted)" }}>
-        Sententia.ai MVP · Diagram Engine v1.0 · PNG &amp; PDF export client-side
-      </p>
+      <footer className="w-full text-center border-t border-white/5 pt-8 pb-4 text-xs text-slate-500">
+        Sententia.ai · AI Cross-Border Fund Structuring Platform · Multi-Jurisdictional Compliance Engine
+      </footer>
     </main>
   );
 }
