@@ -17,7 +17,7 @@ import { useAuth } from "../components/AuthContext";
 import { CorrectionForm } from "../components/CorrectionForm";
 import { DisclaimerBanner } from "../components/DisclaimerBanner";
 
-import { apiReviewQueueList } from "../lib/api";
+import { apiReviewQueueList } from "@/lib/api";
 
 interface QueueItem {
   review_id: string;

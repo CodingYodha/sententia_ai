@@ -17,7 +17,7 @@ import { DiagramPanel, type DiagramData } from "./DiagramPanel";
 import { ReviewActions, ReviewStatusBadge, type ReviewStatus } from "./ReviewActions";
 import { useRole } from "./RBACContext";
 
-import { apiDiagramGenerate } from "../lib/api";
+import { apiDiagramGenerate } from "@/lib/api";
 
 // ── Types pulled from backend schemas ─────────────────────────────────────────
 

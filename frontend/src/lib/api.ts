@@ -8,8 +8,8 @@ interface ApiOptions extends Omit<RequestInit, "body"> {
 
 async function apiFetch<T>(endpoint: string, options: ApiOptions = {}): Promise<T> {
   const { token, body, isFormData, ...customConfig } = options;
-  const headers: HeadersInit = {
-    ...customConfig.headers,
+  const headers: Record<string, string> = {
+    ...(customConfig.headers as Record<string, string>),
   };
 
   if (token) {

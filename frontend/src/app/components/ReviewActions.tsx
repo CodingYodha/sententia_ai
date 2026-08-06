@@ -9,7 +9,7 @@
 import { useState } from "react";
 import { useAuth } from "./AuthContext";
 
-import { apiReviewAction } from "../lib/api";
+import { apiReviewAction } from "@/lib/api";
 
 export type ReviewStatus = "pending" | "approve" | "flag" | "reject";
 

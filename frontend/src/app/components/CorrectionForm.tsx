@@ -12,7 +12,7 @@
 import { useState } from "react";
 import { useAuth } from "./AuthContext";
 
-import { apiReviewCorrection } from "../lib/api";
+import { apiReviewCorrection } from "@/lib/api";
 
 // ── Correction types ───────────────────────────────────────────────────────────
 

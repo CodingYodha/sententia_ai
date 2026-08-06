@@ -14,7 +14,7 @@ import { DisclaimerBanner } from "../components/DisclaimerBanner";
 import { AuthGuard } from "../components/AuthGuard";
 import { useAuth } from "../components/AuthContext";
 
-import { apiComplianceEvaluate } from "../lib/api";
+import { apiComplianceEvaluate } from "@/lib/api";
 
 interface StoredResults {
   scenarioId: string;

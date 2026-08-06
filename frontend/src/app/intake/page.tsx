@@ -16,7 +16,7 @@ import { useAuth } from "../components/AuthContext";
 import { useRouter } from "next/navigation";
 import { useRole } from "../components/RBACContext";
 
-import { apiIntakeDocument, apiIntakeScenario, apiStructuresGenerate } from "../lib/api";
+import { apiIntakeDocument, apiIntakeScenario, apiStructuresGenerate } from "@/lib/api";
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
