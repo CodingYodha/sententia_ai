@@ -139,7 +139,7 @@ export default function HomePage() {
     setFetchState("loading");
     setError(null);
     let attempts = 0;
-    const maxAttempts = 3;
+    const maxAttempts = 15;
     while (attempts < maxAttempts) {
       try {
         const res = await fetch(`${API_URL}/health`, { cache: "no-store" });
@@ -155,7 +155,7 @@ export default function HomePage() {
           setError(err instanceof Error ? err.message : "Failed to reach backend");
           setFetchState("error");
         } else {
-          // Wait 3s for Render free instance wake up
+          // Wait 3s before retry — handles Render free tier cold-start (~25-30s wake up time)
           await new Promise((r) => setTimeout(r, 3000));
         }
       }

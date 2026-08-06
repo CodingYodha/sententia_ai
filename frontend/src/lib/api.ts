@@ -8,7 +8,7 @@ interface ApiOptions extends Omit<RequestInit, "body"> {
 }
 
 async function apiFetch<T>(endpoint: string, options: ApiOptions = {}): Promise<T> {
-  const { token, body, isFormData, retries = 2, ...customConfig } = options;
+  const { token, body, isFormData, retries = 5, ...customConfig } = options;
   const headers: Record<string, string> = {
     ...(customConfig.headers as Record<string, string>),
   };
@@ -48,8 +48,8 @@ async function apiFetch<T>(endpoint: string, options: ApiOptions = {}): Promise<
     } catch (err) {
       lastError = err;
       if (attempt < retries) {
-        // Wait 2 seconds before retrying (handles Render cold start wake-up)
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        // Wait 3 seconds before retrying (handles Render cold start wake-up)
+        await new Promise((resolve) => setTimeout(resolve, 3000));
       }
     }
   }
