@@ -1,13 +1,14 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+const API_URL = (process.env.NEXT_PUBLIC_API_URL || "https://sententia-backend.onrender.com").replace(/\/$/, "");
 
 interface ApiOptions extends Omit<RequestInit, "body"> {
   body?: any;
   token?: string | null;
   isFormData?: boolean;
+  retries?: number;
 }
 
 async function apiFetch<T>(endpoint: string, options: ApiOptions = {}): Promise<T> {
-  const { token, body, isFormData, ...customConfig } = options;
+  const { token, body, isFormData, retries = 2, ...customConfig } = options;
   const headers: Record<string, string> = {
     ...(customConfig.headers as Record<string, string>),
   };
@@ -29,20 +30,31 @@ async function apiFetch<T>(endpoint: string, options: ApiOptions = {}): Promise<
     config.body = isFormData ? body : JSON.stringify(body);
   }
 
-  const res = await fetch(`${API_URL}${endpoint}`, config);
-  
-  if (!res.ok) {
-    let errorDetail = `HTTP ${res.status}`;
+  let lastError: any;
+  for (let attempt = 0; attempt <= retries; attempt++) {
     try {
-      const errData = await res.json();
-      errorDetail = errData.detail ?? errorDetail;
-    } catch {
-      // Ignore JSON parse errors for error responses
+      const res = await fetch(`${API_URL}${endpoint}`, config);
+      if (!res.ok) {
+        let errorDetail = `HTTP ${res.status}`;
+        try {
+          const errData = await res.json();
+          errorDetail = errData.detail ?? errorDetail;
+        } catch {
+          // Ignore JSON parse errors for error responses
+        }
+        throw new Error(errorDetail);
+      }
+      return (await res.json()) as T;
+    } catch (err) {
+      lastError = err;
+      if (attempt < retries) {
+        // Wait 2 seconds before retrying (handles Render cold start wake-up)
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+      }
     }
-    throw new Error(errorDetail);
   }
 
-  return res.json() as Promise<T>;
+  throw lastError;
 }
 
 // Intake API

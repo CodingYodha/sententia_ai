@@ -138,16 +138,27 @@ export default function HomePage() {
   async function checkHealth() {
     setFetchState("loading");
     setError(null);
-    try {
-      const res = await fetch(`${API_URL}/health`, { cache: "no-store" });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data: HealthData = await res.json();
-      setHealth(data);
-      setFetchState("success");
-      setLastChecked(new Date().toLocaleTimeString());
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to reach backend");
-      setFetchState("error");
+    let attempts = 0;
+    const maxAttempts = 3;
+    while (attempts < maxAttempts) {
+      try {
+        const res = await fetch(`${API_URL}/health`, { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data: HealthData = await res.json();
+        setHealth(data);
+        setFetchState("success");
+        setLastChecked(new Date().toLocaleTimeString());
+        return;
+      } catch (err) {
+        attempts++;
+        if (attempts >= maxAttempts) {
+          setError(err instanceof Error ? err.message : "Failed to reach backend");
+          setFetchState("error");
+        } else {
+          // Wait 3s for Render free instance wake up
+          await new Promise((r) => setTimeout(r, 3000));
+        }
+      }
     }
   }
 
