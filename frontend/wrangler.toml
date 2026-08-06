@@ -1,8 +1,0 @@
-name = "sententia-frontend"
-
-# Required: tells Cloudflare Pages where the built output lives
-pages_build_output_dir = ".vercel/output/static"
-
-# Required: enables node:buffer, node:async_hooks (used by Next.js + Supabase)
-compatibility_flags = ["nodejs_compat"]
-compatibility_date = "2024-09-23"
