@@ -11,7 +11,7 @@
  * FR-5.2: Both exports are entirely client-side — no backend involved post-generation.
  */
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { MermaidDiagram } from "./MermaidDiagram";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -140,6 +140,21 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
   const svgRef = useRef<SVGSVGElement | null>(null);
   const [exportState, setExportState] = useState<"idle" | "exporting">("idle");
   const [exportError, setExportError] = useState<string | null>(null);
+  const [isExpanded, setIsExpanded]   = useState(false);
+
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") setIsExpanded(false);
+    }
+    if (isExpanded) {
+      window.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";
+    }
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [isExpanded]);
 
   const handleSvgReady = useCallback((svgEl: SVGSVGElement) => {
     svgRef.current = svgEl;
@@ -168,156 +183,296 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
   }
 
   return (
-    <div
-      className={`rounded-2xl overflow-hidden ${className}`}
-      style={{
-        background: "rgba(255,255,255,0.02)",
-        border: "1px solid rgba(255,255,255,0.07)",
-        boxShadow: "0 4px 40px rgba(0,0,0,0.4)",
-      }}
-    >
-      {/* ── Header bar ── */}
+    <>
       <div
-        className="flex items-center justify-between px-5 py-3.5"
+        className={`rounded-2xl overflow-hidden ${className}`}
         style={{
-          borderBottom: "1px solid rgba(255,255,255,0.06)",
           background: "rgba(255,255,255,0.02)",
+          border: "1px solid rgba(255,255,255,0.07)",
+          boxShadow: "0 4px 40px rgba(0,0,0,0.4)",
         }}
       >
-        <div className="flex items-center gap-2.5">
-          {/* Diagram icon */}
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="2" aria-hidden="true">
-            <rect x="3" y="3" width="6" height="6" rx="1"/>
-            <rect x="15" y="3" width="6" height="6" rx="1"/>
-            <rect x="9" y="15" width="6" height="6" rx="1"/>
-            <path d="M6 9v3a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V9"/>
-          </svg>
-          <span className="text-sm font-semibold" style={{ color: "#c7d2fe" }}>
-            {diagram.structure_name || "Structure Diagram"}
-          </span>
-        </div>
-
-        {/* Export toolbar */}
-        <div className="flex items-center gap-2">
-          <button
-            id="btn-export-png"
-            onClick={handleExportPng}
-            disabled={exportState === "exporting"}
-            title="Export as PNG (client-side)"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
-            style={{
-              background: "rgba(99,102,241,0.12)",
-              border: "1px solid rgba(99,102,241,0.25)",
-              color: "#a5b4fc",
-              cursor: exportState === "exporting" ? "not-allowed" : "pointer",
-              opacity: exportState === "exporting" ? 0.6 : 1,
-            }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(99,102,241,0.22)"; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(99,102,241,0.12)"; }}
-          >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+        {/* ── Header bar ── */}
+        <div
+          className="flex items-center justify-between px-5 py-3.5"
+          style={{
+            borderBottom: "1px solid rgba(255,255,255,0.06)",
+            background: "rgba(255,255,255,0.02)",
+          }}
+        >
+          <div className="flex items-center gap-2.5">
+            {/* Diagram icon */}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="2" aria-hidden="true">
+              <rect x="3" y="3" width="6" height="6" rx="1"/>
+              <rect x="15" y="3" width="6" height="6" rx="1"/>
+              <rect x="9" y="15" width="6" height="6" rx="1"/>
+              <path d="M6 9v3a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V9"/>
             </svg>
-            {exportState === "exporting" ? "Exporting…" : "PNG"}
-          </button>
+            <span className="text-sm font-semibold" style={{ color: "#c7d2fe" }}>
+              {diagram.structure_name || "Structure Diagram"}
+            </span>
+          </div>
 
-          <button
-            id="btn-export-pdf"
-            onClick={handleExportPdf}
-            title="Export as PDF (browser print)"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
+          {/* Export toolbar */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setIsExpanded(true)}
+              title="Expand to Full View"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
+              style={{
+                background: "rgba(129,140,248,0.12)",
+                border: "1px solid rgba(129,140,248,0.25)",
+                color: "#c7d2fe",
+                cursor: "pointer",
+              }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(129,140,248,0.22)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(129,140,248,0.12)"; }}
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                <polyline points="15 3 21 3 21 9"/>
+                <polyline points="9 21 3 21 3 15"/>
+                <line x1="21" y1="3" x2="14" y2="10"/>
+                <line x1="3" y1="21" x2="10" y2="14"/>
+              </svg>
+              Expand
+            </button>
+
+            <button
+              id="btn-export-png"
+              onClick={handleExportPng}
+              disabled={exportState === "exporting"}
+              title="Export as PNG (client-side)"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
+              style={{
+                background: "rgba(99,102,241,0.12)",
+                border: "1px solid rgba(99,102,241,0.25)",
+                color: "#a5b4fc",
+                cursor: exportState === "exporting" ? "not-allowed" : "pointer",
+                opacity: exportState === "exporting" ? 0.6 : 1,
+              }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(99,102,241,0.22)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(99,102,241,0.12)"; }}
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              {exportState === "exporting" ? "Exporting…" : "PNG"}
+            </button>
+
+            <button
+              id="btn-export-pdf"
+              onClick={handleExportPdf}
+              title="Export as PDF (browser print)"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
+              style={{
+                background: "rgba(52,211,153,0.08)",
+                border: "1px solid rgba(52,211,153,0.2)",
+                color: "#6ee7b7",
+                cursor: "pointer",
+              }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(52,211,153,0.16)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(52,211,153,0.08)"; }}
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+              </svg>
+              PDF
+            </button>
+          </div>
+        </div>
+
+        {/* ── Generation warnings ── */}
+        {diagram.generation_warnings.length > 0 && (
+          <div
+            className="px-5 py-2.5"
             style={{
-              background: "rgba(52,211,153,0.08)",
-              border: "1px solid rgba(52,211,153,0.2)",
-              color: "#6ee7b7",
-              cursor: "pointer",
+              background: "rgba(251,191,36,0.04)",
+              borderBottom: "1px solid rgba(251,191,36,0.1)",
             }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(52,211,153,0.16)"; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(52,211,153,0.08)"; }}
           >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
-            </svg>
-            PDF
-          </button>
-        </div>
-      </div>
-
-      {/* ── Warning banner (illustrative / fallback) ── */}
-      {isIllustrative && (
-        <div
-          className="flex items-start gap-3 px-5 py-3"
-          style={{
-            background: "rgba(251,146,60,0.06)",
-            borderBottom: "1px solid rgba(251,146,60,0.15)",
-          }}
-        >
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fb923c" strokeWidth="2" className="mt-0.5 shrink-0" aria-hidden="true">
-            <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
-          </svg>
-          <p className="text-xs leading-relaxed" style={{ color: "#fdba74" }}>
-            <strong className="font-semibold">Illustrative — Not Yet Rule-Validated.</strong>{" "}
-            This diagram was generated from general principles. Do not rely on it for legal decisions without engaging qualified local counsel.
-          </p>
-        </div>
-      )}
-
-      {/* ── Generation warnings ── */}
-      {diagram.generation_warnings.length > 0 && (
-        <div
-          className="px-5 py-2.5"
-          style={{
-            background: "rgba(251,191,36,0.04)",
-            borderBottom: "1px solid rgba(251,191,36,0.1)",
-          }}
-        >
-          {diagram.generation_warnings.map((w, i) => (
-            <p key={i} className="text-xs" style={{ color: "#fbbf24" }}>
-              ⚠ {w}
-            </p>
-          ))}
-        </div>
-      )}
-
-      {/* ── Diagram canvas ── */}
-      <div className="p-5">
-        <MermaidDiagram
-          syntax={diagram.mermaid_syntax}
-          theme="dark"
-          onSvgReady={handleSvgReady}
-          className="w-full"
-        />
-      </div>
-
-      {/* ── Export error ── */}
-      {exportError && (
-        <div
-          className="mx-5 mb-4 px-4 py-2.5 rounded-xl text-xs"
-          style={{
-            background: "rgba(248,113,113,0.08)",
-            border: "1px solid rgba(248,113,113,0.2)",
-            color: "#fca5a5",
-          }}
-        >
-          {exportError}
-        </div>
-      )}
-
-      {/* ── Metadata bar ── */}
-      <div
-        className="flex flex-wrap items-center gap-x-6 gap-y-1.5 px-5 py-3"
-        style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
-      >
-        <MetaBadge icon="□" label="Entities" value={diagram.entity_count} color="#818cf8" />
-        <MetaBadge icon="→" label="Flows" value={diagram.edge_count} color="#38bdf8" />
-        <MetaBadge icon="◆" label="Checkpoints" value={diagram.regulatory_checkpoint_count} color="#fb923c" />
-        {diagram.jurisdictions.length > 0 && (
-          <span className="text-xs" style={{ color: "#64748b" }}>
-            {diagram.jurisdictions.join(" · ")}
-          </span>
+            {diagram.generation_warnings.map((w, i) => (
+              <p key={i} className="text-xs" style={{ color: "#fbbf24" }}>
+                ⚠ {w}
+              </p>
+            ))}
+          </div>
         )}
+
+        {/* ── Inline Diagram canvas (Clickable) ── */}
+        <div
+          className="p-5 cursor-pointer relative group rounded-xl transition-all hover:bg-white/[0.01]"
+          onClick={() => setIsExpanded(true)}
+          title="Click to view full screen diagram"
+        >
+          <div
+            className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity text-xs px-2.5 py-1 rounded-lg pointer-events-none z-10 flex items-center gap-1.5 shadow-lg"
+            style={{ background: "rgba(99,102,241,0.9)", color: "#ffffff" }}
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <polyline points="15 3 21 3 21 9"/>
+              <polyline points="9 21 3 21 3 15"/>
+            </svg>
+            Click to expand
+          </div>
+          <MermaidDiagram
+            syntax={diagram.mermaid_syntax}
+            theme="dark"
+            onSvgReady={handleSvgReady}
+            className="w-full min-h-[300px]"
+          />
+        </div>
+
+        {/* ── Export error ── */}
+        {exportError && (
+          <div
+            className="mx-5 mb-4 px-4 py-2.5 rounded-xl text-xs"
+            style={{
+              background: "rgba(248,113,113,0.08)",
+              border: "1px solid rgba(248,113,113,0.2)",
+              color: "#fca5a5",
+            }}
+          >
+            {exportError}
+          </div>
+        )}
+
+        {/* ── Metadata bar ── */}
+        <div
+          className="flex flex-wrap items-center justify-between gap-y-1.5 px-5 py-3"
+          style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
+        >
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-1.5">
+            <MetaBadge icon="□" label="Entities" value={diagram.entity_count} color="#818cf8" />
+            <MetaBadge icon="→" label="Flows" value={diagram.edge_count} color="#38bdf8" />
+            <MetaBadge icon="◆" label="Checkpoints" value={diagram.regulatory_checkpoint_count} color="#fb923c" />
+            {diagram.jurisdictions.length > 0 && (
+              <span className="text-xs" style={{ color: "#64748b" }}>
+                {diagram.jurisdictions.join(" · ")}
+              </span>
+            )}
+          </div>
+          <button
+            onClick={() => setIsExpanded(true)}
+            className="text-xs transition-colors hover:underline"
+            style={{ color: "#818cf8" }}
+          >
+            Expand View ↗
+          </button>
+        </div>
       </div>
-    </div>
+
+      {/* ── Fullscreen Overlay Modal ── */}
+      {isExpanded && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8"
+          style={{ background: "rgba(5, 7, 15, 0.85)", backdropFilter: "blur(12px)" }}
+          onClick={() => setIsExpanded(false)}
+        >
+          <div
+            className="relative flex flex-col w-full max-w-6xl h-[88vh] rounded-2xl overflow-hidden shadow-2xl"
+            style={{
+              background: "#0f1220",
+              border: "1px solid rgba(255,255,255,0.12)",
+              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.7)",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div
+              className="flex items-center justify-between px-6 py-4"
+              style={{
+                borderBottom: "1px solid rgba(255,255,255,0.08)",
+                background: "rgba(255,255,255,0.02)",
+              }}
+            >
+              <div className="flex items-center gap-3">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="2">
+                  <rect x="3" y="3" width="6" height="6" rx="1"/>
+                  <rect x="15" y="3" width="6" height="6" rx="1"/>
+                  <rect x="9" y="15" width="6" height="6" rx="1"/>
+                  <path d="M6 9v3a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V9"/>
+                </svg>
+                <div>
+                  <h3 className="text-base font-bold" style={{ color: "#f1f1f8" }}>
+                    {diagram.structure_name || "Structure Diagram"}
+                  </h3>
+                  <p className="text-xs" style={{ color: "#64748b" }}>
+                    Full interactive structure visualization
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={handleExportPng}
+                  disabled={exportState === "exporting"}
+                  className="px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all"
+                  style={{
+                    background: "rgba(99,102,241,0.15)",
+                    border: "1px solid rgba(99,102,241,0.3)",
+                    color: "#a5b4fc",
+                  }}
+                >
+                  PNG
+                </button>
+                <button
+                  onClick={handleExportPdf}
+                  className="px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all"
+                  style={{
+                    background: "rgba(52,211,153,0.12)",
+                    border: "1px solid rgba(52,211,153,0.25)",
+                    color: "#6ee7b7",
+                  }}
+                >
+                  PDF
+                </button>
+                <button
+                  onClick={() => setIsExpanded(false)}
+                  className="p-2 rounded-xl transition-colors hover:bg-white/10"
+                  style={{ color: "#94a3b8", cursor: "pointer" }}
+                  title="Close (Esc)"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* Modal Body - High Resolution Canvas */}
+            <div className="flex-1 p-8 overflow-auto flex items-center justify-center bg-slate-950/40">
+              <MermaidDiagram
+                syntax={diagram.mermaid_syntax}
+                theme="dark"
+                onSvgReady={handleSvgReady}
+                className="w-full max-w-4xl"
+              />
+            </div>
+
+            {/* Modal Footer */}
+            <div
+              className="flex items-center justify-between px-6 py-3.5"
+              style={{ borderTop: "1px solid rgba(255,255,255,0.06)", background: "rgba(255,255,255,0.01)" }}
+            >
+              <div className="flex items-center gap-6">
+                <MetaBadge icon="□" label="Entities" value={diagram.entity_count} color="#818cf8" />
+                <MetaBadge icon="→" label="Flows" value={diagram.edge_count} color="#38bdf8" />
+                <MetaBadge icon="◆" label="Checkpoints" value={diagram.regulatory_checkpoint_count} color="#fb923c" />
+                {diagram.jurisdictions.length > 0 && (
+                  <span className="text-xs" style={{ color: "#64748b" }}>
+                    {diagram.jurisdictions.join(" · ")}
+                  </span>
+                )}
+              </div>
+              <span className="text-xs" style={{ color: "#64748b" }}>
+                Press Esc or click ✕ to close
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -344,3 +499,4 @@ function MetaBadge({
     </div>
   );
 }
+
