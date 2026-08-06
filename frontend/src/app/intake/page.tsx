@@ -127,6 +127,43 @@ function selectStyle(hasError?: boolean): React.CSSProperties {
   };
 }
 
+function StepDot({ n, label, step }: { n: number; label: string; step: number }) {
+  const done    = step > n;
+  const current = step === n;
+  return (
+    <div className="flex items-center gap-2">
+      <div
+        className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold"
+        style={{
+          background: done ? "rgba(52,211,153,0.15)" : current ? "rgba(99,102,241,0.2)" : "rgba(255,255,255,0.05)",
+          border:     done ? "1px solid rgba(52,211,153,0.4)" : current ? "1.5px solid rgba(99,102,241,0.5)" : "1px solid rgba(255,255,255,0.08)",
+          color:      done ? "#34d399" : current ? "#818cf8" : "#64748b",
+        }}
+      >
+        {done ? "✓" : n}
+      </div>
+      <span className="text-xs font-medium hidden sm:block" style={{ color: current ? "#f1f1f8" : "#64748b" }}>
+        {label}
+      </span>
+    </div>
+  );
+}
+
+function Card({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      className="rounded-2xl p-6"
+      style={{
+        background: "rgba(255,255,255,0.025)",
+        border: "1px solid rgba(255,255,255,0.07)",
+        boxShadow: "0 4px 32px rgba(0,0,0,0.3)",
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
 // ── Main page ──────────────────────────────────────────────────────────────────
 
 type Step = 1 | 2 | 3;
@@ -272,46 +309,6 @@ export default function IntakePage() {
     }
   }
 
-  // ── Step indicator ──────────────────────────────────────────────────────────
-
-  function StepDot({ n, label }: { n: number; label: string }) {
-    const done    = step > n;
-    const current = step === n;
-    return (
-      <div className="flex items-center gap-2">
-        <div
-          className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold"
-          style={{
-            background: done ? "rgba(52,211,153,0.15)" : current ? "rgba(99,102,241,0.2)" : "rgba(255,255,255,0.05)",
-            border:     done ? "1px solid rgba(52,211,153,0.4)" : current ? "1.5px solid rgba(99,102,241,0.5)" : "1px solid rgba(255,255,255,0.08)",
-            color:      done ? "#34d399" : current ? "#818cf8" : "#64748b",
-          }}
-        >
-          {done ? "✓" : n}
-        </div>
-        <span className="text-xs font-medium hidden sm:block" style={{ color: current ? "#f1f1f8" : "#64748b" }}>
-          {label}
-        </span>
-      </div>
-    );
-  }
-
-  // ── Shared card wrapper ──────────────────────────────────────────────────────
-  function Card({ children }: { children: React.ReactNode }) {
-    return (
-      <div
-        className="rounded-2xl p-6"
-        style={{
-          background: "rgba(255,255,255,0.025)",
-          border: "1px solid rgba(255,255,255,0.07)",
-          boxShadow: "0 4px 32px rgba(0,0,0,0.3)",
-        }}
-      >
-        {children}
-      </div>
-    );
-  }
-
   // ── Render ──────────────────────────────────────────────────────────────────
 
   return (
@@ -337,11 +334,11 @@ export default function IntakePage() {
 
         {/* Step indicator */}
         <div className="flex items-center gap-4 mb-8">
-          <StepDot n={1} label="Scenario Details" />
+          <StepDot n={1} label="Scenario Details" step={step} />
           <div className="flex-1 h-px" style={{ background: "rgba(255,255,255,0.06)" }} />
-          <StepDot n={2} label="Document Review" />
+          <StepDot n={2} label="Document Review" step={step} />
           <div className="flex-1 h-px" style={{ background: "rgba(255,255,255,0.06)" }} />
-          <StepDot n={3} label="Generating…" />
+          <StepDot n={3} label="Generating…" step={step} />
         </div>
 
         {/* ── STEP 1: SCENARIO FORM ── */}
