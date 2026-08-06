@@ -134,10 +134,8 @@ export default function ResultsPage() {
   const hasAnyBlocked      = Object.values(complianceMap).some((c) => c.is_rule_validated && !c.is_allowed);
   const isIllustrative     = results.llm_provider_used === "illustrative" || results.llm_provider_used === "degraded_fallback" || results.llm_provider_used === "none";
 
-  // Human-readable provider label
-  const providerLabel = isIllustrative
-    ? "Illustrative"
-    : results.llm_provider_used.replace(/_/g, " ").replace("groq ", "").replace("openrouter ", "");
+  // Human-readable provider label — never expose model names to end users
+  const providerLabel = isIllustrative ? "Illustrative" : "AI suggested";
 
   return (
     <div className="min-h-screen pt-22 pb-16">
