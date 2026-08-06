@@ -9,9 +9,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "pages:build": "npx @cloudflare/next-on-pages@1",
-    "pages:deploy": "npm run pages:build && wrangler pages deploy .vercel/output/static"
+    "lint": "eslint"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.1",
@@ -21,7 +19,6 @@
     "react-dom": "19.2.8"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^22",
     "@types/react": "^19",
