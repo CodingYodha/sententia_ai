@@ -76,15 +76,15 @@ class LLMClient:
 # ══════════════════════════════════════════════════════════════════════════════
 
 def _make_groq_openai_sync(api_key: str) -> object:
-    """Sync: Groq OpenAI-compat endpoint → instructor JSON mode."""
+    """Sync: Groq OpenAI-compat endpoint → instructor MD_JSON mode."""
     raw = openai.OpenAI(base_url=_GROQ_OPENAI_BASE, api_key=api_key)
-    return instructor.from_openai(raw, mode=instructor.Mode.JSON)
+    return instructor.from_openai(raw, mode=instructor.Mode.MD_JSON)
 
 
 def _make_groq_openai_async(api_key: str) -> object:
-    """Async: Groq OpenAI-compat endpoint → instructor JSON mode."""
+    """Async: Groq OpenAI-compat endpoint → instructor MD_JSON mode."""
     raw = openai.AsyncOpenAI(base_url=_GROQ_OPENAI_BASE, api_key=api_key)
-    return instructor.from_openai(raw, mode=instructor.Mode.JSON)
+    return instructor.from_openai(raw, mode=instructor.Mode.MD_JSON)
 
 
 def _make_groq_tools_sync(api_key: str) -> object:
@@ -105,7 +105,7 @@ def _make_openrouter_sync(api_key: str) -> object:
         api_key=api_key,
         default_headers=_OPENROUTER_HEADERS,
     )
-    return instructor.from_openai(raw, mode=instructor.Mode.JSON)
+    return instructor.from_openai(raw, mode=instructor.Mode.MD_JSON)
 
 
 def _make_openrouter_async(api_key: str) -> object:
@@ -114,7 +114,7 @@ def _make_openrouter_async(api_key: str) -> object:
         api_key=api_key,
         default_headers=_OPENROUTER_HEADERS,
     )
-    return instructor.from_openai(raw, mode=instructor.Mode.JSON)
+    return instructor.from_openai(raw, mode=instructor.Mode.MD_JSON)
 
 
 # ══════════════════════════════════════════════════════════════════════════════

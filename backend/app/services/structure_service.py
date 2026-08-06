@@ -119,7 +119,7 @@ async def _call_with_cascade(
                 llm.client.chat.completions.create(
                     model=llm.model,
                     response_model=StructureGenerationLLMOutput,
-                    max_retries=1,
+                    max_retries=2,
                     max_tokens=_MAX_TOKENS_RESPONSE,
                     messages=messages,
                 ),
@@ -138,7 +138,7 @@ async def _call_with_cascade(
             logger.warning(f"Provider {llm.provider} / {llm.model} timed out after {_PROVIDER_TIMEOUT_S}s — trying next")
             continue
         except Exception as e:
-            logger.warning(
+            logger.error(
                 f"Provider {llm.provider} / {llm.model} failed: "
                 f"{type(e).__name__}: {str(e)[:500]} — trying next"
             )
