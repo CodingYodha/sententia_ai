@@ -96,3 +96,67 @@ async def debug_env() -> dict:
         "_raw_SUPABASE_SERVICE_ROLE_KEY": _status(os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")),
         "_raw_SUPABASE_URL":              _status(os.environ.get("SUPABASE_URL", "")),
     }
+
+
+@router.get("/debug/llm-test", summary="Test Groq LLM connection with a real API call")
+async def debug_llm_test() -> dict:
+    """
+    Makes a real (minimal) call to the configured LLM providers and reports
+    exactly which ones succeeded and which failed, with full error messages.
+    Use this to diagnose 'All providers exhausted' issues on Render.
+    """
+    import asyncio as _asyncio
+    from app.services.llm_router import get_async_llm_cascade, _GROQ_AVAILABLE, _INSTRUCTOR_AVAILABLE
+    from app.config import get_settings
+
+    settings = get_settings()
+
+    results = {
+        "instructor_available": _INSTRUCTOR_AVAILABLE,
+        "groq_sdk_available": _GROQ_AVAILABLE,
+        "groq_key_set": bool(settings.groq_api_key),
+        "openrouter_key_set": bool(settings.openrouter_api_key),
+        "providers_tested": [],
+    }
+
+    cascade = get_async_llm_cascade()
+    results["cascade_length"] = len(cascade)
+    results["cascade_providers"] = [c.provider for c in cascade]
+
+    if not cascade:
+        results["verdict"] = "FAIL — cascade is empty (no API keys or SDK missing)"
+        return results
+
+    # Test each provider with a tiny prompt
+    for llm in cascade:
+        entry: dict = {"provider": llm.provider, "model": llm.model}
+        try:
+            from pydantic import BaseModel
+            class _Ping(BaseModel):
+                reply: str
+
+            resp = await _asyncio.wait_for(
+                llm.client.chat.completions.create(
+                    model=llm.model,
+                    response_model=_Ping,
+                    max_tokens=30,
+                    messages=[{"role": "user", "content": "Reply with the word OK."}],
+                ),
+                timeout=15.0,
+            )
+            entry["status"] = "OK"
+            entry["reply"] = resp.reply
+        except _asyncio.TimeoutError:
+            entry["status"] = "TIMEOUT (>15s)"
+        except Exception as e:
+            entry["status"] = f"ERROR: {type(e).__name__}: {str(e)[:400]}"
+
+        results["providers_tested"].append(entry)
+
+    successes = [e for e in results["providers_tested"] if e.get("status") == "OK"]
+    results["verdict"] = (
+        f"OK — {len(successes)}/{len(cascade)} providers working"
+        if successes else
+        "FAIL — all providers returned errors (see providers_tested for details)"
+    )
+    return results
