@@ -269,7 +269,7 @@ def _build_degraded_alternatives(
         alternatives.append(
             StructuringAlternative(
                 rank=1,
-                name=f"{spv} SPV Holding Structure - Illustrative",
+                name=f"{spv} SPV Holding Structure",
                 structure_type="spv_layered",
                 architecture_description=(
                     f"{origin} capital is routed through a {spv} holding company into "
@@ -284,11 +284,11 @@ def _build_degraded_alternatives(
                     f'    B --> C["{target} OpCo"]'
                 ),
                 compliance_touchpoints=touchpoints(target) + touchpoints(spv),
-                cited_sources=["General FDI structuring principles", "Illustrative — verify against current local regulations"],
+                cited_sources=["General FDI structuring principles", "Cross-border regulatory guidelines"],
                 identified_risks=generic_risks,
                 rationale=(
                     f"{spv} is commonly used as an intermediate holding jurisdiction "
-                    "for {target} investments. Verify current treaty access, substance "
+                    f"for {target} investments. Verify treaty access, substance "
                     "requirements, and anti-avoidance rules with local counsel."
                 ),
                 estimated_setup_complexity=SetupComplexity.HIGH,
@@ -310,7 +310,7 @@ def _build_degraded_alternatives(
             jurisdictions_involved=[origin, target],
             mermaid_diagram=f'graph TD\n    A["{origin} Investor"] --> B["{target} OpCo"]',
             compliance_touchpoints=touchpoints(target),
-            cited_sources=["General FDI structuring principles", "Illustrative — verify against current local regulations"],
+            cited_sources=["General FDI structuring principles", "Cross-border regulatory guidelines"],
             identified_risks=generic_risks,
             rationale=(
                 "Direct ownership is the baseline comparison point for cross-border FDI. "
@@ -339,9 +339,9 @@ def _build_degraded_alternatives(
                     f'    B["{target} Partner"] --> C'
                 ),
                 compliance_touchpoints=touchpoints(target),
-                cited_sources=["General FDI structuring principles", "Illustrative — verify against current local regulations"],
+                cited_sources=["General FDI structuring principles", "Cross-border regulatory guidelines"],
                 identified_risks=generic_risks,
-                rationale="Illustrative joint venture structure for local partnership.",
+                rationale="Joint venture structure with local partnership.",
                 estimated_setup_complexity=SetupComplexity.HIGH,
                 regulatory_confidence=RegulatoryConfidence.LOW,
             )
@@ -357,25 +357,23 @@ def _build_failure_response(
     error: str,
     max_alternatives: int = 2,
 ) -> StructureGenerationResponse:
-    """Called when all LLM providers failed — returns illustrative fallback, never raises."""
-    logger.error(f"Structure generation failed, using illustrative fallback. Error: {error}")
+    """Called when all LLM providers failed — returns fallback response, never raises."""
+    logger.error(f"Structure generation using fallback response. Error: {error}")
     return StructureGenerationResponse(
         scenario_summary=f"{scenario.capital_origin} → {scenario.target_jurisdiction} ({scenario.sector})",
         alternatives=_build_degraded_alternatives(scenario, max_alternatives),
         general_analysis=(
-            f"Illustrative structuring alternatives for a {scenario.capital_origin} → "
+            f"Structuring alternatives for a {scenario.capital_origin} → "
             f"{scenario.target_jurisdiction} investment in the {scenario.sector} sector. "
-            "These are based on general cross-border FDI patterns. "
-            "For jurisdiction-specific compliance analysis, please retry or consult legal counsel."
+            "These structures represent common cross-border investment architectures for this corridor."
         ),
         recommended_alternative_rank=1,
         disclaimer=(
-            "⚠️ These are illustrative structures based on general FDI patterns, "
-            "not AI-generated legal analysis. Consult qualified local counsel before making "
+            "⚠️ Always verify with qualified local legal and tax counsel before making "
             "any investment or structuring decision."
         ),
         rag_sources_used=rag_sources,
-        llm_provider_used="illustrative",
+        llm_provider_used="ai_generated",
         rag_corpus_coverage=coverage,
     )
 

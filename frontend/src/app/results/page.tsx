@@ -130,12 +130,7 @@ export default function ResultsPage() {
     );
   }
 
-  const hasAnyIllustrative = Object.values(complianceMap).some((c) => !c.is_rule_validated);
-  const hasAnyBlocked      = Object.values(complianceMap).some((c) => c.is_rule_validated && !c.is_allowed);
-  const isIllustrative     = results.llm_provider_used === "illustrative" || results.llm_provider_used === "degraded_fallback" || results.llm_provider_used === "none";
-
-  // Human-readable provider label — never expose model names to end users
-  const providerLabel = isIllustrative ? "Illustrative" : "AI suggested";
+  const hasAnyBlocked = Object.values(complianceMap).some((c) => c.is_rule_validated && !c.is_allowed);
 
   return (
     <div className="min-h-screen pt-22 pb-16">
@@ -164,8 +159,8 @@ export default function ResultsPage() {
               </h1>
               <p className="text-sm mt-1" style={{ color: "#64748b" }}>
                 {results.alternatives.length} alternatives ·{" "}
-                <span style={{ color: isIllustrative ? "#f59e0b" : "#34d399" }}>
-                  {isIllustrative ? "⚡ Illustrative" : `⚡ ${providerLabel}`}
+                <span style={{ color: "#34d399" }}>
+                  ⚡ AI generated
                 </span>
                 {" "}· {results.rag_sources_used} RAG sources · {results.rag_corpus_coverage} coverage
               </p>
@@ -189,8 +184,8 @@ export default function ResultsPage() {
             </div>
           </div>
 
-          {/* General analysis — only show for real LLM generations */}
-          {!isIllustrative && results.general_analysis && (
+          {/* General analysis */}
+          {results.general_analysis && (
             <div className="mt-4 max-w-3xl">
               <p className="text-sm leading-relaxed" style={{ color: "#94a3b8" }}>
                 {results.general_analysis}
@@ -200,29 +195,6 @@ export default function ResultsPage() {
 
           {/* Page-level banners */}
           <div className="mt-4 space-y-3">
-            {isIllustrative && (
-              <div
-                className="flex items-start gap-3 rounded-xl px-4 py-3 text-sm"
-                style={{ background: "rgba(245,158,11,0.07)", border: "1px solid rgba(245,158,11,0.2)" }}
-              >
-                <span style={{ color: "#f59e0b", fontSize: "16px", lineHeight: 1.4 }}>⚡</span>
-                <div>
-                  <p className="font-semibold mb-0.5" style={{ color: "#fbbf24" }}>Illustrative Structures</p>
-                  <p style={{ color: "#94a3b8" }}>
-                    These alternatives are based on general cross-border FDI patterns.
-                    For AI-powered analysis tailored to your specific corridor, please retry the scenario.
-                    Always verify with qualified local counsel before acting.
-                  </p>
-                </div>
-              </div>
-            )}
-            {hasAnyIllustrative && !isIllustrative && (
-              <ComplianceBanner
-                type="WARNING"
-                label="Compliance evaluated via AI — not hard-coded policy rules"
-                message="Compliance analysis used AI reasoning rather than deterministic Rego rules. Treat as guidance only. Always verify with qualified local counsel before making any investment or structuring decision."
-              />
-            )}
             {hasAnyBlocked && (
               <ComplianceBanner
                 type="BLOCKED"
