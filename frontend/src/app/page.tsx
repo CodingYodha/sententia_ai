@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { DiagramPanel, type DiagramData } from "./components/DiagramPanel";
+import { apiDiagramGenerate } from "@/lib/api";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface ServiceStatus {
@@ -22,7 +23,7 @@ interface HealthData {
 type FetchState = "idle" | "loading" | "success" | "error";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+const API_URL = (process.env.NEXT_PUBLIC_API_URL || "https://sententia-backend.onrender.com").replace(/\/$/, "");
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
 function StatusDot({ status }: { status: "ok" | "error" | "loading" }) {
@@ -119,14 +120,7 @@ export default function HomePage() {
     setDiagramState("loading");
     setDiagramError(null);
     try {
-      const res = await fetch(`${API_URL}/api/diagram/generate`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ structure_json: DEMO_STRUCTURE }),
-        cache: "no-store",
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data: DiagramData = await res.json();
+      const data: DiagramData = await apiDiagramGenerate(DEMO_STRUCTURE);
       setDiagram(data);
       setDiagramState("success");
     } catch (err) {
