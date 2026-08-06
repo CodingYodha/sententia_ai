@@ -141,6 +141,11 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
   const [exportState, setExportState] = useState<"idle" | "exporting">("idle");
   const [exportError, setExportError] = useState<string | null>(null);
   const [isExpanded, setIsExpanded]   = useState(false);
+  const [zoom, setZoom]               = useState(1.0);
+
+  const zoomIn    = () => setZoom((z) => Math.min(+(z + 0.2).toFixed(2), 2.5));
+  const zoomOut   = () => setZoom((z) => Math.max(+(z - 0.2).toFixed(2), 0.4));
+  const resetZoom = () => setZoom(1.0);
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
@@ -153,6 +158,7 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
+      setZoom(1.0); // Reset zoom on close
     };
   }, [isExpanded]);
 
@@ -365,7 +371,7 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
       {isExpanded && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8"
-          style={{ background: "rgba(5, 7, 15, 0.85)", backdropFilter: "blur(12px)" }}
+          style={{ background: "rgba(5, 7, 15, 0.88)", backdropFilter: "blur(14px)" }}
           onClick={() => setIsExpanded(false)}
         >
           <div
@@ -373,7 +379,7 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
             style={{
               background: "#0f1220",
               border: "1px solid rgba(255,255,255,0.12)",
-              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.7)",
+              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.8)",
             }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -403,6 +409,42 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
               </div>
 
               <div className="flex items-center gap-3">
+                {/* Zoom controls */}
+                <div
+                  className="flex items-center gap-1 px-2 py-1 rounded-xl text-xs"
+                  style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
+                >
+                  <button
+                    onClick={zoomOut}
+                    title="Zoom Out (-)"
+                    className="p-1 rounded-md transition-colors hover:bg-white/10"
+                    style={{ color: "#94a3b8", cursor: "pointer" }}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <line x1="5" y1="12" x2="19" y2="12"/>
+                    </svg>
+                  </button>
+                  <button
+                    onClick={resetZoom}
+                    title="Reset Zoom (Fit to Frame)"
+                    className="px-2 py-0.5 font-mono text-xs transition-colors hover:text-white"
+                    style={{ color: "#c7d2fe", cursor: "pointer" }}
+                  >
+                    {Math.round(zoom * 100)}%
+                  </button>
+                  <button
+                    onClick={zoomIn}
+                    title="Zoom In (+)"
+                    className="p-1 rounded-md transition-colors hover:bg-white/10"
+                    style={{ color: "#94a3b8", cursor: "pointer" }}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <line x1="12" y1="5" x2="12" y2="19"/>
+                      <line x1="5" y1="12" x2="19" y2="12"/>
+                    </svg>
+                  </button>
+                </div>
+
                 <button
                   onClick={handleExportPng}
                   disabled={exportState === "exporting"}
@@ -428,7 +470,7 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
                 </button>
                 <button
                   onClick={() => setIsExpanded(false)}
-                  className="p-2 rounded-xl transition-colors hover:bg-white/10"
+                  className="p-2 rounded-xl transition-colors hover:bg-white/10 ml-1"
                   style={{ color: "#94a3b8", cursor: "pointer" }}
                   title="Close (Esc)"
                 >
@@ -440,14 +482,28 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
               </div>
             </div>
 
-            {/* Modal Body - High Resolution Canvas */}
-            <div className="flex-1 p-8 overflow-auto flex items-center justify-center bg-slate-950/40">
-              <MermaidDiagram
-                syntax={diagram.mermaid_syntax}
-                theme="dark"
-                onSvgReady={handleSvgReady}
-                className="w-full max-w-4xl"
-              />
+            {/* Modal Body - High Resolution Canvas with Zoom */}
+            <div className="flex-1 p-6 overflow-auto flex items-center justify-center bg-slate-950/50 relative">
+              <div
+                style={{
+                  transform: `scale(${zoom})`,
+                  transformOrigin: "center center",
+                  transition: "transform 0.15s ease-out",
+                  maxWidth: "100%",
+                  maxHeight: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                className="w-full h-full"
+              >
+                <MermaidDiagram
+                  syntax={diagram.mermaid_syntax}
+                  theme="dark"
+                  onSvgReady={handleSvgReady}
+                  className="max-w-full max-h-full"
+                />
+              </div>
             </div>
 
             {/* Modal Footer */}

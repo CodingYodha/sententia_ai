@@ -74,16 +74,21 @@ export function MermaidDiagram({
         if (!container) return;
         container.innerHTML = svg;
 
-        // Expose the rendered SVG element to parent (for export)
+        // Expose the rendered SVG element to parent (for export) and ensure responsive scaling
         const svgEl = container.querySelector("svg") as SVGSVGElement | null;
-        if (svgEl && onSvgReady) {
-          // Ensure the SVG has explicit dimensions for canvas export
-          const bbox = svgEl.getBBox?.();
-          if (bbox && (!svgEl.getAttribute("width") || svgEl.getAttribute("width") === "100%")) {
-            svgEl.setAttribute("width", String(bbox.width || 800));
-            svgEl.setAttribute("height", String(bbox.height || 600));
+        if (svgEl) {
+          svgEl.removeAttribute("width");
+          svgEl.removeAttribute("height");
+          svgEl.style.maxWidth = "100%";
+          svgEl.style.maxHeight = "100%";
+          svgEl.style.height = "auto";
+          svgEl.style.width = "auto";
+          svgEl.style.margin = "0 auto";
+          svgEl.style.display = "block";
+
+          if (onSvgReady) {
+            onSvgReady(svgEl);
           }
-          onSvgReady(svgEl);
         }
 
         setLoading(false);
