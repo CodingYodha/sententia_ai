@@ -55,10 +55,10 @@ _OPENROUTER_HEADERS = {
 #                    Use for: llama-3.x models with native function-calling
 #   "openai"       → AsyncOpenAI pointed at OpenRouter
 _PROVIDERS = [
-    {"name": "groq_llama33_70b",           "model": "llama-3.3-70b-versatile",              "client_type": "groq"},
+    {"name": "groq_llama33_70b",           "model": "llama-3.3-70b-versatile",              "client_type": "groq_openai"},
     {"name": "openrouter_nemotron_3_super", "model": "nvidia/nemotron-3-super-120b-a12b:free", "client_type": "openai"},
     {"name": "openrouter_gemma_4_31b",     "model": "google/gemma-4-31b-it:free",          "client_type": "openai"},
-    {"name": "groq_llama31_8b",            "model": "llama-3.1-8b-instant",                "client_type": "groq"},
+    {"name": "groq_llama31_8b",            "model": "llama-3.1-8b-instant",                "client_type": "groq_openai"},
 ]
 
 
