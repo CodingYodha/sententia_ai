@@ -2,11 +2,11 @@
 Sententia.ai — LLM Router
 
 Provider cascade for all LLM calls (Groq-first for reliability):
-  1. Groq  — llama-3.3-70b-versatile   (primary  — fastest, free tier, TOOLS mode)
-  2. Groq  — llama3-70b-8192           (secondary — fallback, TOOLS mode)
-  3. Groq  — gemma2-9b-it              (tertiary  — small fallback)
-  4. OpenRouter — nvidia/llama-3.1-nemotron-ultra-253b-v1:free (last resort)
-  5. OpenRouter — nvidia/llama-3.3-nemotron-super-49b-v1:free  (last resort)
+  1. Groq        — llama-3.3-70b-versatile  (primary  — fast, confirmed working)
+  2. OpenRouter  — openai/gpt-oss-120b      (secondary — high quality)
+  3. OpenRouter  — openai/gpt-oss-20b       (tertiary  — lighter fallback)
+  4. Groq        — llama-3.1-8b-instant     (last Groq fallback — tiny but fast)
+  5. Groq        — deepseek-r1-distill-llama-70b (reasoning fallback)
 
 Key design decisions:
   - Groq async uses instructor.from_groq with TOOLS mode (not MD_JSON).
@@ -50,13 +50,14 @@ _OPENROUTER_HEADERS = {
 }
 
 _PROVIDERS = [
-    # ── Groq first — reliable free tier, low latency, function-calling ────────
-    {"name": "groq_llama33_70b",  "model": "llama-3.3-70b-versatile", "client_type": "groq"},
-    {"name": "groq_llama3_70b",   "model": "llama3-70b-8192",         "client_type": "groq"},
-    {"name": "groq_gemma2_9b",    "model": "gemma2-9b-it",            "client_type": "groq"},
-    # ── OpenRouter as last resort (free models can be slow / rate-limited) ────
-    {"name": "openrouter_nemotron_ultra", "model": "nvidia/llama-3.1-nemotron-ultra-253b-v1:free", "client_type": "openai"},
-    {"name": "openrouter_nemotron_super", "model": "nvidia/llama-3.3-nemotron-super-49b-v1:free",  "client_type": "openai"},
+    # ── Groq primary — confirmed working, free tier, TOOLS mode ──────────────
+    {"name": "groq_llama33_70b",          "model": "llama-3.3-70b-versatile",          "client_type": "groq"},
+    # ── OpenRouter gpt-oss — user-selected, high quality ─────────────────────
+    {"name": "openrouter_gpt_oss_120b",   "model": "openai/gpt-oss-120b",              "client_type": "openai"},
+    {"name": "openrouter_gpt_oss_20b",    "model": "openai/gpt-oss-20b",               "client_type": "openai"},
+    # ── Groq fallbacks — current non-decommissioned models ───────────────────
+    {"name": "groq_llama31_8b",           "model": "llama-3.1-8b-instant",             "client_type": "groq"},
+    {"name": "groq_deepseek_r1",          "model": "deepseek-r1-distill-llama-70b",   "client_type": "groq"},
 ]
 
 

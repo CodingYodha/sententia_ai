@@ -45,7 +45,8 @@ logger = logging.getLogger(__name__)
 
 # ── Context limits ─────────────────────────────────────────────────────────────
 _MAX_RAG_CONTEXT_CHARS = 8_000   # ~2000 tokens — leaves room for prompt + schema
-_MAX_TOKENS_RESPONSE   = 4096
+_MAX_TOKENS_RESPONSE   = 8192    # Groq TOOLS mode supports up to 8192 output tokens
+_PROVIDER_TIMEOUT_S    = 60      # Max seconds to wait for a single provider
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -105,20 +106,23 @@ async def _call_with_cascade(
     max_alternatives: int,
 ) -> tuple[StructureGenerationLLMOutput | None, str]:
     """
-    Try each async LLM client in cascade order.
+    Try each async LLM client in cascade order with a per-provider timeout.
     Returns (parsed_output, provider_name_used) or (None, "none") if all fail.
     """
     for llm in cascade:
         try:
-            logger.info(f"Calling {llm.provider} / {llm.model} for structure generation")
+            logger.info(f"Calling {llm.provider} / {llm.model} (timeout={_PROVIDER_TIMEOUT_S}s)")
             t_start = time.monotonic()
 
-            result = await llm.client.chat.completions.create(
-                model=llm.model,
-                response_model=StructureGenerationLLMOutput,
-                max_retries=2,
-                max_tokens=_MAX_TOKENS_RESPONSE,
-                messages=messages,
+            result = await asyncio.wait_for(
+                llm.client.chat.completions.create(
+                    model=llm.model,
+                    response_model=StructureGenerationLLMOutput,
+                    max_retries=1,
+                    max_tokens=_MAX_TOKENS_RESPONSE,
+                    messages=messages,
+                ),
+                timeout=_PROVIDER_TIMEOUT_S,
             )
 
             elapsed = (time.monotonic() - t_start) * 1000
@@ -129,10 +133,13 @@ async def _call_with_cascade(
             )
             return result, llm.provider
 
+        except asyncio.TimeoutError:
+            logger.warning(f"Provider {llm.provider} / {llm.model} timed out after {_PROVIDER_TIMEOUT_S}s — trying next")
+            continue
         except Exception as e:
             logger.warning(
                 f"Provider {llm.provider} / {llm.model} failed: "
-                f"{type(e).__name__}: {str(e)[:200]} — trying next"
+                f"{type(e).__name__}: {str(e)[:500]} — trying next"
             )
             continue
 
