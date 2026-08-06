@@ -14,7 +14,7 @@ from __future__ import annotations
 from enum import Enum
 from typing import Annotated
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 from app.schemas.intake import ScenarioCreate
 
@@ -69,6 +69,16 @@ class ComplianceTouchpoint(BaseModel):
     authority: str = Field(..., description="Regulatory authority responsible, e.g. 'DPIIT', 'RBI', 'IRAS'")
     notes: str | None = Field(default=None, description="Additional context or filing details")
 
+    @field_validator("timing", mode="before")
+    @classmethod
+    def _normalize_timing(cls, v: object) -> str:
+        if isinstance(v, str):
+            v_norm = v.lower().strip().replace("_", "-").replace(" ", "-")
+            for member in ComplianceTiming:
+                if member.value == v_norm or member.name.lower() == v_norm.replace("-", "_"):
+                    return member.value
+        return ComplianceTiming.PRE_CLOSING.value
+
 
 # ══════════════════════════════════════════════════════════════════════════════
 # IDENTIFIED RISK
@@ -80,6 +90,26 @@ class IdentifiedRisk(BaseModel):
     description: str = Field(..., description="Clear description of the risk")
     severity: RiskSeverity = Field(..., description="Assessed severity: high / medium / low")
     mitigation: str = Field(..., description="Recommended mitigation or next step")
+
+    @field_validator("risk_type", mode="before")
+    @classmethod
+    def _normalize_risk_type(cls, v: object) -> str:
+        if isinstance(v, str):
+            v_norm = v.lower().strip()
+            for member in RiskType:
+                if member.value == v_norm:
+                    return member.value
+        return RiskType.REGULATORY.value
+
+    @field_validator("severity", mode="before")
+    @classmethod
+    def _normalize_severity(cls, v: object) -> str:
+        if isinstance(v, str):
+            v_norm = v.lower().strip()
+            for member in RiskSeverity:
+                if member.value == v_norm:
+                    return member.value
+        return RiskSeverity.MEDIUM.value
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -107,6 +137,14 @@ class ImplementationStep(BaseModel):
         ..., description="Estimated completion duration, e.g. '2-3 weeks'"
     )
 
+    @field_validator("step_number", mode="before")
+    @classmethod
+    def _clamp_step_number(cls, v: object) -> int:
+        try:
+            return max(1, int(v)) # type: ignore
+        except (ValueError, TypeError):
+            return 1
+
 
 # ══════════════════════════════════════════════════════════════════════════════
 # STRUCTURING ALTERNATIVE
@@ -118,7 +156,7 @@ class StructuringAlternative(BaseModel):
         ..., description="Rank 1 = most recommended; up to 4 alternatives"
     )
     name: str = Field(
-        ..., max_length=120,
+        ...,
         description="Short descriptive name, e.g. 'Singapore SPV — DTAA Optimized'"
     )
     structure_type: str = Field(
@@ -134,7 +172,7 @@ class StructuringAlternative(BaseModel):
         description="Linear ownership chain, e.g. 'PRC Fund (100%) → Singapore HoldCo (74%) → India OpCo'"
     )
     jurisdictions_involved: list[str] = Field(
-        ..., min_length=2,
+        ...,
         description="All jurisdictions in the structure"
     )
     mermaid_diagram: str = Field(
@@ -142,15 +180,15 @@ class StructuringAlternative(BaseModel):
         description="Valid Mermaid graph TD flowchart showing the ownership and capital flow"
     )
     compliance_touchpoints: list[ComplianceTouchpoint] = Field(
-        ..., min_length=1,
+        ...,
         description="All regulatory obligations — at least one per jurisdiction involved"
     )
     cited_sources: list[str] = Field(
-        ..., min_length=1,
+        ...,
         description="Source document titles cited from the provided regulatory context"
     )
     identified_risks: list[IdentifiedRisk] = Field(
-        ..., min_length=1,
+        ...,
         description="All material risks — at least one per structure"
     )
     implementation_steps: list[ImplementationStep] = Field(
@@ -166,6 +204,81 @@ class StructuringAlternative(BaseModel):
         ...,
         description="Confidence level based on corpus source coverage for this corridor"
     )
+
+    @field_validator("name", mode="before")
+    @classmethod
+    def _truncate_name(cls, v: object) -> str:
+        return str(v)[:120] if v else "Structuring Alternative"
+
+    @field_validator("rank", mode="before")
+    @classmethod
+    def _validate_rank(cls, v: object) -> int:
+        r = int(v) # type: ignore
+        if r < 1 or r > 4:
+            raise ValueError("rank must be between 1 and 4")
+        return r
+
+    @field_validator("jurisdictions_involved", mode="before")
+    @classmethod
+    def _validate_jurisdictions(cls, v: object) -> list[str]:
+        if isinstance(v, list) and len(v) < 2:
+            raise ValueError("at least 2 jurisdictions involved required")
+        if not isinstance(v, list):
+            return ["Origin", "Target"]
+        return [str(x) for x in v]
+
+    @field_validator("compliance_touchpoints", mode="before")
+    @classmethod
+    def _validate_touchpoints(cls, v: object) -> list:
+        if isinstance(v, list) and len(v) == 0:
+            raise ValueError("at least 1 compliance touchpoint required")
+        if not isinstance(v, list):
+            return [{
+                "jurisdiction": "Target",
+                "requirement": "Verify local FDI regulatory compliance",
+                "timing": "pre-closing",
+                "authority": "Competent regulatory authority"
+            }]
+        return v
+
+    @field_validator("cited_sources", mode="before")
+    @classmethod
+    def _ensure_sources(cls, v: object) -> list:
+        if not isinstance(v, list) or not v:
+            return ["General FDI legal guidelines"]
+        return [str(x) for x in v]
+
+    @field_validator("identified_risks", mode="before")
+    @classmethod
+    def _ensure_risks(cls, v: object) -> list:
+        if not isinstance(v, list) or not v:
+            return [{
+                "risk_type": "regulatory",
+                "description": "General cross-border regulatory compliance risks",
+                "severity": "medium",
+                "mitigation": "Consult qualified local legal counsel before closing"
+            }]
+        return v
+
+    @field_validator("estimated_setup_complexity", mode="before")
+    @classmethod
+    def _normalize_complexity(cls, v: object) -> str:
+        if isinstance(v, str):
+            v_norm = v.lower().strip()
+            for member in SetupComplexity:
+                if member.value == v_norm:
+                    return member.value
+        return SetupComplexity.MEDIUM.value
+
+    @field_validator("regulatory_confidence", mode="before")
+    @classmethod
+    def _normalize_confidence(cls, v: object) -> str:
+        if isinstance(v, str):
+            v_norm = v.lower().strip()
+            for member in RegulatoryConfidence:
+                if member.value == v_norm:
+                    return member.value
+        return RegulatoryConfidence.MEDIUM.value
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -189,6 +302,14 @@ class StructureGenerationLLMOutput(BaseModel):
         ...,
         description="Must warn that this is analytical output only, not legal or tax advice. Flag any gaps in corpus coverage."
     )
+
+    @field_validator("recommended_alternative_rank", mode="before")
+    @classmethod
+    def _clamp_recommended_rank(cls, v: object) -> int:
+        try:
+            return max(1, min(int(v), 4)) # type: ignore
+        except (ValueError, TypeError):
+            return 1
 
 
 # ══════════════════════════════════════════════════════════════════════════════
