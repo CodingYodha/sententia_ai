@@ -50,14 +50,12 @@ _OPENROUTER_HEADERS = {
 }
 
 _PROVIDERS = [
-    # ── Groq primary — confirmed working, free tier, TOOLS mode ──────────────
-    {"name": "groq_llama33_70b",          "model": "llama-3.3-70b-versatile",          "client_type": "groq"},
-    # ── OpenRouter gpt-oss — user-selected, high quality ─────────────────────
-    {"name": "openrouter_gpt_oss_120b",   "model": "openai/gpt-oss-120b",              "client_type": "openai"},
-    {"name": "openrouter_gpt_oss_20b",    "model": "openai/gpt-oss-20b",               "client_type": "openai"},
-    # ── Groq fallbacks — current non-decommissioned models ───────────────────
-    {"name": "groq_llama31_8b",           "model": "llama-3.1-8b-instant",             "client_type": "groq"},
-    {"name": "groq_deepseek_r1",          "model": "deepseek-r1-distill-llama-70b",   "client_type": "groq"},
+    # ── Groq — confirmed working, free tier, TOOLS mode ───────────────────────
+    {"name": "groq_llama33_70b",       "model": "llama-3.3-70b-versatile",        "client_type": "groq"},
+    {"name": "groq_gpt_oss_120b",      "model": "openai/gpt-oss-120b",            "client_type": "groq"},
+    {"name": "groq_gpt_oss_20b",       "model": "openai/gpt-oss-20b",             "client_type": "groq"},
+    {"name": "groq_llama31_8b",        "model": "llama-3.1-8b-instant",           "client_type": "groq"},
+    {"name": "groq_deepseek_r1",       "model": "deepseek-r1-distill-llama-70b",  "client_type": "groq"},
 ]
 
 
