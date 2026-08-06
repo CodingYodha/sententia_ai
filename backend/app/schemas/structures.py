@@ -83,6 +83,32 @@ class IdentifiedRisk(BaseModel):
 
 
 # ══════════════════════════════════════════════════════════════════════════════
+# IMPLEMENTATION STEP
+# ══════════════════════════════════════════════════════════════════════════════
+
+class ImplementationStep(BaseModel):
+    """A detailed step in executing the proposed investment structure."""
+    step_number: Annotated[int, Field(ge=1)] = Field(
+        ..., description="Sequential step number starting from 1"
+    )
+    phase: str = Field(
+        ..., description="Execution phase name, e.g. 'Phase 1: Pre-Incorporation & Filings'"
+    )
+    title: str = Field(
+        ..., description="Short action title, e.g. 'Incorporate SPV & Open Bank Account'"
+    )
+    description: str = Field(
+        ..., description="Detailed explanation of regulatory filings, legal actions, and responsible parties"
+    )
+    key_deliverables: list[str] = Field(
+        default_factory=list, description="Documents, filings, or approvals produced in this step"
+    )
+    estimated_timeline: str = Field(
+        ..., description="Estimated completion duration, e.g. '2-3 weeks'"
+    )
+
+
+# ══════════════════════════════════════════════════════════════════════════════
 # STRUCTURING ALTERNATIVE
 # ══════════════════════════════════════════════════════════════════════════════
 
@@ -126,6 +152,10 @@ class StructuringAlternative(BaseModel):
     identified_risks: list[IdentifiedRisk] = Field(
         ..., min_length=1,
         description="All material risks — at least one per structure"
+    )
+    implementation_steps: list[ImplementationStep] = Field(
+        default_factory=list,
+        description="Detailed step-by-step execution roadmap for implementing this proposed structure"
     )
     rationale: str = Field(
         ...,

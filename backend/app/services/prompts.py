@@ -60,7 +60,15 @@ Step 6 — EXIT ANALYSIS
   c) Withholding on dividends/buyback
   d) Drag-along / liquidity provisions and cross-border mechanics
 
-Step 7 — RANK ALTERNATIVES
+Step 7 — IMPLEMENTATION ROADMAP
+  Provide 4-5 detailed sequential execution steps (`implementation_steps`) for every alternative:
+  a) Step 1: Pre-incorporation due diligence, name reservation & regulatory route assessment
+  b) Step 2: Entity setup & local substance establishment (holding co, bank accounts, resident directors)
+  c) Step 3: Regulatory approvals & statutory filings (FDI applications, sector clearances)
+  d) Step 4: Execution & fund remittance (share subscription, SHA/SSA execution, inward remittance)
+  e) Step 5: Post-closing registrations & UBO disclosures (central bank reporting, tax registrations)
+
+Step 8 — RANK ALTERNATIVES
   Rank 1 = highest regulatory certainty + adequate tax efficiency + manageable complexity
   Rank 2 = alternative with different trade-off (simpler structure, lower cost, lower certainty)
   Rank 3/4 = additional options worth considering for specific investor preferences

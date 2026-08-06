@@ -36,6 +36,15 @@ interface IdentifiedRisk {
   mitigation: string;
 }
 
+export interface ImplementationStep {
+  step_number: number;
+  phase: string;
+  title: string;
+  description: string;
+  key_deliverables: string[];
+  estimated_timeline: string;
+}
+
 export interface StructuringAlternative {
   rank: number;
   name: string;
@@ -47,6 +56,7 @@ export interface StructuringAlternative {
   compliance_touchpoints: ComplianceTouchpoint[];
   cited_sources: string[];
   identified_risks: IdentifiedRisk[];
+  implementation_steps?: ImplementationStep[];
   rationale: string;
   estimated_setup_complexity: "low" | "medium" | "high";
   regulatory_confidence: "high" | "medium" | "low";
@@ -90,7 +100,7 @@ const CONFIDENCE_CFG = {
   low:    { color: "#f87171", label: "Low confidence"    },
 };
 
-type Tab = "overview" | "diagram" | "compliance" | "risks";
+type Tab = "overview" | "diagram" | "compliance" | "risks" | "steps";
 
 // ── Main component ────────────────────────────────────────────────────────────
 
@@ -148,6 +158,7 @@ export function StructureCard({
     { id: "diagram",    label: "Diagram" },
     { id: "compliance", label: "Compliance", count: alternative.compliance_touchpoints.length },
     { id: "risks",      label: "Risks",      count: alternative.identified_risks.length },
+    { id: "steps",      label: "Steps",      count: alternative.implementation_steps?.length || 0 },
   ];
 
   return (
@@ -411,6 +422,72 @@ export function StructureCard({
                 </div>
               );
             })}
+          </div>
+        )}
+
+        {/* IMPLEMENTATION STEPS */}
+        {tab === "steps" && (
+          <div className="space-y-3">
+            {alternative.implementation_steps && alternative.implementation_steps.length > 0 ? (
+              alternative.implementation_steps.map((step, i) => (
+                <div
+                  key={i}
+                  className="rounded-xl p-4 transition-all"
+                  style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+                >
+                  <div className="flex items-center justify-between gap-3 mb-2 flex-wrap">
+                    <div className="flex items-center gap-2">
+                      <span
+                        className="inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold"
+                        style={{ background: "rgba(99,102,241,0.15)", color: "#818cf8", border: "1px solid rgba(99,102,241,0.3)" }}
+                      >
+                        #{step.step_number}
+                      </span>
+                      <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: "#818cf8" }}>
+                        {step.phase}
+                      </span>
+                    </div>
+                    <span
+                      className="px-2.5 py-0.5 rounded-full text-xs font-medium"
+                      style={{ background: "rgba(52,211,153,0.1)", color: "#34d399", border: "1px solid rgba(52,211,153,0.2)" }}
+                    >
+                      🕒 {step.estimated_timeline}
+                    </span>
+                  </div>
+
+                  <h4 className="text-sm font-bold mb-1.5" style={{ color: "#f1f1f8" }}>
+                    {step.title}
+                  </h4>
+
+                  <p className="text-sm leading-relaxed mb-3" style={{ color: "#cbd5e1" }}>
+                    {step.description}
+                  </p>
+
+                  {step.key_deliverables && step.key_deliverables.length > 0 && (
+                    <div>
+                      <p className="text-[11px] font-semibold uppercase tracking-wider mb-1.5" style={{ color: "#64748b" }}>
+                        Key Deliverables & Filings
+                      </p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {step.key_deliverables.map((d, j) => (
+                          <span
+                            key={j}
+                            className="px-2.5 py-1 rounded-lg text-xs flex items-center gap-1.5"
+                            style={{ background: "rgba(255,255,255,0.04)", color: "#94a3b8", border: "1px solid rgba(255,255,255,0.08)" }}
+                          >
+                            <span style={{ color: "#818cf8" }}>📄</span> {d}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))
+            ) : (
+              <p className="text-sm py-4 text-center" style={{ color: "#64748b" }}>
+                No implementation steps available for this structure.
+              </p>
+            )}
           </div>
         )}
       </div>

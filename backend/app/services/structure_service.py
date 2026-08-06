@@ -33,6 +33,7 @@ from app.schemas.structures import (
     RiskType,
     SetupComplexity,
     RegulatoryConfidence,
+    ImplementationStep,
     StructuringAlternative,
     StructureGenerationLLMOutput,
     StructureGenerationResponse,
@@ -286,6 +287,48 @@ def _build_degraded_alternatives(
                 compliance_touchpoints=touchpoints(target) + touchpoints(spv),
                 cited_sources=["General FDI structuring principles", "Cross-border regulatory guidelines"],
                 identified_risks=generic_risks,
+                implementation_steps=[
+                    ImplementationStep(
+                        step_number=1,
+                        phase="Phase 1: Pre-Incorporation & Filings",
+                        title=f"Name Clearance & Pre-FDI Due Diligence ({spv})",
+                        description=f"Reserve the SPV corporate name with {spv} corporate registry. Conduct initial regulatory checks regarding foreign equity caps in {target} {sector} sector.",
+                        key_deliverables=[f"{spv} Name Approval Certificate", "Initial Regulatory Pre-Check Memorandum"],
+                        estimated_timeline="1-2 weeks",
+                    ),
+                    ImplementationStep(
+                        step_number=2,
+                        phase="Phase 2: SPV Setup & Substance",
+                        title=f"Incorporate {spv} HoldCo & Establish Local Substance",
+                        description=f"Incorporate the SPV holding entity in {spv}. Appoint resident directors, open a local corporate bank account, and establish physical office substance to satisfy DTAA/PPT requirements.",
+                        key_deliverables=[f"{spv} Certificate of Incorporation", "Board Minutes", "Corporate Bank Account Setup"],
+                        estimated_timeline="2-3 weeks",
+                    ),
+                    ImplementationStep(
+                        step_number=3,
+                        phase="Phase 3: Regulatory Approval & Clearances",
+                        title=f"Submit FDI Approval & Regulatory Notification ({target})",
+                        description=f"Prepare and file foreign direct investment clearance applications with {target} sector regulator or FDI authority as required for {sector} investments.",
+                        key_deliverables=["FDI Filing Receipt", "Sectoral Regulator Clearance / Approval Letter"],
+                        estimated_timeline="4-8 weeks",
+                    ),
+                    ImplementationStep(
+                        step_number=4,
+                        phase="Phase 4: Execution & Capital Remittance",
+                        title="Execute Share Subscription & Remit Capital",
+                        description=f"Execute the Shareholders' Agreement (SHA) and Share Subscription Agreement (SSA). Remit investment funds from {origin} to {spv} HoldCo, and onwards into {target} OpCo.",
+                        key_deliverables=["Shareholders' Agreement (SHA)", "Bank Remittance Confirmation", "Share Certificates"],
+                        estimated_timeline="1-2 weeks",
+                    ),
+                    ImplementationStep(
+                        step_number=5,
+                        phase="Phase 5: Post-Closing Compliance & Registrations",
+                        title=f"Complete Post-Closing Filings & Tax Registrations ({target})",
+                        description=f"File post-closing foreign exchange returns (e.g. Form FC-GPR/FIRMS in India or local equivalent) with the central bank. Register ultimate beneficial ownership (UBO/SBO) details.",
+                        key_deliverables=["Central Bank FDI Filing Acknowledgment", "UBO Register Entry", "Tax ID / PAN Registration"],
+                        estimated_timeline="2-4 weeks",
+                    ),
+                ],
                 rationale=(
                     f"{spv} is commonly used as an intermediate holding jurisdiction "
                     f"for {target} investments. Verify treaty access, substance "
@@ -312,6 +355,40 @@ def _build_degraded_alternatives(
             compliance_touchpoints=touchpoints(target),
             cited_sources=["General FDI structuring principles", "Cross-border regulatory guidelines"],
             identified_risks=generic_risks,
+            implementation_steps=[
+                ImplementationStep(
+                    step_number=1,
+                    phase="Phase 1: Pre-Closing & Approvals",
+                    title=f"Conduct FDI Regulatory Review & Pre-Clearance ({target})",
+                    description=f"Verify whether direct investment from {origin} into {target} {sector} requires prior government or sector regulator clearance.",
+                    key_deliverables=["FDI Route Assessment Report", "Government Approval Application (if applicable)"],
+                    estimated_timeline="2-4 weeks",
+                ),
+                ImplementationStep(
+                    step_number=2,
+                    phase="Phase 2: Definitive Agreements",
+                    title="Negotiate & Execute Share Purchase / Subscription Agreement",
+                    description=f"Finalize transaction terms, voting rights, board representation, and exit rights between {origin} investor and {target} target company.",
+                    key_deliverables=["Share Subscription Agreement (SSA)", "Articles of Association (AoA) Amendments"],
+                    estimated_timeline="2-3 weeks",
+                ),
+                ImplementationStep(
+                    step_number=3,
+                    phase="Phase 3: Fund Remittance & Share Allotment",
+                    title="Remit Inward Investment & Issue Shares",
+                    description=f"Transfer investment funds via authorized banking channels into {target}. Board of directors of {target} OpCo formally allotments shares to foreign investor.",
+                    key_deliverables=["Inward Remittance Certificate (FIRC)", "Board Allotment Resolution", "Share Certificate"],
+                    estimated_timeline="1-2 weeks",
+                ),
+                ImplementationStep(
+                    step_number=4,
+                    phase="Phase 4: Post-Closing Registrations",
+                    title="File Foreign Exchange & UBO Disclosures",
+                    description=f"Submit mandatory post-closing foreign investment returns to {target} central bank or corporate registrar within prescribed statutory deadlines.",
+                    key_deliverables=["Central Bank FDI Registration Receipt", "Beneficial Ownership Register Entry"],
+                    estimated_timeline="2-3 weeks",
+                ),
+            ],
             rationale=(
                 "Direct ownership is the baseline comparison point for cross-border FDI. "
                 "Simpler to establish but may require additional treaty or sector analysis."
@@ -341,6 +418,40 @@ def _build_degraded_alternatives(
                 compliance_touchpoints=touchpoints(target),
                 cited_sources=["General FDI structuring principles", "Cross-border regulatory guidelines"],
                 identified_risks=generic_risks,
+                implementation_steps=[
+                    ImplementationStep(
+                        step_number=1,
+                        phase="Phase 1: JV Term Sheet & Governance Framework",
+                        title="Negotiate JV Agreement & Deadlock Provisions",
+                        description=f"Agree on equity split, board composition, veto matters, deadlock resolution, and reserved matters between {origin} investor and local {target} partner.",
+                        key_deliverables=["Executed JV Term Sheet", "Draft Joint Venture Agreement (JVA)"],
+                        estimated_timeline="3-4 weeks",
+                    ),
+                    ImplementationStep(
+                        step_number=2,
+                        phase="Phase 2: Corporate Setup & Approvals",
+                        title=f"Incorporate JV Entity & Obtain Regulatory Clearances ({target})",
+                        description=f"Incorporate new Joint Venture entity in {target}. Obtain necessary sector licenses and foreign investment approvals.",
+                        key_deliverables=["JV Certificate of Incorporation", "Regulatory Clearances"],
+                        estimated_timeline="3-5 weeks",
+                    ),
+                    ImplementationStep(
+                        step_number=3,
+                        phase="Phase 3: Capital Contribution & Funding",
+                        title="Inject Capital & Issue Joint Shares",
+                        description=f"Remit foreign capital from {origin} and local contribution from {target} partner into the JV bank account.",
+                        key_deliverables=["Remittance Records", "Share Allotment Certificates"],
+                        estimated_timeline="1-2 weeks",
+                    ),
+                    ImplementationStep(
+                        step_number=4,
+                        phase="Phase 4: Post-Closing Filings",
+                        title="File Mandatory FDI & Competition Returns",
+                        description=f"Submit FDI reporting and anti-trust/merger notification filings (if threshold met) to relevant authorities.",
+                        key_deliverables=["FDI Reporting Receipt", "Merger Clearance (if applicable)"],
+                        estimated_timeline="2-3 weeks",
+                    ),
+                ],
                 rationale="Joint venture structure with local partnership.",
                 estimated_setup_complexity=SetupComplexity.HIGH,
                 regulatory_confidence=RegulatoryConfidence.LOW,
@@ -373,7 +484,7 @@ def _build_failure_response(
             "any investment or structuring decision."
         ),
         rag_sources_used=rag_sources,
-        llm_provider_used="ai_generated",
+        llm_provider_used="degraded_fallback",
         rag_corpus_coverage=coverage,
     )
 

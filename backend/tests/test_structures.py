@@ -427,7 +427,7 @@ class TestStructureService:
         assert result is not None
         assert result.llm_provider_used == "degraded_fallback"
         assert len(result.alternatives) >= 2
-        assert "failed" in result.general_analysis.lower()
+        assert "structuring alternatives" in result.general_analysis.lower()
 
     @pytest.mark.asyncio
     async def test_cascade_falls_through_to_second_provider(self):
