@@ -221,8 +221,8 @@ export default function ResultsPage() {
             {hasAnyIllustrative && !isIllustrative && (
               <ComplianceBanner
                 type="WARNING"
-                label="Some alternatives are Illustrative — Not Yet Rule-Validated"
-                message="One or more structures below were evaluated using general AI analysis rather than deterministic Rego rules. These are marked with an amber banner. Do not rely on them for compliance decisions without qualified local counsel."
+                label="Compliance evaluated via AI — not hard-coded policy rules"
+                message="Compliance analysis used AI reasoning rather than deterministic Rego rules. Treat as guidance only. Always verify with qualified local counsel before making any investment or structuring decision."
               />
             )}
             {hasAnyBlocked && (
