@@ -44,23 +44,13 @@ export default function AdminPage() {
   ];
 
   return (
-    <div className="min-h-screen pt-24 pb-16 px-4">
+    <div className="min-h-screen pt-24 pb-16 px-4 relative z-10">
       <div className="max-w-3xl mx-auto">
         <div className="mb-8">
-          <h1
-            className="text-3xl font-bold mb-2"
-            style={{
-              background: "linear-gradient(135deg, #f1f1f8 30%, #f59e0b 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
+          <h1 className="text-4xl font-editorial-display text-stone-900 mb-3">
             Admin Dashboard
           </h1>
-          <div
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs"
-            style={{ background: "rgba(245,158,11,0.1)", border: "1px solid rgba(245,158,11,0.2)", color: "#f59e0b" }}
-          >
+          <div className="badge-pill bg-amber-50 text-amber-800 border-amber-200">
             ⚠ Auth stub — full wiring in Prompt 9
           </div>
         </div>
@@ -69,20 +59,16 @@ export default function AdminPage() {
           {cards.map(({ label, value, color }) => (
             <div
               key={label}
-              className="rounded-xl px-5 py-4"
-              style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)" }}
+              className="card-editorial px-6 py-5"
             >
-              <p className="text-xs" style={{ color: "#64748b" }}>{label}</p>
-              <p className="text-sm font-semibold mt-0.5" style={{ color }}>{value}</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-stone-500 mb-1">{label}</p>
+              <p className="text-base font-editorial-display font-medium text-stone-900">{value}</p>
             </div>
           ))}
         </div>
 
-        <div
-          className="rounded-xl p-5"
-          style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}
-        >
-          <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "#64748b" }}>Prompt 9 — Auth Wiring Checklist</p>
+        <div className="card-editorial p-6">
+          <p className="text-xs font-semibold uppercase tracking-widest mb-4 text-stone-500">Prompt 9 — Auth Wiring Checklist</p>
           {[
             "Replace localStorage role stub with JWT from auth provider",
             "Wire review queue to real user identities",
@@ -90,8 +76,8 @@ export default function AdminPage() {
             "Implement audit log viewer with filter/export",
             "Add SSO / SAML integration for enterprise users",
           ].map((item, i) => (
-            <div key={i} className="flex items-center gap-2 py-1.5 text-sm" style={{ color: "#64748b" }}>
-              <span style={{ color: "#475569" }}>□</span>
+            <div key={i} className="flex items-center gap-2.5 py-2 text-sm font-editorial-body text-stone-700 border-b border-stone-100 last:border-0">
+              <span className="text-stone-400 font-bold">□</span>
               {item}
             </div>
           ))}

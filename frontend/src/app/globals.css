@@ -1,47 +1,54 @@
-/* ─── Sententia.ai — Global Styles ─────────────────────────────────────────── */
+/* ─── Sententia.ai — Editorial Design System (design.md) ──────────────────── */
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..600;1,400..600&family=Inter:wght@300;400;500;600;700&display=swap");
 
-/* Tailwind v4 utilities.  The legacy @tailwind directives are not expanded by
-   the v4 PostCSS plugin, which left the deployed UI with only inline styles. */
 @import "tailwindcss";
 
 /* ── Design Tokens ──────────────────────────────────────────────────────────── */
 :root {
-  /* Brand palette */
-  --color-brand-50:  #eef2ff;
-  --color-brand-100: #e0e7ff;
-  --color-brand-400: #818cf8;
-  --color-brand-500: #6366f1;
-  --color-brand-600: #4f46e5;
-  --color-brand-700: #4338ca;
-  --color-brand-900: #1e1b4b;
+  /* Surface & Floor */
+  --colors-canvas: #f5f5f5;
+  --colors-canvas-soft: #fafafa;
+  --colors-canvas-deep: #0c0a09;
+  --colors-surface-card: #ffffff;
+  --colors-surface-strong: #f0efed;
+  --colors-surface-dark: #0c0a09;
+  --colors-surface-dark-elevated: #1c1917;
 
-  /* Surface */
-  --color-surface-0:  #0a0a0f;
-  --color-surface-1:  #111118;
-  --color-surface-2:  #16161f;
-  --color-surface-3:  #1e1e2a;
+  /* Ink & Text */
+  --colors-ink: #0c0a09;
+  --colors-primary: #292524;
+  --colors-primary-active: #0c0a09;
+  --colors-body: #4e4e4e;
+  --colors-body-strong: #292524;
+  --colors-muted: #777169;
+  --colors-muted-soft: #a8a29e;
+  --colors-on-primary: #ffffff;
+  --colors-on-dark: #ffffff;
+  --colors-on-dark-soft: #a8a29e;
 
-  /* Text */
-  --color-text-primary:   #f1f1f8;
-  --color-text-secondary: #a1a1b5;
-  --color-text-muted:     #6b6b80;
+  /* Hairlines & Borders */
+  --colors-hairline: #e7e5e4;
+  --colors-hairline-soft: #f0efed;
+  --colors-hairline-strong: #d6d3d1;
 
-  /* Status */
-  --color-success: #34d399;
-  --color-warning: #fbbf24;
-  --color-error:   #f87171;
+  /* Atmospheric Gradient Orbs (signature) */
+  --gradient-mint: #a7e5d3;
+  --gradient-peach: #f4c5a8;
+  --gradient-lavender: #c8b8e0;
+  --gradient-sky: #a8c8e8;
+  --gradient-rose: #e8b8c4;
 
-  /* Glow */
-  --glow-brand: 0 0 40px rgba(99, 102, 241, 0.15);
+  /* Fonts */
+  --font-serif-family: var(--font-garamond), "EB Garamond", Georgia, serif;
+  --font-sans-family: var(--font-inter), "Inter", system-ui, sans-serif;
 }
 
-/* ── Base ───────────────────────────────────────────────────────────────────── */
+/* ── Base Page Layout ───────────────────────────────────────────────────────── */
 html {
-  font-family: "Inter", var(--font-inter), system-ui, sans-serif;
-  background-color: var(--color-surface-0);
-  color: var(--color-text-primary);
+  font-family: var(--font-sans-family);
+  background-color: var(--colors-canvas);
+  color: var(--colors-ink);
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -49,55 +56,189 @@ html {
 
 body {
   min-height: 100vh;
-  background:
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.12) 0%, transparent 70%),
-    var(--color-surface-0);
+  background-color: var(--colors-canvas);
+  color: var(--colors-ink);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Atmospheric page background gradients */
+body::before {
+  content: "";
+  position: fixed;
+  top: -10vw;
+  left: -10vw;
+  width: 50vw;
+  height: 50vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(167, 229, 211, 0.25) 0%, rgba(200, 184, 224, 0.15) 50%, transparent 70%);
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 30vh;
+  right: -10vw;
+  width: 45vw;
+  height: 45vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(244, 197, 168, 0.25) 0%, rgba(232, 184, 196, 0.15) 50%, transparent 70%);
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Typography Classes ──────────────────────────────────────────────────────── */
+.font-serif {
+  font-family: var(--font-serif-family);
+}
+
+.font-editorial-display {
+  font-family: var(--font-serif-family);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  color: var(--colors-ink);
+}
+
+.font-editorial-body {
+  font-family: var(--font-sans-family);
+  font-weight: 400;
+  letter-spacing: 0.012em; /* +0.16px tracking */
+  color: var(--colors-body);
+  line-height: 1.55;
+}
+
+.caption-uppercase {
+  font-family: var(--font-sans-family);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── Editorial Component Utilities ──────────────────────────────────────────── */
+
+/* Ink Primary Pill Button */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--colors-primary);
+  color: var(--colors-on-primary);
+  font-family: var(--font-sans-family);
+  font-size: 15px;
+  font-weight: 500;
+  padding: 10px 22px;
+  height: 42px;
+  border-radius: 9999px; /* rounded.pill */
+  border: 1px solid transparent;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.btn-primary:hover {
+  background-color: var(--colors-primary-active);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Outline Pill Button */
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  color: var(--colors-ink);
+  font-family: var(--font-sans-family);
+  font-size: 15px;
+  font-weight: 500;
+  padding: 10px 22px;
+  height: 42px;
+  border-radius: 9999px;
+  border: 1px solid var(--colors-hairline-strong);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.btn-outline:hover {
+  background-color: var(--colors-surface-strong);
+  border-color: var(--colors-ink);
+}
+
+/* Editorial Card Surface */
+.card-editorial {
+  background-color: var(--colors-surface-card);
+  border: 1px solid var(--colors-hairline);
+  border-radius: 16px; /* rounded.xl */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-editorial:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+/* Badge Pill */
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  background-color: var(--colors-surface-strong);
+  color: var(--colors-body-strong);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  border: 1px solid var(--colors-hairline);
+}
+
+/* Input Fields */
+input, select, textarea {
+  background-color: var(--colors-surface-card);
+  border: 1px solid var(--colors-hairline-strong);
+  color: var(--colors-ink);
+  border-radius: 10px;
+  padding: 11px 16px;
+  font-size: 14px;
+  font-family: var(--font-sans-family);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--colors-ink) !important;
+  box-shadow: 0 0 0 2px rgba(12, 10, 9, 0.1) !important;
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--colors-muted-soft);
 }
 
 /* ── Scrollbar ──────────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar               { width: 6px; }
-::-webkit-scrollbar-track         { background: var(--color-surface-1); }
-::-webkit-scrollbar-thumb         { background: var(--color-surface-3); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover   { background: var(--color-brand-700); }
+::-webkit-scrollbar-track         { background: var(--colors-canvas); }
+::-webkit-scrollbar-thumb         { background: var(--colors-hairline-strong); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover   { background: var(--colors-muted); }
 
 /* ── Selection ──────────────────────────────────────────────────────────────── */
 ::selection {
-  background-color: rgba(99, 102, 241, 0.3);
-  color: var(--color-text-primary);
+  background-color: rgba(200, 184, 224, 0.35);
+  color: var(--colors-ink);
 }
 
-/* ── Form inputs ─────────────────────────────────────────────────────────────── */
-input:focus,
-select:focus,
-textarea:focus {
-  border-color: rgba(99, 102, 241, 0.5) !important;
-  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: var(--color-text-muted);
-}
-
-select option {
-  background: #111118;
-  color: var(--color-text-primary);
-}
-
-/* ── Mermaid container — prevent overflow ────────────────────────────────────── */
-.mermaid-container svg {
-  max-width: 100%;
-  height: auto;
-}
-
-/* ── Page padding for fixed navbar (h-14) ────────────────────────────────────── */
+/* ── Page padding for fixed navbar (h-16) ────────────────────────────────────── */
 .pt-22 {
-  padding-top: 5.5rem;  /* 88px — clears 56px nav + spacing */
-}
-
-/* ── Responsive structure grid — collapses to 1 col on mobile ────────────────── */
-@media (max-width: 768px) {
-  [style*="grid-template-columns"] {
-    grid-template-columns: 1fr !important;
-  }
+  padding-top: 5.5rem;
 }

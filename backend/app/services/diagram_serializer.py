@@ -52,10 +52,11 @@ logger = logging.getLogger(__name__)
 # These map to mermaid.js classDef — the frontend renders them with its theme
 # ──────────────────────────────────────────────────────────────────────────────
 _CLASS_DEFS = """\
-    classDef originNode     fill:#1e3a5f,stroke:#4a9eff,color:#fff,stroke-width:2px
-    classDef entityNode     fill:#243b55,stroke:#3a7bd5,color:#e8eaf6,stroke-width:1.5px
-    classDef targetNode     fill:#1b4332,stroke:#40916c,color:#d8f3dc,stroke-width:2px
-    classDef regulatoryNode fill:#7b2d00,stroke:#f4845f,color:#fff,stroke-width:2px,stroke-dasharray:4 2"""
+    classDef originNode     fill:#1e293b,stroke:#6366f1,color:#f8fafc,stroke-width:2px,rx:8px,ry:8px
+    classDef spvNode        fill:#2e1065,stroke:#a855f7,color:#f8fafc,stroke-width:2px,rx:8px,ry:8px
+    classDef entityNode     fill:#0f172a,stroke:#38bdf8,color:#f8fafc,stroke-width:1.5px,rx:8px,ry:8px
+    classDef targetNode     fill:#064e3b,stroke:#10b981,color:#ecfdf5,stroke-width:2px,rx:8px,ry:8px
+    classDef regulatoryNode fill:#451a03,stroke:#f59e0b,color:#fef3c7,stroke-width:2px,stroke-dasharray:4 2,rx:8px,ry:8px"""
 
 # Mermaid reserved words that cannot be used as node IDs
 _RESERVED = frozenset(["end", "graph", "subgraph", "style", "class", "click",

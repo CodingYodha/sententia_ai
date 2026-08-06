@@ -23,6 +23,8 @@ interface MermaidDiagramProps {
   syntax: string;
   theme?: DiagramTheme;
   className?: string;
+  maxHeight?: string;
+  maxWidth?: string;
   onSvgReady?: (svgElement: SVGSVGElement) => void;
 }
 
@@ -30,6 +32,8 @@ export function MermaidDiagram({
   syntax,
   theme = "dark",
   className = "",
+  maxHeight,
+  maxWidth,
   onSvgReady,
 }: MermaidDiagramProps) {
   const uid = useId().replace(/:/g, "m"); // unique, URL-safe ID
@@ -54,12 +58,13 @@ export function MermaidDiagram({
           startOnLoad: false,
           theme,
           securityLevel: "loose", // needed for classDef styling
-          fontFamily: "'Inter', 'Segoe UI', sans-serif",
+          fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
           flowchart: {
             htmlLabels: true,
             curve: "basis",
-            rankSpacing: 80,
-            nodeSpacing: 60,
+            rankSpacing: 55,
+            nodeSpacing: 45,
+            padding: 12,
           },
         });
 
@@ -83,12 +88,14 @@ export function MermaidDiagram({
             const h = parseFloat(svgEl.getAttribute("height") || "600");
             svgEl.setAttribute("viewBox", `0 0 ${w} ${h}`);
           }
-          svgEl.setAttribute("width", "100%");
-          svgEl.setAttribute("height", "100%");
           svgEl.style.width = "100%";
-          svgEl.style.height = "100%";
-          svgEl.style.maxWidth = "100%";
-          svgEl.style.maxHeight = "100%";
+          svgEl.style.height = "auto";
+          svgEl.style.maxWidth = maxWidth || "100%";
+          if (maxHeight) {
+            svgEl.style.maxHeight = maxHeight;
+          } else {
+            svgEl.style.maxHeight = "350px";
+          }
           svgEl.style.objectFit = "contain";
           svgEl.style.display = "block";
           svgEl.style.margin = "0 auto";

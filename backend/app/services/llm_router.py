@@ -75,44 +75,55 @@ class LLMClient:
 # Client factories
 # ══════════════════════════════════════════════════════════════════════════════
 
+import httpx
+
+
 def _make_groq_openai_sync(api_key: str) -> object:
     """Sync: Groq OpenAI-compat endpoint → instructor MD_JSON mode."""
-    raw = openai.OpenAI(base_url=_GROQ_OPENAI_BASE, api_key=api_key)
+    http_client = httpx.Client()
+    raw = openai.OpenAI(base_url=_GROQ_OPENAI_BASE, api_key=api_key, http_client=http_client)
     return instructor.from_openai(raw, mode=instructor.Mode.MD_JSON)
 
 
 def _make_groq_openai_async(api_key: str) -> object:
     """Async: Groq OpenAI-compat endpoint → instructor MD_JSON mode."""
-    raw = openai.AsyncOpenAI(base_url=_GROQ_OPENAI_BASE, api_key=api_key)
+    http_client = httpx.AsyncClient()
+    raw = openai.AsyncOpenAI(base_url=_GROQ_OPENAI_BASE, api_key=api_key, http_client=http_client)
     return instructor.from_openai(raw, mode=instructor.Mode.MD_JSON)
 
 
 def _make_groq_tools_sync(api_key: str) -> object:
     """Sync: Groq native SDK → instructor TOOLS mode (function-calling)."""
-    raw = groq_sdk.Groq(api_key=api_key)
+    http_client = httpx.Client()
+    raw = groq_sdk.Groq(api_key=api_key, http_client=http_client)
     return instructor.from_groq(raw, mode=instructor.Mode.TOOLS)
 
 
 def _make_groq_tools_async(api_key: str) -> object:
     """Async: Groq native SDK → instructor TOOLS mode (function-calling)."""
-    raw = groq_sdk.AsyncGroq(api_key=api_key)
+    http_client = httpx.AsyncClient()
+    raw = groq_sdk.AsyncGroq(api_key=api_key, http_client=http_client)
     return instructor.from_groq(raw, mode=instructor.Mode.TOOLS)
 
 
 def _make_openrouter_sync(api_key: str) -> object:
+    http_client = httpx.Client()
     raw = openai.OpenAI(
         base_url=_OPENROUTER_BASE,
         api_key=api_key,
         default_headers=_OPENROUTER_HEADERS,
+        http_client=http_client,
     )
     return instructor.from_openai(raw, mode=instructor.Mode.MD_JSON)
 
 
 def _make_openrouter_async(api_key: str) -> object:
+    http_client = httpx.AsyncClient()
     raw = openai.AsyncOpenAI(
         base_url=_OPENROUTER_BASE,
         api_key=api_key,
         default_headers=_OPENROUTER_HEADERS,
+        http_client=http_client,
     )
     return instructor.from_openai(raw, mode=instructor.Mode.MD_JSON)
 

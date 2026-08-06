@@ -61,64 +61,47 @@ export default function LoginPage() {
   }
 
   const inputStyle: React.CSSProperties = {
-    width: "100%", padding: "11px 14px", borderRadius: "10px", fontSize: "14px",
-    background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)",
-    color: "#f1f1f8", outline: "none",
+    width: "100%", padding: "12px 16px", borderRadius: "12px", fontSize: "14px",
+    background: "#ffffff", border: "1px solid #d6d3d1",
+    color: "#0c0a09", outline: "none",
   };
 
   if (loading) return null;
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center px-4"
-      style={{
-        background: `
-          radial-gradient(ellipse 60% 40% at 50% -10%, rgba(99,102,241,0.18) 0%, transparent 70%),
-          #0a0a0f
-        `,
-      }}
+      className="min-h-screen flex items-center justify-center px-4 py-12 relative z-10"
     >
       <div className="w-full max-w-md">
 
         {/* Logo */}
-        <div className="flex flex-col items-center mb-8">
-          <div
-            className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4"
-            style={{ background: "rgba(99,102,241,0.15)", border: "1px solid rgba(99,102,241,0.3)", boxShadow: "0 0 32px rgba(99,102,241,0.2)" }}
-          >
+        <div className="flex flex-col items-center mb-8 text-center">
+          <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4 bg-stone-900 shadow-md">
             <svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-              <path d="M6 24L16 8L26 24" stroke="#818cf8" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M9.5 19h13" stroke="#6366f1" strokeWidth="2" strokeLinecap="round"/>
+              <path d="M6 24L16 8L26 24" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M9.5 19h13" stroke="#d6d3d1" strokeWidth="2" strokeLinecap="round"/>
             </svg>
           </div>
-          <h1 className="text-xl font-bold" style={{ color: "#f1f1f8" }}>
-            Sententia<span style={{ color: "#818cf8" }}>.ai</span>
+          <h1 className="text-3xl font-editorial-display text-stone-900">
+            Sententia<span className="text-stone-500">.ai</span>
           </h1>
-          <p className="text-sm mt-1" style={{ color: "#64748b" }}>
+          <p className="text-sm font-editorial-body text-stone-600 mt-1">
             Cross-Border Fund Structuring Platform
           </p>
         </div>
 
         {/* Card */}
-        <div
-          className="rounded-2xl p-8"
-          style={{
-            background:  "rgba(255,255,255,0.025)",
-            border:      "1px solid rgba(255,255,255,0.08)",
-            boxShadow:   "0 8px 48px rgba(0,0,0,0.5)",
-          }}
-        >
+        <div className="card-editorial p-8 shadow-sm">
           {/* Mode tabs */}
-          <div className="flex gap-1 mb-6 p-1 rounded-xl" style={{ background: "rgba(255,255,255,0.04)" }}>
+          <div className="flex gap-1.5 mb-6 p-1 rounded-full bg-stone-100">
             {(["signin", "signup"] as const).map((m) => (
               <button
                 key={m}
                 onClick={() => { setMode(m); setLocalErr(null); setResetSent(false); }}
-                className="flex-1 py-2 rounded-lg text-sm font-medium transition-all"
+                className="flex-1 py-2 rounded-full text-xs font-semibold transition-all"
                 style={{
-                  background: mode === m ? "rgba(99,102,241,0.2)" : "transparent",
-                  color:      mode === m ? "#818cf8" : "#64748b",
-                  border:     mode === m ? "1px solid rgba(99,102,241,0.3)" : "1px solid transparent",
+                  background: mode === m ? "#0c0a09" : "transparent",
+                  color:      mode === m ? "#ffffff" : "#777169",
                 }}
               >
                 {m === "signin" ? "Sign In" : "Create Account"}
@@ -128,12 +111,9 @@ export default function LoginPage() {
 
           {/* Password reset success */}
           {resetSent && (
-            <div
-              className="rounded-xl p-4 mb-5 text-sm text-center"
-              style={{ background: "rgba(52,211,153,0.07)", border: "1px solid rgba(52,211,153,0.2)", color: "#6ee7b7" }}
-            >
+            <div className="rounded-2xl p-4 mb-5 text-sm text-center bg-emerald-50 border border-emerald-200 text-emerald-800 font-medium">
               Reset link sent — check your email.
-              <button className="block mx-auto mt-2 underline text-xs" style={{ color: "#64748b" }} onClick={() => { setMode("signin"); setResetSent(false); }}>
+              <button className="block mx-auto mt-2 underline text-xs text-stone-600" onClick={() => { setMode("signin"); setResetSent(false); }}>
                 Back to Sign In
               </button>
             </div>
@@ -147,7 +127,7 @@ export default function LoginPage() {
                 {/* Full name — sign up only */}
                 {mode === "signup" && (
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-widest mb-1.5" style={{ color: "#64748b" }}>
+                    <label className="block text-xs font-semibold uppercase tracking-widest mb-1.5 text-stone-600">
                       Full Name
                     </label>
                     <input
@@ -164,8 +144,8 @@ export default function LoginPage() {
 
                 {/* Email */}
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-widest mb-1.5" style={{ color: "#64748b" }}>
-                    Work Email <span style={{ color: "#f87171" }}>*</span>
+                  <label className="block text-xs font-semibold uppercase tracking-widest mb-1.5 text-stone-600">
+                    Work Email <span className="text-red-500">*</span>
                   </label>
                   <input
                     id="input-email"
@@ -183,15 +163,14 @@ export default function LoginPage() {
                 {mode !== "reset" && (
                   <div>
                     <div className="flex items-center justify-between mb-1.5">
-                      <label className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#64748b" }}>
-                        Password <span style={{ color: "#f87171" }}>*</span>
+                      <label className="text-xs font-semibold uppercase tracking-widest text-stone-600">
+                        Password <span className="text-red-500">*</span>
                       </label>
                       {mode === "signin" && (
                         <button
                           type="button"
                           onClick={() => setMode("reset")}
-                          className="text-xs underline"
-                          style={{ color: "#64748b", background: "none", border: "none", cursor: "pointer" }}
+                          className="text-xs underline text-stone-500 hover:text-stone-900"
                         >
                           Forgot?
                         </button>
@@ -213,7 +192,7 @@ export default function LoginPage() {
 
                 {/* Error */}
                 {error && (
-                  <div className="rounded-lg p-3 text-xs" style={{ background: "rgba(248,113,113,0.07)", border: "1px solid rgba(248,113,113,0.2)", color: "#fca5a5" }}>
+                  <div className="rounded-xl p-3 text-xs bg-red-50 border border-red-200 text-red-700 font-medium">
                     {error}
                   </div>
                 )}
@@ -223,14 +202,7 @@ export default function LoginPage() {
                   id="btn-auth-submit"
                   type="submit"
                   disabled={submitting || !email}
-                  className="w-full py-3 rounded-xl text-sm font-semibold transition-all"
-                  style={{
-                    background:  submitting ? "rgba(99,102,241,0.1)" : "rgba(99,102,241,0.2)",
-                    border:      "1.5px solid rgba(99,102,241,0.4)",
-                    color:       "#a5b4fc",
-                    cursor:      submitting ? "not-allowed" : "pointer",
-                    boxShadow:   "0 0 20px rgba(99,102,241,0.12)",
-                  }}
+                  className="btn-primary w-full py-3.5 text-sm font-semibold justify-center mt-2"
                 >
                   {submitting ? "…" : mode === "signin" ? "Sign In" : mode === "signup" ? "Create Account" : "Send Reset Link"}
                 </button>
@@ -242,24 +214,16 @@ export default function LoginPage() {
           {mode !== "reset" && !resetSent && (
             <>
               <div className="flex items-center gap-3 my-5">
-                <div className="flex-1 h-px" style={{ background: "rgba(255,255,255,0.07)" }}/>
-                <span className="text-xs" style={{ color: "#475569" }}>or</span>
-                <div className="flex-1 h-px" style={{ background: "rgba(255,255,255,0.07)" }}/>
+                <div className="flex-1 h-px bg-stone-200" />
+                <span className="text-xs font-editorial-body text-stone-400">or</span>
+                <div className="flex-1 h-px bg-stone-200" />
               </div>
 
               <button
                 id="btn-google-oauth"
                 onClick={handleGoogle}
                 disabled={submitting}
-                className="w-full flex items-center justify-center gap-3 py-3 rounded-xl text-sm font-medium transition-all"
-                style={{
-                  background: "rgba(255,255,255,0.04)",
-                  border:     "1px solid rgba(255,255,255,0.1)",
-                  color:      "#cbd5e1",
-                  cursor:     submitting ? "not-allowed" : "pointer",
-                }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.08)"; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.04)"; }}
+                className="btn-outline w-full justify-center py-3 text-sm"
               >
                 {/* Google icon */}
                 <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
@@ -275,7 +239,7 @@ export default function LoginPage() {
         </div>
 
         {/* Legal note */}
-        <p className="text-center text-xs mt-6" style={{ color: "#475569" }}>
+        <p className="text-center text-xs font-editorial-body text-stone-500 mt-6 leading-relaxed">
           By signing in you agree to our Terms of Service and Privacy Policy.
           <br />
           All activity is logged per FR-7.3.

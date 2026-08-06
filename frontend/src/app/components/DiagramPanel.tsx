@@ -142,9 +142,11 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
   const [exportError, setExportError] = useState<string | null>(null);
   const [isExpanded, setIsExpanded]   = useState(false);
   const [zoom, setZoom]               = useState(1.0);
+  const [showCode, setShowCode]       = useState(false);
+  const [copiedCode, setCopiedCode]   = useState(false);
 
-  const zoomIn    = () => setZoom((z) => Math.min(+(z + 0.2).toFixed(2), 2.5));
-  const zoomOut   = () => setZoom((z) => Math.max(+(z - 0.2).toFixed(2), 0.4));
+  const zoomIn    = () => setZoom((z) => Math.min(+(z + 0.15).toFixed(2), 2.2));
+  const zoomOut   = () => setZoom((z) => Math.max(+(z - 0.15).toFixed(2), 0.5));
   const resetZoom = () => setZoom(1.0);
 
   useEffect(() => {
@@ -188,19 +190,25 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
     exportToPdf(svgRef.current, diagram.structure_name || "Structure Diagram");
   }
 
+  function handleCopyCode() {
+    navigator.clipboard.writeText(diagram.mermaid_syntax);
+    setCopiedCode(true);
+    setTimeout(() => setCopiedCode(false), 2000);
+  }
+
   return (
     <>
       <div
         className={`rounded-2xl overflow-hidden ${className}`}
         style={{
-          background: "rgba(255,255,255,0.02)",
-          border: "1px solid rgba(255,255,255,0.07)",
-          boxShadow: "0 4px 40px rgba(0,0,0,0.4)",
+          background: "rgba(15,18,30,0.8)",
+          border: "1px solid rgba(255,255,255,0.08)",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.45)",
         }}
       >
         {/* ── Header bar ── */}
         <div
-          className="flex items-center justify-between px-5 py-3.5"
+          className="flex flex-wrap items-center justify-between gap-2 px-5 py-3.5"
           style={{
             borderBottom: "1px solid rgba(255,255,255,0.06)",
             background: "rgba(255,255,255,0.02)",
@@ -208,19 +216,70 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
         >
           <div className="flex items-center gap-2.5">
             {/* Diagram icon */}
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="2" aria-hidden="true">
-              <rect x="3" y="3" width="6" height="6" rx="1"/>
-              <rect x="15" y="3" width="6" height="6" rx="1"/>
-              <rect x="9" y="15" width="6" height="6" rx="1"/>
-              <path d="M6 9v3a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V9"/>
-            </svg>
-            <span className="text-sm font-semibold" style={{ color: "#c7d2fe" }}>
+            <div className="p-1.5 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                <rect x="3" y="3" width="6" height="6" rx="1"/>
+                <rect x="15" y="3" width="6" height="6" rx="1"/>
+                <rect x="9" y="15" width="6" height="6" rx="1"/>
+                <path d="M6 9v3a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V9"/>
+              </svg>
+            </div>
+            <span className="text-sm font-semibold text-slate-200">
               {diagram.structure_name || "Structure Diagram"}
             </span>
           </div>
 
-          {/* Export toolbar */}
+          {/* Export & View toolbar */}
           <div className="flex items-center gap-2">
+            {/* Zoom Controls */}
+            <div
+              className="flex items-center gap-0.5 px-1.5 py-0.5 rounded-lg text-xs"
+              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
+            >
+              <button
+                onClick={zoomOut}
+                title="Zoom Out"
+                className="p-1 rounded transition-colors hover:bg-white/10 text-slate-400 hover:text-slate-200"
+              >
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+              </button>
+              <button
+                onClick={resetZoom}
+                title="Reset Zoom"
+                className="px-1.5 font-mono text-[11px] text-indigo-300 hover:text-indigo-200"
+              >
+                {Math.round(zoom * 100)}%
+              </button>
+              <button
+                onClick={zoomIn}
+                title="Zoom In"
+                className="p-1 rounded transition-colors hover:bg-white/10 text-slate-400 hover:text-slate-200"
+              >
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19"/>
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+              </button>
+            </div>
+
+            {/* Toggle Code button */}
+            <button
+              onClick={() => setShowCode(!showCode)}
+              title="Toggle Raw Code"
+              className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-mono transition-all"
+              style={{
+                background: showCode ? "rgba(168,85,247,0.2)" : "rgba(255,255,255,0.05)",
+                border: "1px solid " + (showCode ? "rgba(168,85,247,0.4)" : "rgba(255,255,255,0.1)"),
+                color: showCode ? "#c084fc" : "#94a3b8",
+                cursor: "pointer",
+              }}
+            >
+              &lt;/&gt;
+            </button>
+
+            {/* Expand button */}
             <button
               onClick={() => setIsExpanded(true)}
               title="Expand to Full View"
@@ -243,11 +302,12 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
               Expand
             </button>
 
+            {/* PNG export */}
             <button
               id="btn-export-png"
               onClick={handleExportPng}
               disabled={exportState === "exporting"}
-              title="Export as PNG (client-side)"
+              title="Export as PNG"
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
               style={{
                 background: "rgba(99,102,241,0.12)",
@@ -265,10 +325,11 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
               {exportState === "exporting" ? "Exporting…" : "PNG"}
             </button>
 
+            {/* PDF export */}
             <button
               id="btn-export-pdf"
               onClick={handleExportPdf}
-              title="Export as PDF (browser print)"
+              title="Export as PDF"
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
               style={{
                 background: "rgba(52,211,153,0.08)",
@@ -290,7 +351,7 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
         {/* ── Generation warnings ── */}
         {diagram.generation_warnings.length > 0 && (
           <div
-            className="px-5 py-2.5"
+            className="px-5 py-2"
             style={{
               background: "rgba(251,191,36,0.04)",
               borderBottom: "1px solid rgba(251,191,36,0.1)",
@@ -304,34 +365,61 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
           </div>
         )}
 
-        {/* ── Inline Diagram canvas (Clickable) ── */}
-        <div
-          className="p-5 cursor-pointer relative group rounded-xl transition-all hover:bg-white/[0.01]"
-          onClick={() => setIsExpanded(true)}
-          title="Click to view full screen diagram"
-        >
-          <div
-            className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity text-xs px-2.5 py-1 rounded-lg pointer-events-none z-10 flex items-center gap-1.5 shadow-lg"
-            style={{ background: "rgba(99,102,241,0.9)", color: "#ffffff" }}
-          >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <polyline points="15 3 21 3 21 9"/>
-              <polyline points="9 21 3 21 3 15"/>
-            </svg>
-            Click to expand
+        {/* ── Main Diagram Canvas / Code View ── */}
+        {showCode ? (
+          <div className="p-4 bg-slate-950/80 font-mono text-xs text-slate-300 overflow-x-auto relative min-h-[220px] max-h-[340px]">
+            <div className="flex justify-between items-center mb-2 pb-2 border-b border-white/10 text-slate-400">
+              <span>Mermaid.js Definition</span>
+              <button
+                onClick={handleCopyCode}
+                className="px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-xs text-slate-200 transition-colors"
+              >
+                {copiedCode ? "✓ Copied" : "Copy Syntax"}
+              </button>
+            </div>
+            <pre className="text-indigo-200/90 leading-relaxed overflow-auto">{diagram.mermaid_syntax}</pre>
           </div>
-          <MermaidDiagram
-            syntax={diagram.mermaid_syntax}
-            theme="dark"
-            onSvgReady={handleSvgReady}
-            className="w-full min-h-[300px]"
-          />
-        </div>
+        ) : (
+          <div
+            className="p-4 cursor-pointer relative group rounded-xl transition-all overflow-hidden flex items-center justify-center min-h-[240px] max-h-[360px]"
+            style={{
+              background: "radial-gradient(circle, rgba(129,140,248,0.08) 1px, transparent 1px) 0 0 / 22px 22px, #0b0e17",
+            }}
+            onClick={() => setIsExpanded(true)}
+            title="Click to view full screen diagram"
+          >
+            {/* Expand Hover Badge */}
+            <div
+              className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity text-xs px-2.5 py-1 rounded-lg pointer-events-none z-10 flex items-center gap-1.5 shadow-lg"
+              style={{ background: "rgba(99,102,241,0.9)", color: "#ffffff" }}
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <polyline points="15 3 21 3 21 9"/>
+                <polyline points="9 21 3 21 3 15"/>
+              </svg>
+              Click to expand
+            </div>
+
+            {/* Canvas zoom wrapper */}
+            <div
+              className="w-full h-full flex items-center justify-center transition-transform duration-150 ease-out"
+              style={{ transform: `scale(${zoom})`, transformOrigin: "center center" }}
+            >
+              <MermaidDiagram
+                syntax={diagram.mermaid_syntax}
+                theme="dark"
+                maxHeight="320px"
+                onSvgReady={handleSvgReady}
+                className="w-full"
+              />
+            </div>
+          </div>
+        )}
 
         {/* ── Export error ── */}
         {exportError && (
           <div
-            className="mx-5 mb-4 px-4 py-2.5 rounded-xl text-xs"
+            className="mx-5 mb-3 px-4 py-2 rounded-xl text-xs"
             style={{
               background: "rgba(248,113,113,0.08)",
               border: "1px solid rgba(248,113,113,0.2)",
@@ -352,15 +440,14 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
             <MetaBadge icon="→" label="Flows" value={diagram.edge_count} color="#38bdf8" />
             <MetaBadge icon="◆" label="Checkpoints" value={diagram.regulatory_checkpoint_count} color="#fb923c" />
             {diagram.jurisdictions.length > 0 && (
-              <span className="text-xs" style={{ color: "#64748b" }}>
+              <span className="text-xs text-slate-400">
                 {diagram.jurisdictions.join(" · ")}
               </span>
             )}
           </div>
           <button
             onClick={() => setIsExpanded(true)}
-            className="text-xs transition-colors hover:underline"
-            style={{ color: "#818cf8" }}
+            className="text-xs transition-colors hover:underline text-indigo-400 hover:text-indigo-300"
           >
             Expand View ↗
           </button>
@@ -371,15 +458,15 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
       {isExpanded && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8"
-          style={{ background: "rgba(5, 7, 15, 0.88)", backdropFilter: "blur(14px)" }}
+          style={{ background: "rgba(5, 7, 15, 0.88)", backdropFilter: "blur(16px)" }}
           onClick={() => setIsExpanded(false)}
         >
           <div
             className="relative flex flex-col w-full max-w-6xl h-[88vh] rounded-2xl overflow-hidden shadow-2xl"
             style={{
-              background: "#0f1220",
+              background: "#0d111c",
               border: "1px solid rgba(255,255,255,0.12)",
-              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.8)",
+              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.85)",
             }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -392,33 +479,34 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
               }}
             >
               <div className="flex items-center gap-3">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="2">
-                  <rect x="3" y="3" width="6" height="6" rx="1"/>
-                  <rect x="15" y="3" width="6" height="6" rx="1"/>
-                  <rect x="9" y="15" width="6" height="6" rx="1"/>
-                  <path d="M6 9v3a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V9"/>
-                </svg>
+                <div className="p-2 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="3" y="3" width="6" height="6" rx="1"/>
+                    <rect x="15" y="3" width="6" height="6" rx="1"/>
+                    <rect x="9" y="15" width="6" height="6" rx="1"/>
+                    <path d="M6 9v3a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V9"/>
+                  </svg>
+                </div>
                 <div>
-                  <h3 className="text-base font-bold" style={{ color: "#f1f1f8" }}>
+                  <h3 className="text-base font-bold text-slate-100">
                     {diagram.structure_name || "Structure Diagram"}
                   </h3>
-                  <p className="text-xs" style={{ color: "#64748b" }}>
-                    Full interactive structure visualization
+                  <p className="text-xs text-slate-400">
+                    Interactive multi-jurisdiction ownership architecture
                   </p>
                 </div>
               </div>
 
               <div className="flex items-center gap-3">
-                {/* Zoom controls */}
+                {/* Zoom controls inside modal */}
                 <div
-                  className="flex items-center gap-1 px-2 py-1 rounded-xl text-xs"
+                  className="flex items-center gap-1 px-2.5 py-1 rounded-xl text-xs"
                   style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
                 >
                   <button
                     onClick={zoomOut}
                     title="Zoom Out (-)"
-                    className="p-1 rounded-md transition-colors hover:bg-white/10"
-                    style={{ color: "#94a3b8", cursor: "pointer" }}
+                    className="p-1 rounded-md transition-colors hover:bg-white/10 text-slate-400"
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <line x1="5" y1="12" x2="19" y2="12"/>
@@ -426,17 +514,15 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
                   </button>
                   <button
                     onClick={resetZoom}
-                    title="Reset Zoom (Fit to Frame)"
-                    className="px-2 py-0.5 font-mono text-xs transition-colors hover:text-white"
-                    style={{ color: "#c7d2fe", cursor: "pointer" }}
+                    title="Reset Zoom (Fit)"
+                    className="px-2 font-mono text-xs text-indigo-300 hover:text-white"
                   >
                     {Math.round(zoom * 100)}%
                   </button>
                   <button
                     onClick={zoomIn}
                     title="Zoom In (+)"
-                    className="p-1 rounded-md transition-colors hover:bg-white/10"
-                    style={{ color: "#94a3b8", cursor: "pointer" }}
+                    className="p-1 rounded-md transition-colors hover:bg-white/10 text-slate-400"
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <line x1="12" y1="5" x2="12" y2="19"/>
@@ -470,8 +556,7 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
                 </button>
                 <button
                   onClick={() => setIsExpanded(false)}
-                  className="p-2 rounded-xl transition-colors hover:bg-white/10 ml-1"
-                  style={{ color: "#94a3b8", cursor: "pointer" }}
+                  className="p-2 rounded-xl transition-colors hover:bg-white/10 text-slate-400 hover:text-slate-100 ml-1"
                   title="Close (Esc)"
                 >
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -482,25 +567,23 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
               </div>
             </div>
 
-            {/* Modal Body - High Resolution Canvas with Zoom */}
-            <div className="flex-1 p-6 overflow-auto flex items-center justify-center bg-slate-950/50 relative min-h-[400px]">
+            {/* Modal Canvas */}
+            <div
+              className="flex-1 p-8 overflow-auto flex items-center justify-center relative min-h-[400px]"
+              style={{
+                background: "radial-gradient(circle, rgba(129,140,248,0.1) 1px, transparent 1px) 0 0 / 28px 28px, #080b13",
+              }}
+            >
               <div
-                style={{
-                  transform: `scale(${zoom})`,
-                  transformOrigin: "center center",
-                  transition: "transform 0.15s ease-out",
-                  width: "100%",
-                  height: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
+                className="w-full h-full flex items-center justify-center transition-transform duration-150 ease-out"
+                style={{ transform: `scale(${zoom})`, transformOrigin: "center center" }}
               >
                 <MermaidDiagram
                   syntax={diagram.mermaid_syntax}
                   theme="dark"
+                  maxHeight="70vh"
                   onSvgReady={handleSvgReady}
-                  className="w-full h-full min-h-[350px]"
+                  className="w-full max-w-4xl"
                 />
               </div>
             </div>
@@ -515,13 +598,13 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
                 <MetaBadge icon="→" label="Flows" value={diagram.edge_count} color="#38bdf8" />
                 <MetaBadge icon="◆" label="Checkpoints" value={diagram.regulatory_checkpoint_count} color="#fb923c" />
                 {diagram.jurisdictions.length > 0 && (
-                  <span className="text-xs" style={{ color: "#64748b" }}>
+                  <span className="text-xs text-slate-400">
                     {diagram.jurisdictions.join(" · ")}
                   </span>
                 )}
               </div>
-              <span className="text-xs" style={{ color: "#64748b" }}>
-                Press Esc or click ✕ to close
+              <span className="text-xs text-slate-500">
+                Press Esc or click ✕ to exit preview
               </span>
             </div>
           </div>

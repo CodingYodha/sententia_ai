@@ -105,56 +105,49 @@ export default function ReviewPage() {
   };
 
   return (
-    <div className="min-h-screen pt-22 pb-16 px-4">
+    <div className="min-h-screen pt-22 pb-16 px-4 relative z-10">
       <div className="max-w-4xl mx-auto">
 
         {/* Header */}
         <div className="mb-8">
-          <h1
-            className="text-3xl font-bold mb-2"
-            style={{
-              background: "linear-gradient(135deg, #f1f1f8 30%, #818cf8 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
+          <h1 className="text-4xl font-editorial-display text-stone-900 mb-2">
             Review Queue
           </h1>
-          <p className="text-sm" style={{ color: "#64748b" }}>
+          <p className="text-sm font-editorial-body text-stone-600">
             Expert validation decisions — all review actions are recorded in the audit log.
           </p>
         </div>
 
         {/* Stats row */}
-        <div className="grid grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-3 gap-4 mb-8">
           {([
-            { key: "approve", label: "Validated",   color: "#34d399", bg: "rgba(52,211,153,0.08)",  border: "rgba(52,211,153,0.2)"  },
-            { key: "flag",    label: "Flagged",      color: "#f59e0b", bg: "rgba(245,158,11,0.08)",  border: "rgba(245,158,11,0.2)"  },
-            { key: "reject",  label: "Rejected",     color: "#f87171", bg: "rgba(248,113,113,0.07)", border: "rgba(248,113,113,0.2)" },
+            { key: "approve", label: "Validated",   color: "#15803d", bg: "#f0fdf4", border: "#bbf7d0" },
+            { key: "flag",    label: "Flagged",      color: "#b45309", bg: "#fffbeb", border: "#fde68a" },
+            { key: "reject",  label: "Rejected",     color: "#b91c1c", bg: "#fef2f2", border: "#fecaca" },
           ] as const).map(({ key, label, color, bg, border }) => (
             <div
               key={key}
-              className="rounded-xl px-4 py-4 text-center"
-              style={{ background: bg, border: `1px solid ${border}` }}
+              className="rounded-2xl px-5 py-4 text-center card-editorial"
+              style={{ background: bg, borderColor: border }}
             >
-              <p className="text-2xl font-bold" style={{ color }}>{counts[key]}</p>
-              <p className="text-xs mt-1" style={{ color: "#64748b" }}>{label}</p>
+              <p className="text-3xl font-editorial-display font-medium" style={{ color }}>{counts[key]}</p>
+              <p className="text-xs font-semibold uppercase tracking-wider mt-1 text-stone-600">{label}</p>
             </div>
           ))}
         </div>
 
         {/* Filter tabs + refresh */}
-        <div className="flex items-center justify-between mb-5">
-          <div className="flex gap-1">
+        <div className="flex items-center justify-between mb-6 flex-wrap gap-2">
+          <div className="flex gap-1.5">
             {(["all", "approve", "flag", "reject"] as const).map((f) => (
               <button
                 key={f}
                 onClick={() => setFilter(f)}
-                className="px-3 py-1.5 rounded-lg text-xs font-medium capitalize transition-all"
+                className="px-3.5 py-1.5 rounded-full text-xs font-medium capitalize transition-all"
                 style={{
-                  background: filter === f ? "rgba(99,102,241,0.12)" : "transparent",
-                  color:      filter === f ? "#818cf8" : "#64748b",
-                  border:     filter === f ? "1px solid rgba(99,102,241,0.25)" : "1px solid transparent",
+                  background: filter === f ? "#0c0a09" : "#f0efed",
+                  color:      filter === f ? "#ffffff" : "#4e4e4e",
+                  fontWeight: filter === f ? 600 : 500,
                 }}
               >
                 {f === "all" ? `All (${queue.length})` : `${f} (${counts[f as keyof typeof counts] ?? 0})`}
@@ -165,13 +158,7 @@ export default function ReviewPage() {
             id="btn-refresh-queue"
             onClick={fetchQueue}
             disabled={loading}
-            className="px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
-            style={{
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(255,255,255,0.08)",
-              color: "#64748b",
-              cursor: loading ? "not-allowed" : "pointer",
-            }}
+            className="btn-outline text-xs px-3.5 py-1.5 h-auto"
           >
             {loading ? "Loading…" : "↺ Refresh"}
           </button>
@@ -179,30 +166,27 @@ export default function ReviewPage() {
 
         {/* Error */}
         {error && (
-          <div className="rounded-xl p-4 mb-4 text-sm" style={{ background: "rgba(248,113,113,0.07)", border: "1px solid rgba(248,113,113,0.2)", color: "#fca5a5" }}>
+          <div className="rounded-2xl p-4 mb-4 text-sm bg-red-50 border border-red-200 text-red-700 font-medium">
             {error}
           </div>
         )}
 
         {/* Queue list */}
         {loading ? (
-          <div className="flex items-center justify-center py-16 gap-3" style={{ color: "#818cf8" }}>
+          <div className="card-editorial flex items-center justify-center py-16 gap-3 text-stone-600">
             <svg className="animate-spin" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
             </svg>
-            <span className="text-sm">Loading queue…</span>
+            <span className="text-sm font-editorial-body">Loading queue…</span>
           </div>
         ) : filtered.length === 0 ? (
-          <div
-            className="rounded-2xl p-12 text-center"
-            style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}
-          >
-            <p className="text-base font-medium mb-2" style={{ color: "#f1f1f8" }}>No review actions yet</p>
-            <p className="text-sm" style={{ color: "#64748b" }}>
+          <div className="card-editorial p-12 text-center">
+            <p className="text-lg font-editorial-display font-medium text-stone-900 mb-2">No review actions yet</p>
+            <p className="text-sm font-editorial-body text-stone-500">
               Generate and review structures from the{" "}
               <button
                 onClick={() => router.push("/results")}
-                style={{ color: "#818cf8", cursor: "pointer", background: "none", border: "none" }}
+                className="text-stone-900 font-semibold underline hover:text-stone-700"
               >
                 Results
               </button>{" "}
@@ -210,35 +194,30 @@ export default function ReviewPage() {
             </p>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-4">
             {filtered.map((item) => {
-              const ac = ACTION_COLORS[item.action] ?? ACTION_COLORS.flag;
               return (
                 <div
                   key={item.review_id}
-                  className="rounded-xl px-5 py-4"
-                  style={{
-                    background: "rgba(255,255,255,0.025)",
-                    border: "1px solid rgba(255,255,255,0.07)",
-                  }}
+                  className="card-editorial p-5"
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-3 mb-1 flex-wrap">
+                      <div className="flex items-center gap-3 mb-1.5 flex-wrap">
                         {/* FR-6.2: visual distinction badge */}
                         <ReviewStatusBadge status={item.action as ReviewStatus} />
-                        <span className="text-sm font-semibold truncate" style={{ color: "#f1f1f8" }}>
+                        <span className="text-base font-editorial-display font-medium text-stone-900 truncate">
                           {item.structure_name ?? item.structure_id}
                         </span>
                       </div>
-                      <div className="flex items-center gap-3 text-xs flex-wrap" style={{ color: "#64748b" }}>
+                      <div className="flex items-center gap-3 text-xs font-editorial-body text-stone-500 flex-wrap">
                         <span>Rank: #{item.structure_id.split("rank")[1] ?? "?"}</span>
                         {item.scenario_id && <span>Scenario: {item.scenario_id.slice(0, 8)}…</span>}
                         <span>By: {item.reviewer_role}</span>
                         <span>{formatDate(item.created_at)}</span>
                       </div>
                       {item.notes && (
-                        <p className="mt-2 text-xs italic" style={{ color: "#94a3b8" }}>
+                        <p className="mt-2 text-xs italic font-editorial-body text-stone-600">
                           "{item.notes}"
                         </p>
                       )}
@@ -246,21 +225,15 @@ export default function ReviewPage() {
 
                     {/* Actions column */}
                     <div className="shrink-0 text-right flex flex-col items-end gap-2">
-                      <span className="text-xs font-mono" style={{ color: "#475569" }}>
+                      <span className="text-xs font-mono text-stone-400">
                         {item.review_id.slice(0, 8)}
                       </span>
                       {can("review:write") && (
                         <button
                           onClick={() => setCorrection(item)}
-                          className="text-xs px-2.5 py-1 rounded-lg transition-all"
-                          style={{
-                            background: "rgba(99,102,241,0.08)",
-                            border:     "1px solid rgba(99,102,241,0.2)",
-                            color:      "#818cf8",
-                            cursor:     "pointer",
-                          }}
+                          className="btn-outline text-xs px-3 py-1 h-auto"
                         >
-                          + Correction
+                          Correct / Re-evaluate
                         </button>
                       )}
                     </div>

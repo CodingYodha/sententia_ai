@@ -94,22 +94,22 @@ function validate(data: ScenarioFormData): FormErrors {
 
 function FieldError({ msg }: { msg?: string }) {
   if (!msg) return null;
-  return <p className="text-xs mt-1" style={{ color: "#f87171" }}>{msg}</p>;
+  return <p className="text-xs mt-1 text-red-600 font-medium">{msg}</p>;
 }
 
 function FormLabel({ children, required }: { children: React.ReactNode; required?: boolean }) {
   return (
-    <label className="block text-xs font-semibold uppercase tracking-widest mb-1.5" style={{ color: "#64748b" }}>
-      {children}{required && <span style={{ color: "#f87171" }}> *</span>}
+    <label className="block text-xs font-semibold uppercase tracking-widest mb-1.5 text-stone-600">
+      {children}{required && <span className="text-red-500"> *</span>}
     </label>
   );
 }
 
 function inputStyle(hasError?: boolean): React.CSSProperties {
   return {
-    background: "rgba(255,255,255,0.04)",
-    border: `1px solid ${hasError ? "rgba(248,113,113,0.5)" : "rgba(255,255,255,0.1)"}`,
-    color: "#f1f1f8",
+    background: "#ffffff",
+    border: `1px solid ${hasError ? "#dc2626" : "#d6d3d1"}`,
+    color: "#0c0a09",
     outline: "none",
     width: "100%",
     borderRadius: "10px",
@@ -122,7 +122,7 @@ function inputStyle(hasError?: boolean): React.CSSProperties {
 function selectStyle(hasError?: boolean): React.CSSProperties {
   return {
     ...inputStyle(hasError),
-    background: "rgba(15,15,24,0.9)",
+    background: "#ffffff",
     cursor: "pointer",
   };
 }
@@ -133,16 +133,16 @@ function StepDot({ n, label, step }: { n: number; label: string; step: number })
   return (
     <div className="flex items-center gap-2">
       <div
-        className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold"
+        className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all"
         style={{
-          background: done ? "rgba(52,211,153,0.15)" : current ? "rgba(99,102,241,0.2)" : "rgba(255,255,255,0.05)",
-          border:     done ? "1px solid rgba(52,211,153,0.4)" : current ? "1.5px solid rgba(99,102,241,0.5)" : "1px solid rgba(255,255,255,0.08)",
-          color:      done ? "#34d399" : current ? "#818cf8" : "#64748b",
+          background: done ? "#16a34a" : current ? "#292524" : "#f0efed",
+          border:     done ? "1px solid #16a34a" : current ? "1px solid #0c0a09" : "1px solid #e7e5e4",
+          color:      done ? "#ffffff" : current ? "#ffffff" : "#777169",
         }}
       >
         {done ? "✓" : n}
       </div>
-      <span className="text-xs font-medium hidden sm:block" style={{ color: current ? "#f1f1f8" : "#64748b" }}>
+      <span className="text-xs font-medium hidden sm:block" style={{ color: current ? "#0c0a09" : "#777169" }}>
         {label}
       </span>
     </div>
@@ -151,14 +151,7 @@ function StepDot({ n, label, step }: { n: number; label: string; step: number })
 
 function Card({ children }: { children: React.ReactNode }) {
   return (
-    <div
-      className="rounded-2xl p-6"
-      style={{
-        background: "rgba(255,255,255,0.025)",
-        border: "1px solid rgba(255,255,255,0.07)",
-        boxShadow: "0 4px 32px rgba(0,0,0,0.3)",
-      }}
-    >
+    <div className="card-editorial p-7">
       {children}
     </div>
   );
@@ -317,17 +310,10 @@ export default function IntakePage() {
 
         {/* Page header */}
         <div className="mb-8">
-          <h1
-            className="text-3xl font-bold mb-2"
-            style={{
-              background: "linear-gradient(135deg, #f1f1f8 30%, #818cf8 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
+          <h1 className="text-4xl font-editorial-display text-stone-900 mb-2">
             New Scenario
           </h1>
-          <p className="text-sm" style={{ color: "#64748b" }}>
+          <p className="text-sm font-editorial-body text-stone-600">
             Structure a cross-border FDI scenario and generate compliance-aware structuring alternatives.
           </p>
         </div>
@@ -335,20 +321,20 @@ export default function IntakePage() {
         {/* Step indicator */}
         <div className="flex items-center gap-4 mb-8">
           <StepDot n={1} label="Scenario Details" step={step} />
-          <div className="flex-1 h-px" style={{ background: "rgba(255,255,255,0.06)" }} />
+          <div className="flex-1 h-px bg-stone-200" />
           <StepDot n={2} label="Document Review" step={step} />
-          <div className="flex-1 h-px" style={{ background: "rgba(255,255,255,0.06)" }} />
+          <div className="flex-1 h-px bg-stone-200" />
           <StepDot n={3} label="Generating…" step={step} />
         </div>
 
         {/* ── STEP 1: SCENARIO FORM ── */}
         {step === 1 && (
           <form onSubmit={handleSubmitForm} noValidate>
-            <div className="space-y-5">
+            <div className="space-y-6">
 
               {/* Investor / Entity */}
               <Card>
-                <h2 className="text-sm font-semibold mb-4" style={{ color: "#818cf8" }}>Investor Details</h2>
+                <h2 className="text-base font-editorial-display text-stone-900 mb-4">Investor Details</h2>
                 <div>
                   <FormLabel required>Investor / Entity Name</FormLabel>
                   <input
@@ -365,7 +351,7 @@ export default function IntakePage() {
 
               {/* Jurisdictions */}
               <Card>
-                <h2 className="text-sm font-semibold mb-4" style={{ color: "#818cf8" }}>Jurisdictions</h2>
+                <h2 className="text-base font-editorial-display text-stone-900 mb-4">Jurisdictions</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <FormLabel required>Origin Jurisdiction</FormLabel>
@@ -413,7 +399,7 @@ export default function IntakePage() {
 
               {/* Deal Parameters */}
               <Card>
-                <h2 className="text-sm font-semibold mb-4" style={{ color: "#818cf8" }}>Deal Parameters</h2>
+                <h2 className="text-base font-editorial-display text-stone-900 mb-4">Deal Parameters</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <FormLabel required>Sector</FormLabel>
@@ -459,7 +445,7 @@ export default function IntakePage() {
                 </div>
 
                 {/* Booleans */}
-                <div className="mt-4 space-y-3">
+                <div className="mt-5 space-y-3 pt-3 border-t border-stone-100">
                   {[
                     { key: "has_us_persons_in_fund" as const, label: "Fund has US persons (CFIUS / FBAR implications)" },
                     { key: "is_prohibited_sector" as const,   label: "Target sector is potentially restricted / dual-use" },
@@ -467,21 +453,21 @@ export default function IntakePage() {
                   ].map(({ key, label }) => (
                     <label key={key} className="flex items-center gap-3 cursor-pointer">
                       <div
-                        className="w-5 h-5 rounded flex items-center justify-center shrink-0"
+                        className="w-5 h-5 rounded-md flex items-center justify-center shrink-0 transition-colors"
                         style={{
-                          background: form[key] ? "rgba(99,102,241,0.2)" : "rgba(255,255,255,0.04)",
-                          border: form[key] ? "1.5px solid #6366f1" : "1px solid rgba(255,255,255,0.12)",
+                          background: form[key] ? "#292524" : "#ffffff",
+                          border: form[key] ? "1.5px solid #0c0a09" : "1px solid #d6d3d1",
                         }}
                         onClick={() => handleCheckbox(key)}
                       >
                         {form[key] && (
-                          <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="#818cf8" strokeWidth="2.5">
+                          <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="#ffffff" strokeWidth="2.5">
                             <polyline points="2 6 5 9 10 3"/>
                           </svg>
                         )}
                       </div>
                       <input type="checkbox" className="sr-only" checked={form[key]} onChange={() => handleCheckbox(key)} />
-                      <span className="text-sm" style={{ color: "#94a3b8" }}>{label}</span>
+                      <span className="text-sm font-editorial-body text-stone-700">{label}</span>
                     </label>
                   ))}
                 </div>
@@ -489,7 +475,7 @@ export default function IntakePage() {
 
               {/* Additional context */}
               <Card>
-                <h2 className="text-sm font-semibold mb-4" style={{ color: "#818cf8" }}>Additional Context</h2>
+                <h2 className="text-base font-editorial-display text-stone-900 mb-4">Additional Context</h2>
                 <textarea
                   id="input-additional-context"
                   value={form.additional_context}
@@ -502,15 +488,15 @@ export default function IntakePage() {
 
               {/* Document upload */}
               <Card>
-                <h2 className="text-sm font-semibold mb-1" style={{ color: "#818cf8" }}>Upload Document <span style={{ color: "#64748b", fontWeight: 400 }}>(optional)</span></h2>
-                <p className="text-xs mb-4" style={{ color: "#64748b" }}>
+                <h2 className="text-base font-editorial-display text-stone-900 mb-1">Upload Document <span className="text-stone-400 text-xs font-editorial-body">(optional)</span></h2>
+                <p className="text-xs font-editorial-body text-stone-500 mb-4">
                   Upload a term sheet, cap table, or UBO disclosure for automated extraction. Supported: PDF, DOCX, TXT.
                 </p>
                 <div
-                  className="rounded-xl border-2 border-dashed p-6 text-center transition-all cursor-pointer"
+                  className="rounded-2xl border-2 border-dashed p-6 text-center transition-all cursor-pointer"
                   style={{
-                    borderColor: dragOver ? "rgba(99,102,241,0.5)" : "rgba(255,255,255,0.1)",
-                    background:  dragOver ? "rgba(99,102,241,0.05)" : "transparent",
+                    borderColor: dragOver ? "#292524" : "#e7e5e4",
+                    background:  dragOver ? "#f0efed" : "#fafafa",
                   }}
                   onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
                   onDragLeave={() => setDragOver(false)}
@@ -519,28 +505,28 @@ export default function IntakePage() {
                 >
                   <input ref={fileRef} type="file" accept=".pdf,.docx,.txt" className="sr-only" onChange={handleFileSelect} />
                   {uploading ? (
-                    <p className="text-sm" style={{ color: "#818cf8" }}>Uploading and extracting…</p>
+                    <p className="text-sm font-editorial-body text-stone-700">Uploading and extracting…</p>
                   ) : uploadFile ? (
                     <div>
-                      <p className="text-sm font-medium" style={{ color: "#34d399" }}>✓ {uploadFile.name}</p>
-                      <p className="text-xs mt-1" style={{ color: "#64748b" }}>Click to replace</p>
+                      <p className="text-sm font-semibold text-emerald-700">✓ {uploadFile.name}</p>
+                      <p className="text-xs mt-1 text-stone-400">Click to replace</p>
                     </div>
                   ) : (
                     <div>
-                      <svg width="24" height="24" className="mx-auto mb-2" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="1.5" aria-hidden="true">
+                      <svg width="24" height="24" className="mx-auto mb-2 text-stone-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
                       </svg>
-                      <p className="text-sm" style={{ color: "#64748b" }}>Drag & drop or <span style={{ color: "#818cf8" }}>browse</span></p>
-                      <p className="text-xs mt-1" style={{ color: "#475569" }}>PDF, DOCX, TXT — max 10 MB</p>
+                      <p className="text-sm text-stone-600">Drag & drop or <span className="text-stone-900 font-semibold underline">browse</span></p>
+                      <p className="text-xs mt-1 text-stone-400">PDF, DOCX, TXT — max 10 MB</p>
                     </div>
                   )}
                 </div>
-                {uploadError && <p className="text-xs mt-2" style={{ color: "#f87171" }}>⚠ {uploadError}</p>}
+                {uploadError && <p className="text-xs mt-2 text-red-600 font-medium">⚠ {uploadError}</p>}
               </Card>
 
               {/* Server error */}
               {serverError && (
-                <div className="rounded-xl p-4 text-sm" style={{ background: "rgba(248,113,113,0.07)", border: "1px solid rgba(248,113,113,0.2)", color: "#fca5a5" }}>
+                <div className="rounded-2xl p-4 text-sm bg-red-50 border border-red-200 text-red-700 font-medium">
                   {serverError}
                 </div>
               )}
@@ -549,16 +535,7 @@ export default function IntakePage() {
               <button
                 id="btn-submit-scenario"
                 type="submit"
-                className="w-full py-3.5 rounded-xl text-sm font-semibold transition-all"
-                style={{
-                  background: "linear-gradient(135deg, rgba(99,102,241,0.25) 0%, rgba(99,102,241,0.12) 100%)",
-                  border: "1.5px solid rgba(99,102,241,0.4)",
-                  color: "#a5b4fc",
-                  cursor: "pointer",
-                  boxShadow: "0 0 20px rgba(99,102,241,0.15)",
-                }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(99,102,241,0.3)"; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "linear-gradient(135deg, rgba(99,102,241,0.25) 0%, rgba(99,102,241,0.12) 100%)"; }}
+                className="btn-primary w-full py-4 text-base"
               >
                 {uploadFile && extraction ? "Review Extracted Data →" : "Generate Structures →"}
               </button>

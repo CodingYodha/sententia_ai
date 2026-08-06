@@ -163,32 +163,30 @@ export function StructureCard({
 
   return (
     <div
-      className="flex flex-col rounded-2xl overflow-hidden w-full"
+      className="card-editorial flex flex-col overflow-hidden w-full"
       style={{
-        background:  "rgba(255,255,255,0.025)",
-        border:      isRecommended ? "1.5px solid rgba(99,102,241,0.4)" : "1px solid rgba(255,255,255,0.07)",
-        boxShadow:   isRecommended ? "0 0 30px rgba(99,102,241,0.12)" : "0 4px 24px rgba(0,0,0,0.3)",
+        border:      isRecommended ? "2px solid #292524" : "1px solid #e7e5e4",
+        boxShadow:   isRecommended ? "0 8px 28px rgba(0,0,0,0.08)" : "0 4px 16px rgba(0,0,0,0.03)",
         minWidth:    0,
       }}
     >
       {/* ── Card header ── */}
       <div
-        className="px-5 py-4"
-        style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", background: "rgba(255,255,255,0.02)" }}
+        className="px-6 py-5"
+        style={{ borderBottom: "1px solid #e7e5e4", background: "rgba(250,250,250,0.6)" }}
       >
         {/* Rank + recommended badge */}
         <div className="flex items-start justify-between gap-3 mb-3">
           <div className="flex items-center gap-2 flex-wrap">
             <span
               className="inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold"
-              style={{ background: "rgba(99,102,241,0.15)", color: "#818cf8", border: "1px solid rgba(99,102,241,0.3)" }}
+              style={{ background: "#292524", color: "#ffffff" }}
             >
               #{alternative.rank}
             </span>
             {isRecommended && (
               <span
-                className="px-2.5 py-0.5 rounded-full text-xs font-semibold"
-                style={{ background: "rgba(99,102,241,0.15)", color: "#818cf8", border: "1px solid rgba(99,102,241,0.3)" }}
+                className="badge-pill bg-stone-900 text-white border-stone-900"
               >
                 ★ Recommended
               </span>
@@ -203,16 +201,16 @@ export function StructureCard({
                 isAllowed={complianceResult.is_allowed}
               />
             )}
-            <span className="text-xs" style={{ color: COMPLEXITY_CFG[alternative.estimated_setup_complexity].color }}>
+            <span className="text-xs font-semibold" style={{ color: COMPLEXITY_CFG[alternative.estimated_setup_complexity].color }}>
               {COMPLEXITY_CFG[alternative.estimated_setup_complexity].label}
             </span>
           </div>
         </div>
 
-        <h3 className="text-base font-semibold leading-tight mb-1" style={{ color: "#f1f1f8" }}>
+        <h3 className="text-lg font-editorial-display font-medium leading-tight mb-1 text-stone-900">
           {alternative.name}
         </h3>
-        <p className="text-xs font-mono" style={{ color: "#64748b" }}>
+        <p className="text-xs font-mono text-stone-500">
           {alternative.ownership_chain}
         </p>
 
@@ -221,8 +219,7 @@ export function StructureCard({
           {alternative.jurisdictions_involved.map((j) => (
             <span
               key={j}
-              className="px-2 py-0.5 rounded-full text-xs"
-              style={{ background: "rgba(129,140,248,0.08)", color: "#818cf8", border: "1px solid rgba(129,140,248,0.18)" }}
+              className="badge-pill"
             >
               {j}
             </span>
@@ -232,7 +229,7 @@ export function StructureCard({
 
       {/* ── Compliance banner (full-width, unmissable) ── */}
       {bannerType && (
-        <div className="px-5 pt-4">
+        <div className="px-6 pt-4">
           <ComplianceBanner
             type={bannerType as "WARNING" | "VALIDATED" | "BLOCKED"}
             label={complianceResult?.ui_banner?.label}
@@ -243,28 +240,29 @@ export function StructureCard({
 
       {/* ── Tabs ── */}
       <div
-        className="flex border-b px-5 pt-4 gap-1"
-        style={{ borderColor: "rgba(255,255,255,0.06)" }}
+        className="flex border-b px-6 pt-4 gap-1.5 bg-stone-50/50"
+        style={{ borderColor: "#e7e5e4" }}
       >
         {tabs.map((t) => (
           <button
             key={t.id}
             onClick={() => setTab(t.id)}
-            className="flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-t-lg transition-all"
+            className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium rounded-t-xl transition-all"
             style={{
-              color:      tab === t.id ? "#818cf8" : "#64748b",
-              background: tab === t.id ? "rgba(99,102,241,0.08)" : "transparent",
-              borderBottom: tab === t.id ? "2px solid #6366f1" : "2px solid transparent",
+              color:      tab === t.id ? "#0c0a09" : "#777169",
+              background: tab === t.id ? "#ffffff" : "transparent",
+              borderBottom: tab === t.id ? "2px solid #0c0a09" : "2px solid transparent",
+              fontWeight: tab === t.id ? 600 : 500,
               marginBottom: "-1px",
             }}
           >
             {t.label}
             {t.count !== undefined && (
               <span
-                className="px-1.5 py-0.5 rounded-full text-xs"
+                className="px-1.5 py-0.5 rounded-full text-[10px] font-bold"
                 style={{
-                  background: tab === t.id ? "rgba(99,102,241,0.15)" : "rgba(255,255,255,0.06)",
-                  color:      tab === t.id ? "#818cf8" : "#64748b",
+                  background: tab === t.id ? "#f0efed" : "#e7e5e4",
+                  color:      tab === t.id ? "#0c0a09" : "#777169",
                 }}
               >
                 {t.count}
@@ -275,43 +273,43 @@ export function StructureCard({
       </div>
 
       {/* ── Tab content ── */}
-      <div className="flex-1 p-5 overflow-auto">
+      <div className="flex-1 p-6 overflow-auto bg-white">
 
         {/* OVERVIEW */}
         {tab === "overview" && (
           <div className="space-y-5">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#64748b" }}>Architecture</p>
-              <p className="text-sm leading-relaxed" style={{ color: "#cbd5e1" }}>
+              <p className="text-xs font-semibold uppercase tracking-widest mb-1.5 text-stone-500">Architecture</p>
+              <p className="text-sm font-editorial-body text-stone-800 leading-relaxed">
                 {alternative.architecture_description}
               </p>
             </div>
             <div>
-              <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#64748b" }}>Rationale</p>
-              <p className="text-sm leading-relaxed" style={{ color: "#94a3b8" }}>
+              <p className="text-xs font-semibold uppercase tracking-widest mb-1.5 text-stone-500">Rationale</p>
+              <p className="text-sm font-editorial-body text-stone-700 leading-relaxed">
                 {alternative.rationale}
               </p>
             </div>
             <div>
-              <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: "#64748b" }}>Cited Sources</p>
+              <p className="text-xs font-semibold uppercase tracking-widest mb-1.5 text-stone-500">Cited Sources</p>
               <ul className="space-y-1">
                 {alternative.cited_sources.map((s, i) => (
-                  <li key={i} className="flex items-center gap-2 text-sm" style={{ color: "#94a3b8" }}>
-                    <span style={{ color: "#6366f1" }}>›</span>
+                  <li key={i} className="flex items-center gap-2 text-sm font-editorial-body text-stone-700">
+                    <span className="text-stone-400 font-bold">›</span>
                     {s}
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="flex items-center gap-4 pt-2">
+            <div className="flex items-center gap-6 pt-3 border-t border-stone-100">
               <div>
-                <p className="text-xs" style={{ color: "#64748b" }}>Setup complexity</p>
+                <p className="text-xs text-stone-500">Setup complexity</p>
                 <p className="text-sm font-semibold" style={{ color: COMPLEXITY_CFG[alternative.estimated_setup_complexity].color }}>
                   {COMPLEXITY_CFG[alternative.estimated_setup_complexity].label}
                 </p>
               </div>
               <div>
-                <p className="text-xs" style={{ color: "#64748b" }}>Regulatory confidence</p>
+                <p className="text-xs text-stone-500">Regulatory confidence</p>
                 <p className="text-sm font-semibold" style={{ color: CONFIDENCE_CFG[alternative.regulatory_confidence].color }}>
                   {CONFIDENCE_CFG[alternative.regulatory_confidence].label}
                 </p>
@@ -324,11 +322,11 @@ export function StructureCard({
         {tab === "diagram" && (
           <div>
             {diagLoading && (
-              <div className="flex items-center gap-3 py-8 justify-center" style={{ color: "#818cf8" }}>
+              <div className="flex items-center gap-3 py-8 justify-center text-stone-700">
                 <svg className="animate-spin" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
                 </svg>
-                <span className="text-sm">Generating diagram…</span>
+                <span className="text-sm font-editorial-body">Generating diagram…</span>
               </div>
             )}
             {diagram && !diagLoading && (
@@ -337,13 +335,7 @@ export function StructureCard({
             {!diagram && !diagLoading && (
               <button
                 onClick={loadDiagram}
-                className="w-full py-8 rounded-xl text-sm"
-                style={{
-                  background: "rgba(99,102,241,0.05)",
-                  border: "1px dashed rgba(99,102,241,0.25)",
-                  color: "#818cf8",
-                  cursor: "pointer",
-                }}
+                className="w-full py-8 rounded-2xl text-sm btn-outline justify-center border-dashed"
               >
                 ↺ Load Diagram
               </button>
@@ -359,29 +351,25 @@ export function StructureCard({
               return (
                 <div
                   key={i}
-                  className="rounded-xl p-4"
-                  style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+                  className="rounded-xl p-4 bg-stone-50 border border-stone-200"
                 >
                   <div className="flex items-start justify-between gap-3 mb-2">
-                    <span className="text-sm font-semibold" style={{ color: "#c7d2fe" }}>{tp.authority}</span>
+                    <span className="text-sm font-semibold text-stone-900">{tp.authority}</span>
                     <div className="flex items-center gap-2 shrink-0">
                       <span
-                        className="px-2 py-0.5 rounded-full text-xs font-medium"
-                        style={{ background: tc.bg, color: tc.color }}
+                        className="px-2.5 py-0.5 rounded-full text-xs font-medium"
+                        style={{ background: "#f0efed", color: "#292524" }}
                       >
                         {tp.timing}
                       </span>
-                      <span
-                        className="px-2 py-0.5 rounded-full text-xs"
-                        style={{ background: "rgba(129,140,248,0.08)", color: "#818cf8" }}
-                      >
+                      <span className="badge-pill">
                         {tp.jurisdiction}
                       </span>
                     </div>
                   </div>
-                  <p className="text-sm" style={{ color: "#94a3b8" }}>{tp.requirement}</p>
+                  <p className="text-sm font-editorial-body text-stone-700">{tp.requirement}</p>
                   {tp.notes && (
-                    <p className="text-xs mt-2" style={{ color: "#64748b" }}>{tp.notes}</p>
+                    <p className="text-xs mt-2 text-stone-500 font-editorial-body">{tp.notes}</p>
                   )}
                 </div>
               );
@@ -397,27 +385,23 @@ export function StructureCard({
               return (
                 <div
                   key={i}
-                  className="rounded-xl p-4"
-                  style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+                  className="rounded-xl p-4 bg-stone-50 border border-stone-200"
                 >
                   <div className="flex items-center gap-2 mb-2">
                     <span
-                      className="px-2 py-0.5 rounded-full text-xs font-semibold"
+                      className="px-2.5 py-0.5 rounded-full text-xs font-semibold"
                       style={{ background: sc.bg, color: sc.color }}
                     >
                       {sc.label}
                     </span>
-                    <span className="text-xs capitalize" style={{ color: "#64748b" }}>
+                    <span className="text-xs capitalize text-stone-500">
                       {risk.risk_type.replace("_", " ")}
                     </span>
                   </div>
-                  <p className="text-sm mb-2" style={{ color: "#cbd5e1" }}>{risk.description}</p>
-                  <div
-                    className="flex items-start gap-2 px-3 py-2 rounded-lg"
-                    style={{ background: "rgba(52,211,153,0.05)", border: "1px solid rgba(52,211,153,0.12)" }}
-                  >
-                    <span style={{ color: "#34d399", fontSize: "11px" }}>→</span>
-                    <p className="text-xs" style={{ color: "#6ee7b7" }}>{risk.mitigation}</p>
+                  <p className="text-sm font-editorial-body text-stone-800 mb-2">{risk.description}</p>
+                  <div className="flex items-start gap-2 px-3 py-2 rounded-lg bg-emerald-50 border border-emerald-200">
+                    <span className="text-emerald-700 text-xs font-bold">→</span>
+                    <p className="text-xs font-editorial-body text-emerald-900">{risk.mitigation}</p>
                   </div>
                 </div>
               );
@@ -432,50 +416,42 @@ export function StructureCard({
               alternative.implementation_steps.map((step, i) => (
                 <div
                   key={i}
-                  className="rounded-xl p-4 transition-all"
-                  style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+                  className="rounded-xl p-4 bg-stone-50 border border-stone-200"
                 >
                   <div className="flex items-center justify-between gap-3 mb-2 flex-wrap">
                     <div className="flex items-center gap-2">
-                      <span
-                        className="inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold"
-                        style={{ background: "rgba(99,102,241,0.15)", color: "#818cf8", border: "1px solid rgba(99,102,241,0.3)" }}
-                      >
+                      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold bg-stone-900 text-white">
                         #{step.step_number}
                       </span>
-                      <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: "#818cf8" }}>
+                      <span className="text-xs font-semibold uppercase tracking-wider text-stone-600">
                         {step.phase}
                       </span>
                     </div>
-                    <span
-                      className="px-2.5 py-0.5 rounded-full text-xs font-medium"
-                      style={{ background: "rgba(52,211,153,0.1)", color: "#34d399", border: "1px solid rgba(52,211,153,0.2)" }}
-                    >
+                    <span className="badge-pill">
                       🕒 {step.estimated_timeline}
                     </span>
                   </div>
 
-                  <h4 className="text-sm font-bold mb-1.5" style={{ color: "#f1f1f8" }}>
+                  <h4 className="text-sm font-semibold mb-1 text-stone-900">
                     {step.title}
                   </h4>
 
-                  <p className="text-sm leading-relaxed mb-3" style={{ color: "#cbd5e1" }}>
+                  <p className="text-sm font-editorial-body text-stone-700 leading-relaxed mb-3">
                     {step.description}
                   </p>
 
                   {step.key_deliverables && step.key_deliverables.length > 0 && (
                     <div>
-                      <p className="text-[11px] font-semibold uppercase tracking-wider mb-1.5" style={{ color: "#64748b" }}>
-                        Key Deliverables & Filings
+                      <p className="text-[11px] font-semibold uppercase tracking-wider mb-1.5 text-stone-500">
+                        Key Deliverables &amp; Filings
                       </p>
                       <div className="flex flex-wrap gap-1.5">
                         {step.key_deliverables.map((d, j) => (
                           <span
                             key={j}
-                            className="px-2.5 py-1 rounded-lg text-xs flex items-center gap-1.5"
-                            style={{ background: "rgba(255,255,255,0.04)", color: "#94a3b8", border: "1px solid rgba(255,255,255,0.08)" }}
+                            className="px-2.5 py-1 rounded-lg text-xs bg-white text-stone-700 border border-stone-200 flex items-center gap-1.5"
                           >
-                            <span style={{ color: "#818cf8" }}>📄</span> {d}
+                            <span className="text-stone-500">📄</span> {d}
                           </span>
                         ))}
                       </div>
@@ -484,7 +460,7 @@ export function StructureCard({
                 </div>
               ))
             ) : (
-              <p className="text-sm py-4 text-center" style={{ color: "#64748b" }}>
+              <p className="text-sm py-4 text-center text-stone-500 font-editorial-body">
                 No implementation steps available for this structure.
               </p>
             )}
@@ -495,10 +471,10 @@ export function StructureCard({
       {/* ── Reviewer action strip (FR-6.2, role-gated) ── */}
       {can("review:write") && (
         <div
-          className="px-5 py-4"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.06)", background: "rgba(255,255,255,0.02)" }}
+          className="px-6 py-4 bg-stone-50"
+          style={{ borderTop: "1px solid #e7e5e4" }}
         >
-          <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "#64748b" }}>
+          <p className="text-xs font-semibold uppercase tracking-widest mb-3 text-stone-500">
             Reviewer Decision
           </p>
           <ReviewActions

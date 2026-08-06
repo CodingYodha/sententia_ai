@@ -133,33 +133,32 @@ export default function ResultsPage() {
   const hasAnyBlocked = Object.values(complianceMap).some((c) => c.is_rule_validated && !c.is_allowed);
 
   return (
-    <div className="min-h-screen pt-22 pb-16">
+    <div className="min-h-screen pt-22 pb-16 relative z-10">
       {/* ── Page header ── */}
       <div
-        className="px-6 py-5"
-        style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", background: "rgba(255,255,255,0.01)" }}
+        className="px-6 py-6"
+        style={{ borderBottom: "1px solid #e7e5e4", background: "rgba(255,255,255,0.6)" }}
       >
         <div className="max-w-screen-xl mx-auto">
           <div className="flex items-start justify-between gap-4 flex-wrap">
             <div>
-              <div className="flex items-center gap-3 mb-1">
+              <div className="flex items-center gap-3 mb-2">
                 <button
                   onClick={() => router.push("/intake")}
-                  className="text-xs px-2.5 py-1 rounded-lg"
-                  style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "#64748b", cursor: "pointer" }}
+                  className="btn-outline text-xs px-3 py-1.5 h-auto"
                 >
                   ← New Scenario
                 </button>
-                <span className="text-xs font-mono" style={{ color: "#475569" }}>
+                <span className="text-xs font-mono text-stone-400">
                   ID: {results.scenarioId?.slice(0, 8)}…
                 </span>
               </div>
-              <h1 className="text-2xl font-bold" style={{ color: "#f1f1f8" }}>
+              <h1 className="text-3xl font-editorial-display text-stone-900">
                 Structuring Alternatives
               </h1>
-              <p className="text-sm mt-1" style={{ color: "#64748b" }}>
+              <p className="text-sm font-editorial-body text-stone-600 mt-1">
                 {results.alternatives.length} alternatives ·{" "}
-                <span style={{ color: "#34d399" }}>
+                <span className="text-emerald-700 font-semibold">
                   ⚡ AI generated
                 </span>
                 {" "}· {results.rag_sources_used} RAG sources · {results.rag_corpus_coverage} coverage
@@ -169,7 +168,7 @@ export default function ResultsPage() {
             {/* Meta badges */}
             <div className="flex items-center gap-2 flex-wrap">
               {complianceLoading && (
-                <span className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full" style={{ background: "rgba(99,102,241,0.1)", color: "#818cf8" }}>
+                <span className="badge-pill bg-stone-100 text-stone-700">
                   <svg className="animate-spin" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
                   </svg>
@@ -177,7 +176,7 @@ export default function ResultsPage() {
                 </span>
               )}
               {results.generation_time_ms && (
-                <span className="text-xs px-3 py-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.04)", color: "#64748b" }}>
+                <span className="badge-pill">
                   ⚡ {(results.generation_time_ms / 1000).toFixed(1)}s
                 </span>
               )}
@@ -187,7 +186,7 @@ export default function ResultsPage() {
           {/* General analysis */}
           {results.general_analysis && (
             <div className="mt-4 max-w-3xl">
-              <p className="text-sm leading-relaxed" style={{ color: "#94a3b8" }}>
+              <p className="text-sm font-editorial-body text-stone-700 leading-relaxed">
                 {results.general_analysis}
               </p>
             </div>
@@ -207,9 +206,9 @@ export default function ResultsPage() {
       </div>
 
       {/* ── Structure cards — side-by-side (FR-3.5) ── */}
-      <div className="px-4 pt-6 pb-4 max-w-screen-xl mx-auto">
+      <div className="px-4 pt-8 pb-4 max-w-screen-xl mx-auto">
         <div
-          className="grid gap-5"
+          className="grid gap-6"
           style={{
             gridTemplateColumns: `repeat(${Math.min(results.alternatives.length, 3)}, minmax(0, 1fr))`,
           }}
@@ -226,7 +225,7 @@ export default function ResultsPage() {
         </div>
 
         {/* FR-6.4: Disclaimer — must appear on every output view */}
-        <DisclaimerBanner className="mt-6 rounded-xl" />
+        <DisclaimerBanner className="mt-8 rounded-2xl" />
       </div>
     </div>
   );

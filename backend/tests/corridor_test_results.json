@@ -4,7 +4,7 @@
     "matched": true,
     "is_validated": true,
     "is_allowed": false,
-    "latency_ms": 12.9,
+    "latency_ms": 15.3,
     "notes": ""
   },
   {
@@ -12,7 +12,7 @@
     "matched": true,
     "is_validated": true,
     "is_allowed": false,
-    "latency_ms": 13.2,
+    "latency_ms": 14.2,
     "notes": "violations=1"
   },
   {
@@ -20,7 +20,7 @@
     "matched": true,
     "is_validated": true,
     "is_allowed": false,
-    "latency_ms": 12.7,
+    "latency_ms": 14.4,
     "notes": ""
   },
   {
@@ -28,7 +28,7 @@
     "matched": true,
     "is_validated": true,
     "is_allowed": true,
-    "latency_ms": 12.7,
+    "latency_ms": 13.6,
     "notes": "violations=[]"
   },
   {
@@ -36,7 +36,7 @@
     "matched": true,
     "is_validated": true,
     "is_allowed": true,
-    "latency_ms": 12.4,
+    "latency_ms": 13.8,
     "notes": "violations=[]"
   },
   {
@@ -44,7 +44,7 @@
     "matched": true,
     "is_validated": true,
     "is_allowed": true,
-    "latency_ms": 12.0,
+    "latency_ms": 13.5,
     "notes": "violations=[]"
   },
   {
@@ -52,7 +52,7 @@
     "matched": true,
     "is_validated": true,
     "is_allowed": true,
-    "latency_ms": 12.6,
+    "latency_ms": 14.1,
     "notes": ""
   },
   {
@@ -60,7 +60,7 @@
     "matched": true,
     "is_validated": true,
     "is_allowed": true,
-    "latency_ms": 12.5,
+    "latency_ms": 13.9,
     "notes": "pillar_two_violations=[]"
   },
   {
@@ -68,7 +68,7 @@
     "matched": false,
     "is_validated": false,
     "is_allowed": null,
-    "latency_ms": 2.6,
+    "latency_ms": 3.1,
     "notes": "fallback fired: banner=WARNING"
   },
   {
@@ -84,7 +84,7 @@
     "matched": false,
     "is_validated": false,
     "is_allowed": null,
-    "latency_ms": 2.7,
+    "latency_ms": 3.1,
     "notes": ""
   },
   {
@@ -92,7 +92,7 @@
     "matched": false,
     "is_validated": false,
     "is_allowed": null,
-    "latency_ms": 2.3,
+    "latency_ms": 2.6,
     "notes": ""
   }
 ]
