@@ -10,7 +10,23 @@ from app.routers import health, intake, rag, structures, compliance, diagram, re
 settings = get_settings()
 
 # ── Parse CORS origins ────────────────────────────────────────────────────────
-_raw_origins = [o.strip() for o in settings.cors_origins.split(",") if o.strip()]
+_raw_origins = []
+_regex_origins = []
+
+for o in settings.cors_origins.split(","):
+    o = o.strip()
+    if not o:
+        continue
+    if "*" in o:
+        # Convert simple wildcard to regex
+        _regex = o.replace(".", r"\.").replace("*", ".*")
+        _regex_origins.append(_regex)
+    else:
+        _raw_origins.append(o)
+
+origin_regex_str = None
+if _regex_origins:
+    origin_regex_str = "^(" + "|".join(_regex_origins) + ")$"
 
 app = FastAPI(
     title=settings.app_name,
@@ -28,7 +44,7 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=_raw_origins,
-    allow_origin_regex=r"https://.*\.pages\.dev",  # Cloudflare Pages wildcard
+    allow_origin_regex=origin_regex_str,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -17,7 +17,7 @@ import { useAuth } from "../components/AuthContext";
 import { CorrectionForm } from "../components/CorrectionForm";
 import { DisclaimerBanner } from "../components/DisclaimerBanner";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+import { apiReviewQueueList } from "../lib/api";
 
 interface QueueItem {
   review_id: string;
@@ -56,11 +56,8 @@ export default function ReviewPage() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`${API_URL}/api/review/queue?limit=100`, {
-        headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {},
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      setQueue(await res.json());
+      const data = await apiReviewQueueList(100, accessToken);
+      setQueue(data);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Failed to load queue");
     } finally {

@@ -17,7 +17,7 @@ import { DiagramPanel, type DiagramData } from "./DiagramPanel";
 import { ReviewActions, ReviewStatusBadge, type ReviewStatus } from "./ReviewActions";
 import { useRole } from "./RBACContext";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+import { apiDiagramGenerate } from "../lib/api";
 
 // ── Types pulled from backend schemas ─────────────────────────────────────────
 
@@ -130,13 +130,8 @@ export function StructureCard({
     if (diagram || diagLoading) return;
     setDL(true);
     try {
-      const res = await fetch(`${API_URL}/api/diagram/generate`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ structure_json: alternative }),
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      setDiagram(await res.json());
+      const data = await apiDiagramGenerate(alternative);
+      setDiagram(data);
     } catch {
       /* diagram will just not render */
     } finally {

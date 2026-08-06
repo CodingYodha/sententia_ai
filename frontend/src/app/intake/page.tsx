@@ -12,10 +12,11 @@
  */
 
 import { useRef, useState } from "react";
+import { useAuth } from "../components/AuthContext";
 import { useRouter } from "next/navigation";
 import { useRole } from "../components/RBACContext";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+import { apiIntakeDocument, apiIntakeScenario, apiStructuresGenerate } from "../lib/api";
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
@@ -133,6 +134,7 @@ type Step = 1 | 2 | 3;
 export default function IntakePage() {
   const { can } = useRole();
   const router  = useRouter();
+  const { accessToken } = useAuth();
 
   const [step, setStep]             = useState<Step>(1);
   const [form, setForm]             = useState<ScenarioFormData>(INITIAL);
@@ -177,14 +179,7 @@ export default function IntakePage() {
     setUploading(true);
     setUploadError(null);
     try {
-      const fd = new FormData();
-      fd.append("file", file);
-      const res = await fetch(`${API_URL}/api/intake/document`, { method: "POST", body: fd });
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err.detail ?? `HTTP ${res.status}`);
-      }
-      const data = await res.json();
+      const data = await apiIntakeDocument(file);
       setExtraction(data);
     } catch (e) {
       setUploadError(e instanceof Error ? e.message : "Upload failed");
@@ -228,50 +223,37 @@ export default function IntakePage() {
     setStep(3);
 
     try {
-      // Build scenario payload
+      // Build scenario payload matching ScenarioCreate Pydantic schema
+      const regulatory_constraints = [];
+      if (form.has_us_persons_in_fund) regulatory_constraints.push("fund_has_us_persons");
+      if (form.is_prohibited_sector) regulatory_constraints.push("prohibited_sector");
+      if (form.prior_govt_approval_obtained) regulatory_constraints.push("prior_govt_approval_obtained");
+
       const scenarioPayload = {
-        investor_name: form.investor_name,
-        origin_jurisdiction: form.origin_jurisdiction,
+        investor_name: form.investor_name, // Sent to backend, though backend needs it added to schema
+        capital_origin: form.origin_jurisdiction,
         target_jurisdiction: form.target_jurisdiction,
         spv_jurisdiction: form.spv_jurisdiction || undefined,
         sector: form.sector,
         investment_amount_usd: Number(form.investment_amount_usd),
         equity_pct: form.equity_pct ? Number(form.equity_pct) : undefined,
-        has_us_persons_in_fund: form.has_us_persons_in_fund,
-        is_prohibited_sector: form.is_prohibited_sector,
-        prior_govt_approval_obtained: form.prior_govt_approval_obtained,
-        additional_context: form.additional_context || undefined,
+        investment_structure_type: "direct_fdi", // Default as frontend lacks this field
+        regulatory_constraints,
+        notes: form.additional_context || undefined,
       };
 
       // Step A: Submit scenario to intake endpoint
-      const intakeRes = await fetch(`${API_URL}/api/intake/scenario`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(scenarioPayload),
-      });
-
       let sid: string;
-      if (intakeRes.ok) {
-        const intakeData = await intakeRes.json();
+      try {
+        const intakeData = await apiIntakeScenario(scenarioPayload);
         sid = intakeData.scenario_id ?? crypto.randomUUID();
-      } else {
+      } catch {
         sid = crypto.randomUUID();
       }
       setScenarioId(sid);
 
       // Step B: Generate structures
-      const genRes = await fetch(`${API_URL}/api/structures/generate`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ scenario: scenarioPayload, max_alternatives: 3 }),
-      });
-
-      if (!genRes.ok) {
-        const err = await genRes.json().catch(() => ({}));
-        throw new Error(err.detail ?? `Structure generation failed (HTTP ${genRes.status})`);
-      }
-
-      const genData = await genRes.json();
+      const genData = await apiStructuresGenerate(scenarioPayload, 3, accessToken);
 
       // Store in sessionStorage for results page
       sessionStorage.setItem("sententia_results", JSON.stringify({

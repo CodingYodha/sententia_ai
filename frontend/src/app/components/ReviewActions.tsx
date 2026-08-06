@@ -9,7 +9,7 @@
 import { useState } from "react";
 import { useAuth } from "./AuthContext";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+import { apiReviewAction } from "../lib/api";
 
 export type ReviewStatus = "pending" | "approve" | "flag" | "reject";
 
@@ -90,23 +90,15 @@ export function ReviewActions({
     setLoading(action);
     setError(null);
     try {
-      const res = await fetch(`${API_URL}/api/review/action`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
-        },
-        body: JSON.stringify({
-          structure_id: structureId,
-          scenario_id: scenarioId,
-          alternative_rank: alternativeRank,
-          structure_name: structureName,
-          action,
-          notes: notesText || null,
-          reviewer_role: reviewerRole,
-        }),
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      await apiReviewAction({
+        structure_id: structureId,
+        scenario_id: scenarioId,
+        alternative_rank: alternativeRank,
+        structure_name: structureName,
+        action,
+        notes: notesText || null,
+        reviewer_role: reviewerRole,
+      }, accessToken);
       setStatus(action);
       onActionComplete?.(action);
       setNotesOpen(false);

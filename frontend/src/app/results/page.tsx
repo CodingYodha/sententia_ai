@@ -14,7 +14,7 @@ import { DisclaimerBanner } from "../components/DisclaimerBanner";
 import { AuthGuard } from "../components/AuthGuard";
 import { useAuth } from "../components/AuthContext";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+import { apiComplianceEvaluate } from "../lib/api";
 
 interface StoredResults {
   scenarioId: string;
@@ -58,15 +58,8 @@ export default function ResultsPage() {
     await Promise.all(
       data.alternatives.map(async (alt) => {
         try {
-          const res = await fetch(`${API_URL}/api/compliance/evaluate`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              scenario: data.scenario,
-              proposed_structure: alt,
-            }),
-          });
-          if (res.ok) map[alt.rank] = await res.json();
+          const res = await apiComplianceEvaluate(data.scenario, alt);
+          map[alt.rank] = res;
         } catch {
           // Non-fatal: compliance result just won't show
         }

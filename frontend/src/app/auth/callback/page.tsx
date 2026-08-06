@@ -8,19 +8,30 @@
  * (detectSessionInUrl: true). We just wait for the session, then redirect.
  */
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../components/AuthContext";
 
 export default function AuthCallbackPage() {
   const router = useRouter();
   const { session, loading } = useAuth();
+  const [exchangeStarted, setExchangeStarted] = useState(false);
 
   useEffect(() => {
-    if (!loading) {
-      router.replace(session ? "/intake" : "/login");
+    // Prevent premature redirect if Supabase is still exchanging the PKCE code in the background
+    if (typeof window !== "undefined" && window.location.search.includes("code=")) {
+      setExchangeStarted(true);
     }
-  }, [session, loading, router]);
+    
+    // Only redirect if auth context has finished loading AND we aren't waiting on a code exchange that hasn't fired yet
+    if (!loading) {
+      if (session) {
+        router.replace("/intake");
+      } else if (!exchangeStarted) {
+        router.replace("/login");
+      }
+    }
+  }, [session, loading, router, exchangeStarted]);
 
   return (
     <div className="min-h-screen flex items-center justify-center">

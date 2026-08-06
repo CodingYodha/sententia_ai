@@ -12,7 +12,7 @@
 import { useState } from "react";
 import { useAuth } from "./AuthContext";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+import { apiReviewCorrection } from "../lib/api";
 
 // ── Correction types ───────────────────────────────────────────────────────────
 
@@ -92,31 +92,18 @@ export function CorrectionForm({
     setSub(true); setErr(null);
 
     try {
-      const res = await fetch(`${API_URL}/api/review/correction`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
-        },
-        body: JSON.stringify({
-          review_queue_id: reviewQueueId,
-          structure_id:    structureId,
-          correction_type: correctionType,
-          affected_field:  affectedField,
-          original_value:  originalValue || null,
-          corrected_value: correctedValue,
-          jurisdiction:    jurisdiction || null,
-          severity,
-          notes:           notes || null,
-        }),
-      });
+      const data = await apiReviewCorrection({
+        review_queue_id: reviewQueueId,
+        structure_id:    structureId,
+        correction_type: correctionType,
+        affected_field:  affectedField,
+        original_value:  originalValue || null,
+        corrected_value: correctedValue,
+        jurisdiction:    jurisdiction || null,
+        severity,
+        notes:           notes || null,
+      }, accessToken);
 
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err.detail ?? `HTTP ${res.status}`);
-      }
-
-      const data = await res.json();
       setSucc(`Correction recorded: ${data.correction_id}`);
       onSuccess?.(data.correction_id);
     } catch (e) {

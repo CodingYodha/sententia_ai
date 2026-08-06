@@ -156,6 +156,10 @@ class ScenarioCreate(BaseModel):
     """
 
     # ── Required (FR-1.2) ──────────────────────────────────────────────────
+    investor_name: str | None = Field(
+        default=None,
+        description="Name of the investor or entity"
+    )
     capital_origin: str = Field(
         ...,
         min_length=2,
