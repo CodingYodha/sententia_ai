@@ -202,25 +202,179 @@ def _build_no_llm_response(scenario: ScenarioCreate, rag_sources: int) -> Struct
 # ══════════════════════════════════════════════════════════════════════════════
 # Fallback on LLM failure
 # ══════════════════════════════════════════════════════════════════════════════
+def _build_degraded_alternatives(
+    scenario: ScenarioCreate,
+    max_alternatives: int = 2,
+) -> list[StructuringAlternative]:
+    """
+    Keep the product usable when upstream LLMs fail.
+
+    These are intentionally conservative and generic. They avoid naming
+    corridor-specific statutes because no model-generated legal analysis exists.
+    """
+    count = max(2, min(max_alternatives, 4))
+    origin = scenario.capital_origin
+    target = scenario.target_jurisdiction
+    spv = scenario.spv_jurisdiction
+    sector = scenario.sector
+
+    def touchpoints(jurisdiction: str) -> list[ComplianceTouchpoint]:
+        return [
+            ComplianceTouchpoint(
+                jurisdiction=jurisdiction,
+                requirement=(
+                    "Confirm whether foreign investment approval, notification, "
+                    "or sector regulator clearance is required before closing."
+                ),
+                timing=ComplianceTiming.PRE_CLOSING,
+                authority="Relevant investment or sector regulator",
+                notes="System fallback: exact filing route was not model-verified.",
+            ),
+            ComplianceTouchpoint(
+                jurisdiction=jurisdiction,
+                requirement=(
+                    "Complete post-closing corporate, foreign exchange, beneficial "
+                    "ownership, and tax registrations as applicable."
+                ),
+                timing=ComplianceTiming.POST_CLOSING,
+                authority="Corporate registry, tax authority, or central bank",
+                notes="System fallback: local counsel should confirm exact deadlines.",
+            ),
+        ]
+
+    generic_risks = [
+        IdentifiedRisk(
+            risk_type=RiskType.REGULATORY,
+            description=(
+                "Regulatory clearance requirements may differ by investor nationality, "
+                "sector sensitivity, ownership percentage, and control rights."
+            ),
+            severity=RiskSeverity.HIGH,
+            mitigation="Run jurisdiction-specific legal review before signing or closing.",
+        ),
+        IdentifiedRisk(
+            risk_type=RiskType.TAX,
+            description=(
+                "Tax treaty access, withholding tax, and anti-avoidance treatment may "
+                "change materially depending on substance and beneficial ownership."
+            ),
+            severity=RiskSeverity.MEDIUM,
+            mitigation="Obtain tax advice on treaty access, substance, and exit treatment.",
+        ),
+    ]
+
+    alternatives: list[StructuringAlternative] = []
+
+    if spv:
+        alternatives.append(
+            StructuringAlternative(
+                rank=1,
+                name=f"{spv} SPV Holding Structure - Illustrative",
+                structure_type="spv_layered",
+                architecture_description=(
+                    f"{origin} capital is routed through a {spv} holding company into "
+                    f"the {target} {sector} target. This can support governance, treaty, "
+                    "financing, or exit planning, but only if substance and anti-avoidance "
+                    "requirements are validated."
+                ),
+                ownership_chain=f"{origin} Investor -> {spv} HoldCo -> {target} OpCo",
+                jurisdictions_involved=[origin, spv, target],
+                mermaid_diagram=(
+                    f'graph TD\n    A["{origin} Investor"] --> B["{spv} HoldCo"]\n'
+                    f'    B --> C["{target} OpCo"]'
+                ),
+                compliance_touchpoints=touchpoints(target) + touchpoints(spv),
+                cited_sources=["General investment law principles", "Fallback generated without LLM legal analysis"],
+                identified_risks=generic_risks,
+                rationale=(
+                    "Ranked first only because the submitted scenario includes an SPV. "
+                    "This ranking must be re-run once LLM generation is available."
+                ),
+                estimated_setup_complexity=SetupComplexity.HIGH,
+                regulatory_confidence=RegulatoryConfidence.LOW,
+            )
+        )
+
+    alternatives.append(
+        StructuringAlternative(
+            rank=len(alternatives) + 1,
+            name="Direct FDI Structure - Illustrative",
+            structure_type="direct_fdi",
+            architecture_description=(
+                f"{origin} capital invests directly into the {target} {sector} target. "
+                "This is operationally simpler than a holding-company structure, but may "
+                "offer less flexibility for treaty planning, governance, financing, and exit."
+            ),
+            ownership_chain=f"{origin} Investor -> {target} OpCo",
+            jurisdictions_involved=[origin, target],
+            mermaid_diagram=f'graph TD\n    A["{origin} Investor"] --> B["{target} OpCo"]',
+            compliance_touchpoints=touchpoints(target),
+            cited_sources=["General investment law principles", "Fallback generated without LLM legal analysis"],
+            identified_risks=generic_risks,
+            rationale=(
+                "Included as the baseline structure because direct ownership is the simplest "
+                "comparison point for cross-border FDI."
+            ),
+            estimated_setup_complexity=SetupComplexity.MEDIUM,
+            regulatory_confidence=RegulatoryConfidence.LOW,
+        )
+    )
+
+    if len(alternatives) < count:
+        alternatives.append(
+            StructuringAlternative(
+                rank=len(alternatives) + 1,
+                name="Local Partner or JV Structure - Illustrative",
+                structure_type="joint_venture",
+                architecture_description=(
+                    f"{origin} capital invests alongside a local {target} partner. "
+                    "This may reduce execution friction in sensitive sectors, but introduces "
+                    "partner governance, control, exit, and deadlock considerations."
+                ),
+                ownership_chain=f"{origin} Investor + {target} Partner -> {target} JV",
+                jurisdictions_involved=[origin, target],
+                mermaid_diagram=(
+                    f'graph TD\n    A["{origin} Investor"] --> C["{target} JV"]\n'
+                    f'    B["{target} Partner"] --> C'
+                ),
+                compliance_touchpoints=touchpoints(target),
+                cited_sources=["General investment law principles", "Fallback generated without LLM legal analysis"],
+                identified_risks=generic_risks,
+                rationale=(
+                    "Included as a general fallback alternative where local participation "
+                    "may be commercially or regulatorily useful."
+                ),
+                estimated_setup_complexity=SetupComplexity.HIGH,
+                regulatory_confidence=RegulatoryConfidence.LOW,
+            )
+        )
+
+    return alternatives[:count]
+
 
 def _build_failure_response(
     scenario: ScenarioCreate,
     rag_sources: int,
     coverage: str,
     error: str,
+    max_alternatives: int = 2,
 ) -> StructureGenerationResponse:
     """Called when all LLM providers failed — returns error response, never raises."""
     return StructureGenerationResponse(
         scenario_summary=f"{scenario.capital_origin} → {scenario.target_jurisdiction} ({scenario.sector})",
-        alternatives=[],
-        general_analysis=f"Structure generation failed after trying all LLM providers. Error: {error}",
+        alternatives=_build_degraded_alternatives(scenario, max_alternatives),
+        general_analysis=(
+            "AI structure generation failed and degraded after trying all configured LLM providers. "
+            f"Error: {error}. The alternatives below are system-generated placeholders "
+            "based on general structuring patterns, not model-generated legal analysis."
+        ),
         recommended_alternative_rank=1,
         disclaimer=(
             "⚠️ ALL LLM PROVIDERS FAILED. This may be due to rate limits or network issues. "
             "Please retry. This is not legal or tax advice."
         ),
         rag_sources_used=rag_sources,
-        llm_provider_used="none",
+        llm_provider_used="degraded_fallback",
         rag_corpus_coverage=coverage,
     )
 
@@ -277,7 +431,13 @@ async def generate_structure(
     total_ms = int((time.monotonic() - t_total) * 1000)
 
     if llm_output is None:
-        return _build_failure_response(scenario, rag_sources, coverage, "All providers exhausted")
+        return _build_failure_response(
+            scenario,
+            rag_sources,
+            coverage,
+            "All providers exhausted",
+            max_alternatives=max_alternatives,
+        )
 
     # ── Step 5: Build response ─────────────────────────────────────────────────
     return StructureGenerationResponse(

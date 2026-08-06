@@ -425,8 +425,8 @@ class TestStructureService:
             result = await generate_structure(make_scenario())
 
         assert result is not None
-        assert result.llm_provider_used == "none"
-        assert result.alternatives == []
+        assert result.llm_provider_used == "degraded_fallback"
+        assert len(result.alternatives) >= 2
         assert "failed" in result.general_analysis.lower()
 
     @pytest.mark.asyncio

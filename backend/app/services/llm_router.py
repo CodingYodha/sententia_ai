@@ -55,12 +55,14 @@ _OPENROUTER_HEADERS = {
 #                    Use for: llama-3.x models with native function-calling
 #   "openai"       → AsyncOpenAI pointed at OpenRouter
 _PROVIDERS = [
-    # ── gpt-oss via Groq OpenAI-compat endpoint (JSON mode) ──────────────────
-    {"name": "groq_gpt_oss_120b",  "model": "openai/gpt-oss-120b",     "client_type": "groq_openai"},
-    {"name": "groq_gpt_oss_20b",   "model": "openai/gpt-oss-20b",      "client_type": "groq_openai"},
-    # ── Llama via Groq native SDK (TOOLS / function-calling mode) ────────────
-    {"name": "groq_llama33_70b",   "model": "llama-3.3-70b-versatile", "client_type": "groq"},
-    {"name": "groq_llama31_8b",    "model": "llama-3.1-8b-instant",    "client_type": "groq"},
+    # Groq gpt-oss JSON mode currently fails Groq-side JSON validation even for
+    # tiny Instructor schemas. Keep structure generation on providers that can
+    # actually satisfy schema calls.
+    {"name": "groq_llama33_70b",           "model": "llama-3.3-70b-versatile",              "client_type": "groq"},
+    {"name": "openrouter_nemotron_3_super", "model": "nvidia/nemotron-3-super-120b-a12b:free", "client_type": "openai"},
+    {"name": "openrouter_ling_3_flash",    "model": "inclusionai/ling-3.0-flash:free",     "client_type": "openai"},
+    {"name": "openrouter_gemma_4_31b",     "model": "google/gemma-4-31b-it:free",          "client_type": "openai"},
+    {"name": "groq_llama31_8b",            "model": "llama-3.1-8b-instant",                "client_type": "groq"},
 ]
 
 
@@ -155,7 +157,7 @@ def get_llm_client() -> LLMClient | None:
             logger.warning(f"Sync provider {p['name']} init failed: {type(e).__name__}: {e}")
             continue
 
-    logger.error("No sync LLM providers available — set GROQ_API_KEY in environment")
+    logger.error("No sync LLM providers available — set GROQ_API_KEY or OPENROUTER_API_KEY in environment")
     return None
 
 

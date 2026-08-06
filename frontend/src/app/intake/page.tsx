@@ -274,7 +274,7 @@ export default function IntakePage() {
         sector: form.sector,
         investment_amount_usd: Number(form.investment_amount_usd),
         equity_pct: form.equity_pct ? Number(form.equity_pct) : undefined,
-        investment_structure_type: "direct_fdi", // Default as frontend lacks this field
+        investment_structure_type: form.spv_jurisdiction ? "spv_layered" : "direct_fdi",
         regulatory_constraints,
         notes: form.additional_context || undefined,
       };

@@ -116,34 +116,22 @@ async def _call_fallback_cascade(
             logger.warning("LLM cascade returned empty list — no API keys configured")
             return None, "none"
 
-        for provider_config in cascade:
-            provider_name = provider_config.get("provider", "unknown")
+        for llm in cascade:
+            provider_name = llm.provider
             try:
-                import openai
-
-                # Build async client — same pattern as structure_service.py
-                base_url = provider_config.get("base_url")
-                api_key  = provider_config.get("api_key")
-                model    = provider_config.get("model")
-
-                raw_client = openai.AsyncOpenAI(
-                    base_url=base_url,
-                    api_key=api_key,
-                )
-                client = instructor.from_openai(raw_client)
-
-                result: FallbackLLMOutput = await client.chat.completions.create(
-                    model=model,
+                result: FallbackLLMOutput = await llm.client.chat.completions.create(
+                    model=llm.model,
                     messages=messages,
                     response_model=FallbackLLMOutput,
                     max_retries=2,
-                    max_tokens=2048,     # Shorter than structure generation
-                    temperature=0.2,     # Lower temperature for factual restraint
+                    max_tokens=2048,
+                    temperature=0.2,
                 )
 
                 logger.info(f"Fallback LLM served by provider: {provider_name}")
                 return result, provider_name
 
+                # Build async client — same pattern as structure_service.py
             except Exception as e:
                 logger.warning(
                     f"Fallback cascade provider {provider_name} failed: "
