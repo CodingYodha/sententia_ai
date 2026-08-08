@@ -122,12 +122,19 @@ export function ReviewActions({
       <div className="flex items-center gap-3 flex-wrap">
         <ReviewStatusBadge status={status} />
         <button
-          onClick={() => setStatus("pending")}
-          className="text-xs underline"
+          onClick={() => {
+            setStatus("pending");
+            setLoading(null);
+            setNotesOpen(false);
+            setPending(null);
+            setError(null);
+          }}
+          className="text-xs underline cursor-pointer hover:text-stone-900 transition-colors"
           style={{ color: "#64748b" }}
         >
           Undo
         </button>
+
       </div>
     );
   }

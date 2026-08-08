@@ -149,14 +149,8 @@ def _class_mermaid(node: _Node) -> str:
 
 def _validate_llm_mermaid(raw: str) -> tuple[bool, str]:
     """
-    Light structural validation of the LLM-written mermaid_diagram string.
+    Light structural validation of the LLM-written or simulation template mermaid_diagram string.
     Returns (is_valid, cleaned_string).
-
-    Checks:
-    - Contains 'graph TD' or 'graph LR' (required direction)
-    - Contains at least one node definition (alphanumeric[ or alphanumeric{)
-    - Contains at least one edge (-->)
-    - No obviously malformed constructs (unclosed brackets etc.)
     """
     if not raw or not raw.strip():
         return False, ""
@@ -168,22 +162,19 @@ def _validate_llm_mermaid(raw: str) -> tuple[bool, str]:
     text = re.sub(r"\n?```\s*$", "", text)
     text = text.strip()
 
-    # Must have a graph declaration
-    if not re.search(r"graph\s+(TD|LR|RL|BT|TB)", text, re.IGNORECASE):
+    # Clean frontmatter if present
+    text = re.sub(r"^---[\s\S]*?---\s*", "", text).strip()
+
+    # Must have a graph or flowchart declaration
+    if not re.search(r"(?:graph|flowchart)\s+(TD|LR|RL|BT|TB)", text, re.IGNORECASE):
         return False, ""
 
-    # Must have at least one node
-    if not re.search(r"\w+[\[({]", text):
+    # Must have at least one node or subgraph
+    if not re.search(r"\w+[\[({]|subgraph", text, re.IGNORECASE):
         return False, ""
 
     # Must have at least one edge
-    if "-->" not in text and "-.->'" not in text:
-        return False, ""
-
-    # Check for unclosed brackets (rough check)
-    opens  = text.count("[") + text.count("{") + text.count("(")
-    closes = text.count("]") + text.count("}") + text.count(")")
-    if abs(opens - closes) > 4:   # allow small mismatches from label content
+    if "-->" not in text and "-.->" not in text and "->" not in text:
         return False, ""
 
     return True, text
@@ -195,21 +186,20 @@ def _enrich_llm_mermaid(
     show_regulatory: bool,
 ) -> tuple[str, int, int, int, list[str]]:
     """
-    Take the (validated) LLM-written Mermaid string and:
-    1. Normalize to graph TD
-    2. Append our classDef block
-    3. Append regulatory checkpoint nodes from compliance_touchpoints
-
-    Returns (final_mermaid, entity_count, edge_count, checkpoint_count, warnings)
+    Take the (validated) Mermaid string and return it cleanly.
+    If subgraphs exist (e.g. USA / INDIA subgraphs in simulation templates), return intact.
     """
     warnings: list[str] = []
-
-    # Normalize direction to TD
-    text = re.sub(r"graph\s+(LR|RL|BT|TB)", "graph TD", raw, flags=re.IGNORECASE)
+    text = raw.strip()
+    text = re.sub(r"^---[\s\S]*?---\s*", "", text).strip()
 
     # Count existing entities and edges
     entity_count = len(re.findall(r"\w+[\[({]", text))
-    edge_count   = len(re.findall(r"-->|--\|", text))
+    edge_count = len(re.findall(r"-->|--\||-\.->", text))
+
+    # If diagram already has detailed subgraphs / styling (simulation template), return intact
+    if "subgraph" in text.lower():
+        return text, entity_count, edge_count, 0, warnings
 
     checkpoint_count = 0
     touchpoints = alternative.get("compliance_touchpoints", [])
@@ -236,11 +226,13 @@ def _enrich_llm_mermaid(
             text += "\n".join(checkpoint_lines) + "\n"
             text += "\n".join(class_lines) + "\n"
 
-    # Append classDef block
+    # Append classDef block if not present
     if "classDef" not in text:
         text = text.rstrip() + "\n" + _CLASS_DEFS + "\n"
 
     return text, entity_count, edge_count, checkpoint_count, warnings
+
+
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -416,38 +408,38 @@ def serialize_structure_to_mermaid(
 ) -> tuple[str, int, int, int, list[str]]:
     """
     Convert a StructuringAlternative dict into Mermaid.js graph TD syntax.
-
-    Returns:
-        (mermaid_syntax, entity_count, edge_count, checkpoint_count, warnings)
-
-    Strategy:
-        Pass 1 — validate and enrich the LLM-written mermaid_diagram field
-        Pass 2 — regenerate from ownership_chain + compliance_touchpoints if Pass 1 fails
+    If mermaid_diagram is already provided (e.g. from simulation_template_folder),
+    normalize syntax and return it directly.
     """
     warnings: list[str] = []
     raw_mermaid = alternative.get("mermaid_diagram", "")
 
-    # ── Pass 1: Validate LLM diagram ──────────────────────────────────────────
-    is_valid, cleaned = _validate_llm_mermaid(raw_mermaid)
+    if raw_mermaid and raw_mermaid.strip():
+        # Clean frontmatter & normalize non-standard dotted syntax
+        cleaned = re.sub(r"^---[\s\S]*?---\s*", "", raw_mermaid.strip()).strip()
+        cleaned = re.sub(r'-\.\s*"([^"]+)"\s*\.-\s*>', r'-.-|"\1"|', cleaned)
+        cleaned = re.sub(r'-\.\s*"([^"]+)"\s*\.->', r'-.-|"\1"|', cleaned)
 
-    if is_valid:
-        mermaid, entity_count, edge_count, checkpoint_count, w = _enrich_llm_mermaid(
-            cleaned, alternative, show_regulatory_checkpoints
-        )
-        warnings.extend(w)
-        logger.info(
-            f"Diagram: Pass 1 used (LLM diagram valid). "
-            f"entities={entity_count} edges={edge_count} checkpoints={checkpoint_count}"
-        )
-        return mermaid, entity_count, edge_count, checkpoint_count, warnings
+        is_valid, _ = _validate_llm_mermaid(cleaned)
+        if is_valid or "subgraph" in cleaned.lower():
+            mermaid, entity_count, edge_count, checkpoint_count, w = _enrich_llm_mermaid(
+                cleaned, alternative, show_regulatory_checkpoints
+            )
+            warnings.extend(w)
+            logger.info(
+                f"Diagram: Preserved exact template/LLM diagram. "
+                f"entities={entity_count} edges={edge_count}"
+            )
+            return mermaid, entity_count, edge_count, checkpoint_count, warnings
 
-    # ── Pass 2: Regenerate from structured fields ─────────────────────────────
-    logger.info("Diagram: Pass 1 failed — running Pass 2 (field-based regeneration)")
+    # ── Pass 2: Regenerate from structured fields if no valid raw diagram ──────
+    logger.info("Diagram: Running Pass 2 (field-based regeneration)")
     diagram = _build_diagram_from_fields(
         alternative,
         show_regulatory=show_regulatory_checkpoints,
         show_flow_labels=show_capital_flow_labels,
     )
+
     warnings.extend(diagram.warnings)
     mermaid = _render_diagram(diagram)
 

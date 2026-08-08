@@ -35,55 +35,89 @@ interface DiagramPanelProps {
 // ── Export helpers (pure client-side, FR-5.2) ─────────────────────────────────
 
 async function exportToPng(svgEl: SVGSVGElement, filename: string): Promise<void> {
-  // 1. Serialize the SVG
-  const serializer = new XMLSerializer();
-  let svgStr = serializer.serializeToString(svgEl);
+  // 1. Clone SVG node to prevent mutating DOM
+  const svgClone = svgEl.cloneNode(true) as SVGSVGElement;
 
-  // 2. Ensure proper XML namespace
-  if (!svgStr.includes("xmlns=")) {
-    svgStr = svgStr.replace("<svg", '<svg xmlns="http://www.w3.org/2000/svg"');
+  const viewBox = svgEl.viewBox?.baseVal;
+  const w = viewBox?.width || parseFloat(svgEl.getAttribute("width") || "900") || 900;
+  const h = viewBox?.height || parseFloat(svgEl.getAttribute("height") || "600") || 600;
+
+  svgClone.setAttribute("width", w.toString());
+  svgClone.setAttribute("height", h.toString());
+  if (!svgClone.getAttribute("xmlns")) {
+    svgClone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
   }
 
-  // 3. Determine dimensions
-  const w = parseFloat(svgEl.getAttribute("width") || "0") || svgEl.viewBox?.baseVal?.width || 900;
-  const h = parseFloat(svgEl.getAttribute("height") || "0") || svgEl.viewBox?.baseVal?.height || 600;
-  const scale = 2; // retina quality
+  // 2. Add inline clean background style
+  const styleEl = document.createElement("style");
+  styleEl.textContent = `
+    svg { background-color: #fafafa !important; font-family: system-ui, -apple-system, sans-serif !important; }
+  `;
+  svgClone.insertBefore(styleEl, svgClone.firstChild);
 
-  // 4. Draw to canvas
+  // 3. Serialize SVG string and remove external imports/fonts that taint canvas
+  const serializer = new XMLSerializer();
+  let svgStr = serializer.serializeToString(svgClone);
+  svgStr = svgStr
+    .replace(/@import\s+url\([^)]+\);?/gi, "")
+    .replace(/<foreignObject[\s\S]*?<\/foreignObject>/gi, "");
+
+  // 4. Encode as UTF-8 Base64 Data URI
+  const encodedSvg = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgStr)));
+
+  const scale = 2; // Retina resolution
   const canvas = document.createElement("canvas");
   canvas.width = w * scale;
   canvas.height = h * scale;
   const ctx = canvas.getContext("2d");
   if (!ctx) throw new Error("Canvas 2D context unavailable");
 
-  // Dark background matching the UI theme
-  ctx.fillStyle = "#0f1220";
+  ctx.fillStyle = "#fafafa";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.scale(scale, scale);
 
-  const blob = new Blob([svgStr], { type: "image/svg+xml;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-
-  await new Promise<void>((resolve, reject) => {
+  await new Promise<void>((resolve) => {
     const img = new Image();
+    img.crossOrigin = "anonymous";
     img.onload = () => {
-      ctx.drawImage(img, 0, 0);
-      URL.revokeObjectURL(url);
-      // Trigger download
-      canvas.toBlob((pngBlob) => {
-        if (!pngBlob) { reject(new Error("Canvas PNG export failed")); return; }
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(pngBlob);
-        a.download = filename;
-        a.click();
-        setTimeout(() => URL.revokeObjectURL(a.href), 3000);
+      try {
+        ctx.drawImage(img, 0, 0, w, h);
+        canvas.toBlob((pngBlob) => {
+          if (!pngBlob) {
+            triggerSvgFallback(svgStr, filename);
+            resolve();
+            return;
+          }
+          const a = document.createElement("a");
+          a.href = URL.createObjectURL(pngBlob);
+          a.download = filename;
+          a.click();
+          setTimeout(() => URL.revokeObjectURL(a.href), 3000);
+          resolve();
+        }, "image/png");
+      } catch (err) {
+        // Fallback: download SVG if canvas is tainted by browser security policy
+        triggerSvgFallback(svgStr, filename);
         resolve();
-      }, "image/png");
+      }
     };
-    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("SVG image load failed")); };
-    img.src = url;
+    img.onerror = () => {
+      triggerSvgFallback(svgStr, filename);
+      resolve();
+    };
+    img.src = encodedSvg;
   });
 }
+
+function triggerSvgFallback(svgStr: string, filename: string) {
+  const blob = new Blob([svgStr], { type: "image/svg+xml;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = filename.endsWith(".png") ? filename.replace(/\.png$/i, ".svg") : filename;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 3000);
+}
+
 
 function exportToPdf(svgEl: SVGSVGElement, title: string): void {
   // Use browser Print API on an isolated window containing only the SVG
@@ -348,7 +382,7 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
           </div>
         ) : (
           <div
-            className="p-4 cursor-pointer relative group transition-all overflow-hidden flex items-center justify-center min-h-[240px] max-h-[360px]"
+            className="p-3 cursor-pointer relative group transition-all overflow-hidden flex items-center justify-center min-h-[500px] max-h-[620px]"
             style={{
               background: "radial-gradient(circle, rgba(0,0,0,0.06) 1px, transparent 1px) 0 0 / 22px 22px, #fafafa",
             }}
@@ -374,12 +408,13 @@ export function DiagramPanel({ diagram, isIllustrative = false, className = "" }
               <MermaidDiagram
                 syntax={diagram.mermaid_syntax}
                 theme="neutral"
-                maxHeight="320px"
+                maxHeight="580px"
                 onSvgReady={handleSvgReady}
                 className="w-full"
               />
             </div>
           </div>
+
         )}
 
         {/* ── Export error ── */}

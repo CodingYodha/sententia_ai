@@ -1,0 +1,44 @@
+---
+config:
+  layout: elk
+---
+flowchart TB
+
+%% ---------------------- USA ----------------------
+subgraph USA
+direction LR
+
+MGF["Meridian Grace<br/>Foundation (MGF)"]
+
+AEP["Atlas Education<br/>Partners LLC (AEP)"]
+
+JV["Meridian-Atlas<br/>Education JV LLC<br/>(Delaware)<br/><br/><i>JV LLC allocates returns to MGF & AEP<br/>per Operating Agreement split</i>"]
+
+MGF -->|"capitalize jointly,<br/>per agreed split"| JV
+AEP -->|"capitalize jointly,<br/>per agreed split"| JV
+
+end
+
+%% ---------------------- INDIA ----------------------
+subgraph INDIA
+
+direction TB
+
+PROP["Meridian Campus<br/>Infrastructure Pvt. Ltd.<br/><b>('PropCo')</b><br/>sole FDI conduit<br/>for the campus"]
+
+OPCO["Ananta Educare<br/>Pvt. Ltd.<br/><b>('OpCo')</b><br/>sole FDI conduit<br/>for school services"]
+
+AET["Ananta Education Trust<br/><b>('AET')</b><br/>lease + consultancy<br/>counterparty for both entities"]
+
+PROP --> AET
+OPCO --> AET
+
+end
+
+%% ---------------------- FDI ----------------------
+
+JV -->|"single FDI<br/>tranche"| PROP
+JV -->|"single FDI<br/>tranche"| OPCO
+
+PROP -->|"dividends up<br/>to JV LLC"| JV
+OPCO -->|"dividends up<br/>to JV LLC"| JV

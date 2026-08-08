@@ -21,6 +21,8 @@ class Settings(BaseSettings):
     app_name: str = "Sententia.ai"
     app_version: str = "0.1.0"
     debug: bool = False
+    simulation_mode: str = "auto"  # "true" | "false" | "auto"
+
 
     # ── LLM Providers ────────────────────────────────────────────────
     openrouter_api_key: str = ""

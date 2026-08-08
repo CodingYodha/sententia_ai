@@ -1,0 +1,42 @@
+flowchart TB
+
+%% ---------------------- USA ----------------------
+
+subgraph USA
+direction LR
+
+MGF["Meridian Grace<br/>Foundation (MGF)"]
+
+AEP["Atlas Education<br/>Partners LLC (AEP)"]
+
+end
+
+%% ---------------------- INDIA ----------------------
+
+subgraph INDIA
+
+direction TB
+
+PROP["Meridian Campus<br/>Infrastructure Pvt. Ltd.<br/><b>('PropCo')</b>"]
+
+OPCO["Ananta Educare<br/>Pvt. Ltd.<br/><b>('OpCo')</b>"]
+
+AET["Ananta Education Trust<br/><b>('AET')</b><br/>school operator,<br/>no dividend capacity"]
+
+FUNDS(("School fee collections fund<br/>lease rent + consultancy fees<br/>+ reasonable surplus (6–15%)"))
+
+FUNDS -.-> AET
+
+AET -->|"Lease rental<br/>(Sec.194-I TDS 10% +<br/>18% GST - domestic,<br/>both Indian residents)"| PROP
+
+AET -->|"Consultancy fees<br/>(arm's length,<br/>transfer-pricing tested;<br/>18% GST)"| OPCO
+
+end
+
+%% ---------------------- DIVIDENDS ----------------------
+
+PROP -->|"Dividends<br/>(Art.10 India-US DTAA:<br/>15% → ≥10% voting stock)"| MGF
+
+OPCO -->|"Dividends<br/>(Art.10 India-US DTAA:<br/>15% → ≥10% voting stock)"| AEP
+
+

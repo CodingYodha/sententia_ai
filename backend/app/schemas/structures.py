@@ -342,3 +342,6 @@ class StructureGenerationResponse(BaseModel):
     llm_provider_used: str
     rag_corpus_coverage: str  # "direct" | "adjacent" | "general_only"
     generation_time_ms: int | None = None
+    reasoning_steps: list[str] = Field(default_factory=list)
+    proposed_timeline: dict | None = None
+

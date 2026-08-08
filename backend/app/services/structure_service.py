@@ -402,15 +402,15 @@ def _build_degraded_alternatives(
         alternatives.append(
             StructuringAlternative(
                 rank=len(alternatives) + 1,
-                name="Local Partner / JV Structure",
+                name="Delaware Joint Venture (JV LLC) Holding Structure",
                 structure_type="joint_venture",
                 architecture_description=(
-                    f"{origin} capital invests alongside a local {target} partner. "
-                    "This may reduce execution friction in sensitive sectors, but introduces "
-                    "partner governance, control, exit, and deadlock considerations."
+                    f"MGF and AEP co-invest into a single Delaware holding vehicle: Meridian-Atlas Education JV LLC. "
+                    f"The JV LLC then injects a single consolidated FDI tranche into PropCo and OpCo in India."
                 ),
-                ownership_chain=f"{origin} Investor + {target} Partner -> {target} JV",
-                jurisdictions_involved=[origin, target],
+                ownership_chain=f"MGF (US) + AEP (US) -> Delaware JV LLC -> Indian PropCo & OpCo -> Ananta Education Trust",
+                jurisdictions_involved=[origin, target, "Delaware (US)"],
+
                 mermaid_diagram=(
                     f'graph TD\n    A["{origin} Investor"] --> C["{target} JV"]\n'
                     f'    B["{target} Partner"] --> C'

@@ -1,0 +1,39 @@
+flowchart TB
+
+%% ---------------------- USA ----------------------
+subgraph USA
+direction LR
+
+MGF["Meridian Grace<br/>Foundation (MGF)<br/>US 501(c)(3) non-profit"]
+
+AEP["Atlas Education<br/>Partners LLC (AEP)<br/>Delaware LLC investor"]
+
+MGF -. "co-invest under a<br/>Term Sheet" .-> AEP
+end
+
+%% ---------------------- INDIA ----------------------
+subgraph INDIA
+
+direction TB
+
+PROP["Meridian Campus<br/>Infrastructure Pvt. Ltd.<br/><b>('PropCo')</b><br/>Indian WOS<br/>owns land & school building"]
+
+OPCO["Ananta Educare<br/>Pvt. Ltd.<br/><b>('OpCo')</b><br/>for-profit Educational<br/>Services Company (ESC)"]
+
+AET["Ananta Education Trust<br/><b>('AET')</b><br/>registered public charitable trust,<br/>holds CBSE affiliation,<br/>runs on no-profit-no-loss basis"]
+
+SCHOOL(("Ananta International School<br/>(Pune, Maharashtra - CBSE)"))
+
+PROP -->|"Registered long-term<br/>Lease Deed (campus)"| AET
+
+OPCO -->|"Management &<br/>Consultancy Agreement"| AET
+
+AET -. "operates" .-> SCHOOL
+
+end
+
+%% ---------------------- FDI ----------------------
+
+MGF -->|"FDI: equity shares<br/>(incorporation) +<br/>CCPS (capex tranche)"| PROP
+
+AEP -->|"FDI: equity shares<br/>(FMV valuation,<br/>FC-GPR reporting)"| OPCO

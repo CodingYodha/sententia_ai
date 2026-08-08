@@ -62,20 +62,12 @@ export function NavigationBar() {
       }}
     >
       {/* Logo */}
-      <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
-        <span
-          className="w-8 h-8 rounded-full flex items-center justify-center transition-transform group-hover:scale-105"
-          style={{ background: "#292524", color: "#ffffff" }}
-        >
-          <svg width="15" height="15" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-            <path d="M6 24L16 8L26 24" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M9.5 19h13" stroke="#e8b8c4" strokeWidth="2" strokeLinecap="round"/>
-          </svg>
-        </span>
-        <span className="text-base font-editorial-display tracking-tight" style={{ color: "#0c0a09" }}>
+      <Link href="/" className="flex items-center shrink-0 group">
+        <span className="text-lg font-editorial-display font-semibold tracking-tight" style={{ color: "#0c0a09" }}>
           Sententia<span style={{ color: "#777169", fontFamily: "var(--font-sans-family)", fontSize: "14px", fontWeight: 500 }}>.ai</span>
         </span>
       </Link>
+
 
       {/* Nav links */}
       <div className="flex items-center gap-1.5">

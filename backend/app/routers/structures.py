@@ -16,8 +16,11 @@ from app.dependencies.auth import UserContext, get_optional_user
 from app.schemas.structures import StructureGenerateRequest, StructureGenerationResponse
 from app.services.audit_service import audit_structure_generated
 from app.services.review_queue_service import auto_enqueue
+from app.config import get_settings
+from app.services.simulation_service import generate_simulated_structure, is_simulation_triggered
 from app.services.structure_service import generate_structure
 from app.services.llm_router import get_async_llm_cascade
+
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/structures", tags=["Structures"])
@@ -35,25 +38,19 @@ async def generate(
 ) -> StructureGenerationResponse:
     """
     Accepts a validated investment scenario and returns 2–4 ranked structuring alternatives.
-
-    Each alternative includes:
-    - Architecture description and ownership chain
-    - Mermaid diagram (graph TD)
-    - Compliance touchpoints (pre-/at-/post-closing obligations per jurisdiction)
-    - Cited regulatory sources (from RAG corpus)
-    - Identified risks with severity and mitigation
-
-    **Auth**: optional Bearer token. Authenticated requests log to audit_log (FR-7.3)
-    and auto-enqueue each alternative in the review_queue (FR-6.1).
-
-    **Provider cascade**: Nemotron Ultra → Groq Llama 3.3 → Nemotron Super → Ling-flash.
     """
     try:
-        result = await generate_structure(
-            scenario=payload.scenario,
-            max_alternatives=payload.max_alternatives,
-            override_rag_context=payload.override_rag_context,
-        )
+        settings = get_settings()
+        if is_simulation_triggered(payload.scenario, settings.simulation_mode):
+            logger.info("Simulation Mode active — generating structure from simulation templates")
+            result = await generate_simulated_structure(payload.scenario, delay_seconds=6.5)
+        else:
+            result = await generate_structure(
+                scenario=payload.scenario,
+                max_alternatives=payload.max_alternatives,
+                override_rag_context=payload.override_rag_context,
+            )
+
 
         # FR-7.3: audit the generation event
         scenario_id = str(payload.scenario.model_dump().get("investor_name", "unknown"))

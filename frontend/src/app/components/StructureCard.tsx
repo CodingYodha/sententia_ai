@@ -70,7 +70,16 @@ export interface ComplianceResult {
   ui_banner?: { type: string; label: string; message: string };
   general_analysis?: string;
   risk_summary?: string;
+  overall_confidence?: string;
+  compliance_score?: number;
+  rules_checked?: number;
+  required_filings?: string[];
+  blocking_issues?: any[];
+  warning_issues?: any[];
+  jurisdiction_breakdown?: any[];
 }
+
+
 
 // ── Sub-components ────────────────────────────────────────────────────────────
 
@@ -135,9 +144,30 @@ export function StructureCard({
     ? "VALIDATED"
     : "BLOCKED";
 
-  // Lazy-load the diagram when the Diagram tab is first opened
+  // Lazy-load or initialize the diagram when the Diagram tab is first opened
   const loadDiagram = useCallback(async () => {
     if (diagram || diagLoading) return;
+
+    if (alternative.mermaid_diagram) {
+      // Clean frontmatter & normalize non-standard dotted syntax
+      const cleanSyntax = alternative.mermaid_diagram
+        .replace(/^---[\s\S]*?---\s*/, '')
+        .replace(/-\.\s*"([^"]+)"\s*\.-\s*>/g, '-.-|"$1"|')
+        .replace(/-\.\s*"([^"]+)"\s*\.->/g, '-.-|"$1"|')
+        .trim();
+
+      setDiagram({
+        mermaid_syntax: cleanSyntax,
+        entity_count: 5,
+        edge_count: 4,
+        regulatory_checkpoint_count: alternative.compliance_touchpoints?.length || 0,
+        jurisdictions: alternative.jurisdictions_involved || [],
+        structure_name: alternative.name,
+        generation_warnings: [],
+      });
+      return;
+    }
+
     setDL(true);
     try {
       const data = await apiDiagramGenerate(alternative);
@@ -148,6 +178,7 @@ export function StructureCard({
       setDL(false);
     }
   }, [alternative, diagram, diagLoading]);
+
 
   useEffect(() => {
     if (tab === "diagram") loadDiagram();

@@ -57,21 +57,34 @@ export function MermaidDiagram({
         mermaid.initialize({
           startOnLoad: false,
           theme,
-          securityLevel: "loose", // needed for classDef styling
+          securityLevel: "loose",
           fontFamily: "'Inter', system-ui, -apple-system, sans-serif",
+          fontSize: 14,
           flowchart: {
             htmlLabels: true,
             curve: "basis",
-            rankSpacing: 55,
-            nodeSpacing: 45,
-            padding: 12,
+            rankSpacing: 45,
+            nodeSpacing: 40,
+            padding: 16,
+            useMaxWidth: false,
           },
         });
 
         if (cancelled) return;
 
+        // Clean frontmatter like `--- config: layout: elk ---`, HTML bold/italic, and non-standard dotted arrow syntax
+        const cleanSyntax = syntax
+          .replace(/^---[\s\S]*?---\s*/, '')
+          .replace(/<b>(.*?)<\/b>/gi, '$1')
+          .replace(/<i>(.*?)<\/i>/gi, '$1')
+          .replace(/-\.\s*"([^"]+)"\s*\.-\s*>/g, '-.-|"$1"|')
+          .replace(/-\.\s*"([^"]+)"\s*\.->/g, '-.-|"$1"|')
+          .replace(/-\.\s+([^\.]+)\s+\.-\s*>/g, '-.-|"$1"|')
+          .replace(/-\.\s+([^\.]+)\s+\.->/g, '-.-|"$1"|')
+          .trim();
+
         const diagramId = `mermaid-${uid}`;
-        const { svg } = await mermaid.render(diagramId, syntax);
+        const { svg } = await mermaid.render(diagramId, cleanSyntax);
 
         if (cancelled) return;
 
@@ -94,11 +107,12 @@ export function MermaidDiagram({
           if (maxHeight) {
             svgEl.style.maxHeight = maxHeight;
           } else {
-            svgEl.style.maxHeight = "350px";
+            svgEl.style.maxHeight = "580px";
           }
           svgEl.style.objectFit = "contain";
           svgEl.style.display = "block";
           svgEl.style.margin = "0 auto";
+
 
           if (onSvgReady) {
             onSvgReady(svgEl);

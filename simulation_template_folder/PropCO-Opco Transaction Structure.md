@@ -1,0 +1,145 @@
+# Regulatory Verification Memo: A US-to-India Education-Sector FDI "PropCo–OpCo" Structure
+
+## TL;DR
+- **The core premise is legally sound and reflects real market practice.** Indian law (RTE Act 2009, State education acts, CBSE bye-laws) and a settled line of Supreme Court precedent (Unni Krishnan → T.M.A. Pai → Islamic Academy → P.A. Inamdar → Modern Dental College) require K-12 schools to be run by non-profit societies/trusts/Section 8 companies on a "no-profit-no-loss" basis, with no dividend distribution — so the school itself (OpCo) cannot be the FDI recipient or profit-repatriation channel. The documented workaround is the "three-pronged"/PropCo–OpCo model: a for-profit PropCo owns the land/buildings and leases them to the non-profit school, and a for-profit ServiceCo provides paid services.
+- **FDI mechanics support the structure.** 100% FDI is allowed under the automatic route into the education sector and into construction-development of educational institutions; and critically, "earning of rent or income on lease of the property, not amounting to transfer" is expressly carved out of the prohibited "real estate business" definition in the FEMA NDI Rules — this carve-out remains current and was NOT changed by the May 2026 or June 2026 NDI amendments. So a foreign-owned PropCo earning lease rentals is FDI-compliant.
+- **The main risks are anti-avoidance, not entry-level prohibition.** The structure must survive (a) GAAR / "colorable device" scrutiny (arm's-length rents/fees, genuine commercial substance), (b) transfer-pricing and the India-US DTAA "make available" test for service fees, (c) FCRA exposure if a non-profit US party's funds touch an Indian Section 8/trust, and (d) NBFC "50-50" thresholds and the Companies Act resident-director rule for the WOS.
+
+## Key Findings
+
+**1. K-12 schools must be non-profit; education is not a "business."** This is confirmed at three layers — statute, affiliation bye-laws, and constitutional precedent — and remains current law. It means an OpCo running a school cannot pay dividends/profits to any investor; hence the need to house the repatriation channel outside the school.
+
+**2. 100% FDI is permitted (automatic route) into education services and construction-development of educational institutions.** No FDI is permitted into trusts or societies (except SEBI-regulated vehicles); FDI into a Section 8 company is treated as "foreign contribution" and triggers FCRA. This is why the FDI must go into a for-profit PropCo/ServiceCo, not the school-operating entity.
+
+**3. The rent/lease carve-out from "real estate business" is the legal lynchpin of the PropCo channel** and is current. A for-profit PropCo owning developed property and earning lease rentals (not transferring the property) is not carrying on prohibited "real estate business," so it can receive 100% foreign equity.
+
+**4. The PropCo–OpCo (and three-pronged) model is a documented, mainstream structuring approach** in Indian K-12 and higher-education PE/FDI, described by multiple law firms and industry sources. It carries recognized anti-avoidance risk.
+
+**5. Standard FEMA reporting/valuation mechanics apply** (FC-GPR within 30 days of allotment; FC-TRS within 60 days of transfer; registered-valuer/merchant-banker FMV; AD Bank as first-level verifier; FIRMS portal). These remain current.
+
+**6. India-US DTAA and domestic withholding** govern the three repatriation channels differently — dividends (15%/25%), fees for included services (10%/15% with "make available" test), and immovable-property/rental income (Article 6, domestic TDS rates).
+
+**7. Companies Act 2013 WOS mechanics are unchanged** — ≥2 directors (≥1 resident under s.149(3)), ≥2 shareholders for a private company, DIN/DSC, and NBFC "50-50" threshold avoidance.
+
+**8. FCRA 2011 ss.5(1) and 5(4)** remain in force (upheld, with the Rules read down, by the Supreme Court in *INSAF v. Union of India* on 6 March 2020) and are the reason a WOS-insulation structure is used when a US non-profit party has faith-based/advocacy ties.
+
+---
+
+## Details
+
+### 1. The "no-profit-no-loss" mandate for K-12 schools (Question 1)
+
+**Statutory / regulatory layer.** The CBSE Affiliation Bye-Laws expressly require that "Societies/trusts/companies are required to run schools without any profit motive," and that the managing body be a "Registered Society/Registered Trust/Registered Company under section 8 of the Companies Act – 2013 … having non-proprietary character not vesting control in a single individual or members of a family." The Right of Children to Free and Compulsory Education Act, 2009 (RTE) prohibits capitation fees and screening (s.13), and requires private unaided recognized schools to reserve 25% of entry-class seats for disadvantaged/EWS children (s.12(1)(c)). Most State education acts independently require schools to be run by non-profit societies/trusts and prohibit "profiteering"/commercialization and diversion of funds. Net effect: the school-operating entity (OpCo) must be a society, public trust, or Section 8 company, cannot declare dividends, and must plough surplus back into the institution.
+
+**Constitutional / Supreme Court layer.** The doctrine that education is a "noble occupation" to be run on a "no-profit-no-loss" basis, not a commercial "business," runs through:
+- **Unni Krishnan v. State of A.P. (1993)** — held commercialization of education impermissible.
+- **T.M.A. Pai Foundation v. State of Karnataka (2002)**, 11-judge bench — education is an "occupation" under Article 19(1)(g); institutions may retain a "reasonable surplus" for growth but no profiteering or capitation fees.
+- **Islamic Academy of Education v. State of Karnataka (2003) 6 SCC 697**, 5-judge bench — set up fee/admission committees and quantified the permissible surplus. Para 154 (verbatim): "Reasonable surplus should ordinarily vary from 6% to 15%, as such surplus would be utilized for expansion of the system and development of education."
+- **P.A. Inamdar v. State of Maharashtra (2005) 6 SCC 537**, 7-judge bench — reaffirmed no profiteering/no capitation; each institution may set its own fee structure subject to that limit; struck down mandatory reservation in unaided private institutions (later modified by the 93rd Constitutional Amendment / Article 15(5)).
+- **Modern Dental College & Research Centre v. State of Madhya Pradesh (2016) 7 SCC 353**, 5-judge Constitution bench (decided 2 May 2016, per Justice A.K. Sikri) — the most recent authoritative restatement. Verbatim: "It is a noble occupation which would not permit commercialisation or profiteering and, therefore, such educational institutions are to be run on 'no profit no loss basis'." The Court was categorical that this activity "could not be treated as 'business' or 'profession'." This remains good law and is the current governing statement.
+
+*Nuance to preserve in the model:* the Supreme Court permits a **"reasonable surplus" (ordinarily 6%–15%)** for institutional growth — it is *profiteering* and *capitation fees* that are prohibited, not the mere existence of surplus. The PropCo–OpCo structure is precisely how promoters/investors extract economic value that the school cannot itself distribute.
+
+### 2. FDI position: education services, construction-development, and the "real estate business" carve-out (Question 2)
+
+**(a) Education services & construction-development.** The Consolidated FDI Policy and FEMA NDI Rules permit **100% FDI under the automatic route** in the education sector (services) and in **construction-development projects including educational institutions**. This is confirmed by DPIIT/PIB, Invest India, and multiple law-firm alerts. The construction-development entry (Schedule I) is subject to conditions such as: each phase treated as a separate project; sale only of developed plots; a **3-year lock-in** on each tranche of FDI (measured from the date of receipt of each tranche) — **but the 3-year lock-in does NOT apply to educational institutions** (also exempt: hotels/resorts, hospitals, SEZs, old-age homes, and NRI investment). The earlier minimum-capitalization (US$5m) and minimum-area (20,000 sq m) requirements were removed by Press Note 12 (2015). 100% FDI under automatic route is also allowed into completed projects for operation/management (with 3-year lock-in and no transfer of the immovable property during lock-in).
+
+**(b) "Real estate business" carve-out.** No FDI is permitted in an entity engaged in "real estate business," construction of farm houses, or trading in TDRs. The current verbatim Explanation — as substituted by the FEMA (NDI) (Amendment) Rules, 2022, Notification **S.O. 1802(E) dated 12 April 2022**, sitting at **Schedule I, Paragraph 2(f)** (the prohibited-sectors paragraph, not the separate permitted construction-development entry) — reads:
+
+> "For the purpose of this rule, 'real estate business' means dealing in land and immovable property with a view to earning profit from there and does not include development of townships, construction of residential or commercial premises, roads or bridges, educational institutions, recreational facilities, city and regional level infrastructure, townships, real estate broking services and Real Estate Investment Trusts (REITs) registered and regulated under the SEBI (REITs) Regulations 2014 **and earning of rent or income on lease of the property, not amounting to transfer**."
+
+The final clause is the lynchpin: a foreign-owned PropCo that owns developed school premises and leases them to the OpCo for rent (without transferring the property) is **not** carrying on prohibited real estate business, and is therefore FDI-eligible. The identical language appears in the DPIIT Consolidated FDI Policy.
+
+**(c) Currency given the 2026 amendments.** The FEMA (NDI) (Amendment) Rules, 2026 (S.O. 2174(E), notified 1 May 2026 / published 2 May 2026, File No. F. No. 1/4/2026-EM) amended **only Rule 6** (beneficial ownership and land-border-country investments, operationalizing DPIIT Press Note 2 (2026 Series) and aligning the beneficial-owner test with the PMLA, 2002). The FEMA (NDI) (Third Amendment) Rules, 2026 (published 12 June 2026) amended **only Rule 9, the Chapter V heading, Rule 12, Rule 13, and Schedules II–III** (expanding the listed-securities investor class from "NRI/OCI" to "individual person resident outside India"). **Neither 2026 amendment touched the "real estate business" definition, the rent-on-lease carve-out, or the education/construction-development conditions** — those remain as last amended in 2022. (A separate Second Amendment, S.O. 2186(E) dated 2 May 2026, addressed only insurance-sector FDI.)
+
+### 3. Is PropCo–OpCo a recognized/documented structure? (Question 3)
+
+Yes — it is explicitly documented as a mainstream ("commonly adopted") structuring approach:
+- **LexCounsel / Conventus Law ("Foreign Investment in the Education Sector: Regulatory Roadblocks," Seema Jhingan, 2018):** describes the "three pronged model" — (a) a not-for-profit entity (often a public trust) runs the school; (b) a separate "for profit company" acquires/constructs/develops the school infrastructure and leases it long-term to the school for lease rentals; (c) another "for profit" entity provides management/support services (content, teacher training, marketing/admissions, maintenance, transport, catering, security) at arm's length. The alert notes this "enables the 'for profit' entities to raise funds from investors (including under the FDI route)."
+- **INSEAD PE study (2009):** documents school-owners "extracting profits from trusts … in the form of lease rentals and management fee," and describes "innovative structures" to "break the 'trust' issue."
+- **Industry/PE sources:** describe PropCo/OpCo as the "dominant deal architecture" for international-school PE, with 20-40 year leasebacks; the Cerestra "Edu-Infra" REIT model (with AnaCap Financial Partners; Jain Group K-12/student-housing assets); and PE activity such as KKR/EuroKids and Kedaara Capital/Orchids International Schools.
+- **Higher-ed variant:** "Sponsoring Body" (non-profit) + "ManCo" (services) + "PropCo" (real estate leased long-term).
+
+**Regulatory / enforcement risk factors to flag in the model:**
+- **"Colorable device" / GAAR (Chapter X-A, Income Tax Act 1961; effective 1 April 2017).** Courts (McDowell & Co. v. CTO (1985), 154 ITR 148 — "Colorable devices cannot be part of tax planning … it is wrong to encourage or entertain the belief that it is honorable to avoid the payment of tax by resorting to dubious methods"; Union of India v. Azadi Bachao Andolan (2003), 263 ITR 706 — legitimate tax planning that is not a colorable device is permissible) distinguish legitimate tax planning from colorable devices lacking commercial substance. If the rents/fees are not at arm's length or the arrangement is a sham to strip a non-profit's surplus, the arrangement risks being recharacterized as an "impermissible avoidance arrangement," and the AO can lift the veil. Arm's-length pricing, genuine services actually rendered, independent valuation of rent, and documented commercial substance are essential.
+- **Fee-regulation exposure:** several states scrutinize whether inflated lease rentals/management fees paid by a school amount to indirect profiteering / diversion of school funds, which fee-regulatory committees can disallow.
+- **CBSE non-proprietary character:** the affiliation bye-laws require the managing society/trust/Section 8 company to have a non-proprietary character; excessive control/economic capture by the for-profit affiliates can jeopardize affiliation.
+- **FCRA:** if the OpCo is a Section 8 company/trust receiving foreign funds, or if a foreign non-profit's money reaches it, FCRA is triggered (see §8).
+
+### 4. FDI-compliant instruments and control mechanics for PropCo vs OpCo/ServiceCo (Question 4)
+
+**Instruments (FEMA NDI Rules, "equity instruments," Rule 2(f)).** Foreign investors may use: equity shares; **compulsorily and mandatorily convertible preference shares (CCPS)**; **compulsorily and mandatorily convertible debentures (CCDs)**; **share warrants**; and **partly-paid shares** (subject to prescribed upfront/payment conditions). Optionally convertible or redeemable instruments are treated as debt (ECB) and are not FDI-compliant equity. CCDs/CCPS are recognized capital instruments and are reported on FC-GPR.
+
+**Suitability distinctions:**
+- **PropCo (for-profit real-estate lessor).** As a real-estate/infrastructure asset-owner generating stable lease income, PropCo suits equity + CCDs/CCPS. CCDs can provide a coupon-like return pre-conversion; CCPS can carry a preferential dividend. Investors typically take substantial/100% ownership since PropCo is the primary repatriation vehicle. Note the construction-development 3-year lock-in (though educational institutions are exempt from the lock-in) and the no-transfer-of-immovable-property-during-lock-in rule.
+- **OpCo/ServiceCo (for-profit paid services).** A services/ESC entity providing content, teacher training, admissions/marketing, and management suits equity/CCPS with an eye on GST (18% on services) and the "make available" DTAA test on any cross-border fees. Investors again typically take control.
+- **The school-operating entity is NOT an FDI target** — it is the non-profit society/trust/Section 8 company.
+
+**Control mechanics (SHA/consulting agreements).** Practitioners use: board seats and board-observer rights; affirmative/veto rights (reserved matters); "as-if-converted" voting on CCPS/CCDs; anti-dilution; information rights; drag/tag; exit rights (IPO, buy-back, put options — noting FEMA bars assured returns/optionality that guarantees an exit price above FMV); and, for the OpCo/school, indirect influence via long-term lease covenants and detailed service/management agreements rather than shareholding. Because the promoters cannot be given a proprietary interest in the non-profit school, control over the school is exercised contractually (lease terms, management/consulting agreements, step-in/security over PropCo assets), not through equity in the school.
+
+### 5. FC-GPR / FC-TRS, AD Bank, valuation (Question 5)
+
+- **FC-GPR** (issue of equity instruments to a non-resident): filed by the Indian investee company on the **RBI FIRMS portal (Single Master Form)** within **30 days of the date of allotment** (not the date funds are received). Applies to equity shares, CCPS, CCDs, and warrants.
+- **FC-TRS** (transfer of equity instruments between a resident and a non-resident): within **60 days** of transfer or receipt of consideration, whichever is earlier.
+- **Form DI** (downstream investment): within 30 days of allotment in the downstream investee. **FLA** annual return: by 15 July each year.
+- **Valuation:** issue price must be ≥ fair value determined per FEMA pricing guidelines by a **SEBI-registered merchant banker or a practicing Chartered Accountant** (registered valuer); valuation should be recent (practitioners keep it within ~90 days, and in any event not older than 180 days before allotment).
+- **AD Bank role:** the AD Category-I bank is the first-level verifier of the FIRMS filing (checking KYC/FIRC match) before it reaches RBI.
+- **Late filing:** attracts a **Late Submission Fee (LSF)** (per RBI Circular RBI/2022-23/122) and, if not regularized, compounding under FEMA s.15.
+
+These mechanics remain current in 2026.
+
+### 6. Withholding tax and India-US DTAA for the three repatriation channels (Question 6)
+
+The India-US DTAA (signed 12 September 1989; amended by protocol in 2000) governs. A **Tax Residency Certificate (TRC)** and **Form 10F** (per practitioner commentary, reportedly to be replaced by "Form 41," effective 1 April 2026 — confirm against the current CBDT notification) are needed to claim treaty rates; the more beneficial of the treaty vs domestic rate applies (s.90(2), Income Tax Act).
+
+- **(a) Lease rental (OpCo → PropCo).** If both are Indian, this is a **purely domestic** payment: OpCo (a company/firm) deducts **TDS at 10% under Section 194-I** on rent for land/building. Per Finance Act 2025 (Budget 2025), the Section 194-I annual threshold was raised from ₹2,40,000 to ₹6,00,000 (₹50,000/month) effective 1 April 2025, with the 10% rate unchanged. **18% GST** applies on commercial leasing (TDS is computed on the rent net of separately-shown GST, per CBDT Circular 23/2017). The DTAA is not engaged at this leg because both parties are Indian residents. Any onward payment from PropCo to a foreign shareholder is then a **dividend** — see (b). If, alternatively, rent were paid directly to a *non-resident* lessor, Article 6 (Income from Immovable Property) gives India primary taxing rights and domestic TDS (up to ~30%+ surcharge for a non-resident) applies with no treaty-rate cap — which is precisely why the lessor is structured as an Indian PropCo.
+- **(b) Dividends (PropCo → US shareholder).** Article 10(2) caps source-country tax at **15%** where the US corporate beneficial owner holds ≥10% of the voting stock, and **25%** for all other eligible shareholders. Since a WOS parent typically holds 100%, the **15%** rate applies. Domestically, dividends to non-residents are taxable (post-2020 classical system) with TDS generally at 20% (plus surcharge/cess) under the Act, so the 15% treaty rate is beneficial.
+- **(c) Consulting/management/technical fees (OpCo/ServiceCo → foreign WOS or foreign parent).** Under Article 12 (Royalties and **Fees for Included Services (FIS)**), the source-country cap is **15%** (10% where ancillary/subsidiary to a royalty). Crucially, the India-US treaty's FIS definition is **narrower** than the "fees for technical services" concept in domestic law and other treaties: it applies only where the service **"makes available"** technical knowledge, experience, skill, know-how, or processes to the recipient. Pure management/administrative or recurring services that do not transfer know-how often fall outside FIS and, absent a Permanent Establishment, may not be taxable in India at all. Fees are also subject to **18% GST** (reverse charge where the recipient is offshore, or vice-versa). Transfer-pricing (arm's-length) documentation is mandatory for these related-party charges.
+
+### 7. Companies Act 2013 WOS incorporation mechanics (Question 7)
+
+- **Resident director (s.149(3)):** every company must have at least one director who stayed in India ≥182 days in the financial year. Applies to WOS of foreign parents without exception; penalty flows via s.172 (₹50,000, plus ₹500/day, capped). Enforcement is active.
+- **Minimum directors/shareholders:** a **private company** needs a minimum of **2 directors** and **2 shareholders** (a WOS uses a nominee to hold a single share to meet the 2-member minimum, with the foreign parent as beneficial owner). DIN and DSC required for directors; DIR-3 KYC now required once every three years (by 30 September).
+- **NBFC "50-50" threshold:** to avoid deemed-NBFC classification, the WOS/PropCo must ensure **financial assets ≤ 50% of total assets AND income from financial assets ≤ 50% of gross income** (RBI's "principal business" test, per RBI Press Release 1998-99/1269 dated 8 April 1999). A PropCo whose principal business is owning/leasing real estate (rental income) sits comfortably outside NBFC classification; but a holding-company WOS that mainly holds shares and earns dividends/interest can inadvertently breach the 50-50 test — this needs monitoring.
+
+### 8. FCRA 2011 relevant provisions (Question 8)
+
+- **Structure of the Act:** s.3 lists persons barred from receiving "foreign contribution," including s.3(1)(f) "organisation of a political nature" as specified under **s.5(1)**. **s.5(1)** empowers the Central Government to declare an organization (not a political party) to be "of a political nature" after examining its activities, ideology, or association with a political party; **s.5(4)** allows the organization to make a representation, which the Government refers to a specified authority for a report. The guidelines for such declaration are in **Rule 3, FCRR 2011** (e.g., avowed political objectives; trade unions with political goals; certain organizations habitually engaging in bandhs/hartals, etc.).
+- **Current status:** In **Indian Social Action Forum (INSAF) v. Union of India, Civil Appeal No. 1510 of 2020, decided 6 March 2020** (Justices L. Nageswara Rao & Deepak Gupta), the Supreme Court **upheld ss.5(1) and 5(4)** of the FCRA and Rules 3(i), 3(v), 3(vi) of the FCRR 2011, holding that "Section 5(1) does not suffer from the vice of vagueness," while **reading down Rules 3(v)/(vi)** so that organizations working for social/economic betterment or citizens' rights "are outside the purview." The Court confirmed that organizations used as conduits to channel foreign funds for political ends cannot escape the law where there is concrete evidence. So the provisions remain valid and current — it is the *Rules*, not the *Act*, that were read down.
+- **Relevance to the structure:** FCRA is triggered because (i) **foreign investment into a Section 8 (non-profit) company is treated as "foreign contribution,"** requiring prior FCRA registration/permission, and (ii) an operating trust/society running the school that receives any foreign funds must be FCRA-registered, generally cannot appoint foreign trustees/board members, and must segregate FCRA funds in a designated FCRA account (s.17). If a **US investing party is itself a non-profit with faith-based or advocacy ties**, there is heightened risk that (a) the Indian non-profit recipient could be scrutinized for its foreign-donor linkage, and (b) the "common members" restriction applies where the Indian recipient and foreign donor share members (the chief functionary of the recipient must not be part of the donor; ≥75% of the recipient's office-bearers/governing-body members must not be members/employees of the foreign donor). **This is exactly the exposure a WOS-insulation structure is designed to avoid:** by routing money as *FDI equity into a for-profit PropCo/ServiceCo* (governed by FEMA, not FCRA) and keeping the foreign non-profit at arm's length from the Indian school-operating non-profit, the parties avoid the "foreign contribution" characterization and FCRA's political-nature/conduit risks. The analysis in the reference deck remains current law.
+
+---
+
+## Recommendations
+
+**Stage 1 — Structure the entities correctly (entry).**
+- Incorporate the US-side consolidating vehicle (e.g., a Delaware JV LLC) and, beneath it, an **Indian WOS** (private company: 2 directors incl. 1 resident, 2 shareholders, DIN/DSC).
+- Have the WOS establish a **for-profit Indian PropCo** (owns/develops/leases the school land and buildings) and, if paid services are contemplated, a **for-profit ServiceCo/ESC**. Keep the **school-operating entity as an independent non-profit** society/trust/Section 8 company — do **not** take equity in it and do **not** route foreign money into it.
+- Fund PropCo/ServiceCo via **equity + CCPS/CCDs** (FDI-compliant), with FMV valuation by a registered valuer/merchant banker, and file **FC-GPR within 30 days** of each allotment.
+
+**Stage 2 — Paper the commercial relationships at arm's length (substance).**
+- **Registered long-term lease** (e.g., 20-40 years) from PropCo to the school, at an **independently valued market rent**; 18% GST; 194-I TDS. Avoid rents so high they read as profit-stripping.
+- **Arm's-length service/consulting agreement** from ServiceCo to the school for services genuinely rendered; maintain transfer-pricing documentation; assess the DTAA "make available" test before assuming any Indian FIS withholding.
+- Exercise control over the school **contractually** (lease covenants, service SLAs, step-in/security) plus SHA rights in PropCo/ServiceCo — never via a proprietary stake in the school.
+
+**Stage 3 — Repatriate and monitor.**
+- Repatriate through **PropCo dividends (15% DTAA)** and **service fees**; obtain **TRC + Form 10F/Form 41** for treaty rates.
+- Continuously monitor the **NBFC 50-50 test** (especially for any holding-company WOS), the **resident-director 182-day** compliance, and **CBSE non-proprietary-character** limits.
+- Commission a **GAAR/"colorable device" risk opinion** and, where a US non-profit party with faith-based/advocacy ties is involved, an **FCRA opinion** confirming the FDI route avoids "foreign contribution" characterization.
+
+**Benchmarks that would change the recommendation:**
+- If rents/fees cannot be independently justified as arm's-length → recharacterization/GAAR risk rises; reduce extraction or add substance.
+- If any foreign money must reach the Section 8/trust → FCRA registration/permission becomes mandatory; reconsider or obtain prior permission.
+- If the WOS's financial assets/income exceed 50% → NBFC registration risk; rebalance the balance sheet.
+- If a future FDI/NDI amendment narrows the rent carve-out or the education/construction-development route → revisit the PropCo channel (monitor DPIIT Press Notes and NDI amendments).
+
+---
+
+## Caveats
+
+- **This is a regulatory-verification memo, not legal advice or a tax opinion.** A live transaction requires Indian counsel and a registered valuer/tax advisor; state-specific education laws (e.g., Maharashtra) vary materially and must be checked for the actual situs. (For the fictional model, no real party names from the reference deck have been reused.)
+- **"Reasonable surplus" vs "profiteering" is a fact-sensitive line.** The Supreme Court permits surplus (ordinarily 6%–15% per Islamic Academy) for growth but prohibits profiteering/capitation; aggressive extraction via rent/fees can be challenged as indirect profiteering or as a colorable device.
+- **Anti-avoidance is the principal legal risk,** not entry prohibition. The structure is legal on its face but must have genuine commercial substance to withstand GAAR, transfer-pricing, and fee-regulatory scrutiny.
+- **Primary-gazette verification pending on two 2026 items:** the negative confirmation that the May 2026 (S.O. 2174(E)) and June 2026 Third Amendment NDI Rules did not alter the real-estate carve-out is drawn from consistent professional-firm summaries (PwC, SCC Online, Lexology, India Briefing, etc.), not from opening the gazette PDFs directly; and the reported replacement of Form 10F by "Form 41" (eff. 1 April 2026) should be confirmed against the current CBDT notification before reliance.
+- **DTAA rate specifics** (e.g., the 15% vs 25% dividend split, and whether particular services "make available" know-how) are fact-dependent; confirm beneficial-ownership and PE exposure for the specific payment flows.
+- **FEMA prohibits assured returns/guaranteed exit pricing** above FMV; structure put/exit rights accordingly.
