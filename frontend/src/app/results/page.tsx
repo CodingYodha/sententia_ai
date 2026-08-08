@@ -9,7 +9,7 @@
  * 3. Simultaneous word-by-word streaming legal reasoning text in the left AI Agent panel (over 5-8 seconds).
  */
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { StructureCard, type StructuringAlternative, type ComplianceResult } from "../components/StructureCard";
 import { ComplianceBanner } from "../components/ComplianceBanner";
@@ -19,7 +19,10 @@ import { GanttTimeline } from "../components/GanttTimeline";
 import { useAuth } from "../components/AuthContext";
 import { apiComplianceEvaluate, apiStructuresGenerate } from "@/lib/api";
 
+export const dynamic = "force-dynamic";
+
 interface StoredResults {
+
   scenarioId: string;
   scenario: Record<string, unknown>;
   alternatives: StructuringAlternative[];
@@ -262,9 +265,10 @@ const INITIAL_FALLBACK_RESULTS: StoredResults = {
   rag_corpus_coverage: "direct",
 };
 
-export default function ResultsPage() {
+function ResultsContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+
   const { accessToken } = useAuth();
 
   const [results, setResults] = useState<StoredResults>(INITIAL_FALLBACK_RESULTS);
@@ -782,3 +786,18 @@ export default function ResultsPage() {
     </div>
   );
 }
+
+export default function ResultsPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-stone-100">
+          <div className="w-8 h-8 border-2 border-stone-800 border-t-transparent rounded-full animate-spin" />
+        </div>
+      }
+    >
+      <ResultsContent />
+    </Suspense>
+  );
+}
+
